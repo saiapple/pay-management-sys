@@ -1,0 +1,75 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <h3 class="inverse">{{::Constant.FULL_TITLE}}</h3>
+                    <a class="dropdown-toggle" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="clear">
+                            <span class="block m-t-xs"><strong class="font-bold"></strong></span>
+                            <span class="text-muted text-xs block"
+                                  title="{{::displayName}}({{::Constant.USER_TYPE[displayType].name}})">{{::displayName}} ({{::Constant.USER_TYPE[displayType].name}})
+                                <b class="caret"></b>
+                            </span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu m-t-xs" aria-labelledby="dropdownMenu">
+                        <li><a href ng-click="openSettingDlg()">设置</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href ng-click="logout()">注销</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    {{::Constant.SHORT_TITLE}}
+                </div>
+            </li>
+
+            <li>
+                <a href="#/"><i class="fa fa-diamond"></i> <span class="nav-label">首页</span></a>
+            </li>
+            <li ng-repeat="menu in Constant.MENU_LIST" ng-hide="menu.hide" ng-if="isAdmin() || resDataMap[menu.uuid]">
+                <a href>
+                    <i class="{{menu.icon}}"></i>
+                    <span class="nav-label">{{menu.name}}</span><span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse">
+                    <li ng-repeat="subMenu in menu.subList" ng-hide="subMenu.hide" ng-if="(isAdmin() || subMenu.dynamic || resDataMap[subMenu.uuid])">
+                        <a ng-if="!subMenu.subList || subMenu.subList.length == 0" href="#{{subMenu.link}}" ng-click="setCurrentMenu(menu, subMenu)">{{subMenu.name}}</a>
+
+                        <a ng-if="subMenu.subList && subMenu.subList.length > 0" href>{{subMenu.name}}<span class="fa arrow"></span></a>
+                        <ul ng-if="subMenu.subList && subMenu.subList.length > 0" class="nav nav-third-level">
+                            <li ng-repeat="thirdMenu in subMenu.subList" ng-hide="thirdMenu.hide" ng-if="(isAdmin() || thirdMenu.dynamic || resDataMap[thirdMenu.uuid])">
+                                <a href="#{{thirdMenu.link}}" ng-click="setCurrentMenu(menu, subMenu, thirdMenu)">{{thirdMenu.name}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+
+
+<script type="text/ng-template" id="settingDlg.html">
+    <div class="modal-header">
+        <h3 class="modal-title">设置</h3>
+    </div>
+    <div class="modal-body">
+        <uib-tabset active="activeForm">
+            <uib-tab index="0" heading="修改密码">
+                <ng-form name="nestedForm">
+                    <div class="form-group">
+                        <input type="password" placeholder="请输入当前密码" ng-model="passwordChange.password" class="form-control m-b m-t">
+                        <input type="password" placeholder="请输入新密码" ng-model="passwordChange.newPassword" class="form-control m-b">
+                        <input type="password" placeholder="请再次输入新密码" ng-model="passwordChange.newPasswordConfirm" class="form-control m-b">
+                    </div>
+                </ng-form>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="modifyPassword();closeSettingDlg()">确定</button>
+        <button class="btn btn-warning" type="button" ng-click="closeSettingDlg()">取消</button>
+    </div>
+</script>

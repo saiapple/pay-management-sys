@@ -1,0 +1,21 @@
+.auth-config {
+  .treeview-title {
+    padding: 10px;
+    border: 1px solid #e7eaec;
+  }
+  .treeview {
+    .list-group {
+      border: 1px solid #e7eaec;
+    }
+    .node-authTree {
+      border: 0px !important;
+    }
+  }
+}
+
+#dataListDlg, #addSysCptDlg {
+  .list-group-item:hover {
+    cursor: pointer;
+    background-color: whitesmoke;
+  }
+}

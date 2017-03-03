@@ -1,0 +1,13 @@
+.ui-customize {
+  .column-editor {
+    &__static {
+      position: relative;
+      top: 8px;
+      left: 8px;
+    }
+
+    input[type='text'], input[type='number'] {
+      border: 0px;
+    }
+  }
+}

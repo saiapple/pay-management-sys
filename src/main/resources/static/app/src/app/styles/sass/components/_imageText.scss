@@ -1,0 +1,42 @@
+.img-text-block {
+  .img {
+    display: inline-block;
+    width: 150px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    img {
+      max-width: 150px;
+    }
+  }
+
+  .text {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    left: 200px;
+    top: -125px;
+  }
+}
+
+
+.row-img-block {
+  margin-bottom: 20px;
+  .img {
+    position: absolute;
+    width: 150px;
+
+    label {
+      position: absolute;
+      top: -20px;
+    }
+    img {
+      max-width: 150px;
+      margin-left: 35px;
+      position: relative;
+    }
+  }
+
+  .text {
+    margin-left: 220px;
+  }
+}

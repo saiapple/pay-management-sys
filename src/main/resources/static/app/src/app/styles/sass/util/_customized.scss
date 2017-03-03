@@ -1,0 +1,79 @@
+body {
+  font-family: 'Open Sans', 'Microsoft Yahei', "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.profile-element {
+  margin-bottom: 35px;
+}
+
+
+h3 {
+  input[type='checkbox'] {
+    margin-top: 2px;
+  }
+}
+
+a {
+  color: $text-color;
+}
+
+.ibox-title h3 {
+  display: inline-block;
+  font-size: 16px;
+  margin: 0 0 7px;
+  padding: 0;
+  text-overflow: ellipsis;
+  float: left;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.form-group {
+  .input-group.h-display, .form-control.h-display {
+    display: table;
+    min-width: 120px;
+  }
+  .input-group.h-display-btn, .form-control.h-display-btn {
+    display: table;
+  }
+}
+
+
+.checkbox-fix {
+  position: relative !important;
+  top: 2px;
+}
+
+.logo-name {
+  font-size: 100px;
+  text-align: left;
+  position: relative;
+  left: -10px;
+}
+
+.btn[disabled] {
+  color: gray !important;
+}
+
+.ibox-title.large-box {
+  padding: 23px 15px 7px;
+  min-height: 65px;
+
+  h3 {
+    font-size:18px;
+  }
+
+  .right-arrow {
+    font-size: 34px;
+    position: relative;
+    top: -15px;
+    color: ghostwhite;
+    
+    &:hover {
+      color: #a0a0a0;
+      cursor: pointer;
+    }
+  }
+}

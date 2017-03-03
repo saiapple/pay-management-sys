@@ -1,0 +1,154 @@
+<!--<h2 ng-if="hasFieldWithType('STRING') || hasFieldWithType('INT') || hasFieldWithType('PASSWORD') ">基本属性</h2>-->
+<div class="form-inline">
+    <div class="form-group m-t m-r" ng-repeat="value in filterOrder(objectInfo,'STRING')"
+         ng-if="!value.name.endsWith('Uuid')  && value.inputSize <= 1 && value.format!='FILE'"
+         ng-class="value.inputSize == 1 ? 'full-width' : ''">
+        <label class="font-normal">{{value.desc}}</label>
+        <input type="text" class="form-control h-display" title="{{value.desc}}: {{source[value.name]}}"
+               ng-model="source[value.name]"
+               ng-required="value.notBlank" ng-disabled="!value.editable"
+               ng-class="{'required-field' : (value.notBlank && !source[value.name]), 'full-width' : value.inputSize == 1}">
+    </div>
+    <div class="form-group m-t m-r full-width" ng-repeat="value in filterOrder(objectInfo,'STRING')"
+         ng-if="!key.endsWith('Uuid')  && value.inputSize > 1 && value.format!='FILE'">
+        <label class="font-normal">{{value.desc}}</label>
+        <textarea rows="{{value.inputSize}}" class="form-control h-display full-width"
+                  title="{{value.desc}}: {{source[value.name]}}" ng-model="source[value.name]"
+                  ng-required="value.notBlank"
+                  ng-disabled="!value.editable"
+                  ng-class="(value.notBlank && !source[value.name]) ? 'required-field' : ''"></textarea>
+    </div>
+    <div class="form-group m-t m-r" ng-repeat="value in filterOrder(objectInfo,'STRING')" ng-if="value.format=='FILE'">
+        <label class="font-normal">{{value.desc}}</label>
+        <img ng-show="source[value.name]" ng-src="{{(source[value.name])?getImageFullPath(source[value.name]):''}}"
+             width="80px;"
+             height="80px;">
+
+        <input type="file" ngf-select="uploadImage($file,value.name )" title="{{value.desc}}: {{source[value.name]}}"
+               ng-model="source[value.name]" ng-required="value.notBlank" ng-disabled="!value.editable"
+               name="{{value.desc}}">
+
+    </div>
+</div>
+
+<div class="form-inline">
+    <div class="form-group m-t m-r" ng-repeat="value in filterOrder(objectInfo,'INT')">
+        <label class="font-normal">{{value.desc}}</label>
+        <input type="number" class="form-control h-display" title="{{value.desc}}: {{source[value.name]}}"
+               ng-model="source[key]" ng-required="value.notBlank" ng-disabled="!value.editable"
+               ng-class="(value.notBlank && !source[value.name]) ? 'required-field' : ''">
+    </div>
+</div>
+
+<div class="form-inline">
+    <div class="form-group m-t m-r" ng-repeat="value in filterOrder(objectInfo,'PASSWORD')"
+         ng-if="value.type == 'PASSWORD' && value.show">
+        <label class="font-normal">{{value.desc}}</label>
+        <input type="text" class="form-control h-display" title="{{value.desc}}: {{source[value.name]}}"
+               ng-model="source[value.name]"
+               ng-required="value.notBlank" ng-disabled="!value.editable"
+               ng-class="(value.notBlank && !source[key]) ? 'required-field' : ''">
+    </div>
+</div>
+
+<!--<h2 ng-if="hasFieldWithType('OBJECT')" class="p-t-xl">对象类属性</h2>-->
+<hr ng-if="hasFieldWithType('OBJECT')" />
+<div class="form-inline">
+    <div class="form-group m-t m-r" ng-repeat="value in filterOrder(objectInfo,'OBJECT')"
+         ng-if="!value.name.endsWith('Master')">
+        <label class="font-normal">{{value.desc}}</label>
+        <div class="input-group h-display">
+            <input type="text" class="form-control"
+                   title="{{value.desc}}: {{source[value.name].name ? source[value.name].name: ''}}"
+                   ng-model="source[value.name].name" disabled ng-required="value.notBlank"
+                   ng-disabled="!value.editable"
+                   ng-class="(value.notBlank && !source[key]) ? 'required-field' : ''">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#optionDlg-{{random}}"
+                        ng-click="openDlg(value.name, value)" ng-disabled="!value.editable"><i
+                        class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </div>
+</div>
+
+<!--<h2 ng-if="hasFieldWithType('SELECT')" class="p-t-xl">选择类属性</h2>-->
+<hr ng-if="hasFieldWithType('SELECT')" />
+<div class="form-inline">
+    <div class="form-group m-t m-r" ng-repeat="value in filterOrder(objectInfo,'SELECT')">
+        <label class="font-normal">{{value.desc}}</label>
+        <select class="form-control h-display" title="{{value.desc}}: {{source[value.name]}}"
+                ng-model="source[value.name]"
+                ng-required="value.notBlank" ng-disabled="!value.editable"
+                ng-class="(value.notBlank && !source[value.name]) ? 'required-field' : ''">
+            <option ng-repeat="(key1, value1) in value.options" value="{{key1}}">
+                {{value1}}
+            </option>
+        </select>
+    </div>
+</div>
+
+<!--<h2 ng-if="hasFieldWithType('DATE')" class="p-t-xl">日期类属性</h2>-->
+<hr ng-if="hasFieldWithType('DATE')" />
+<div class="form-inline">
+    <div class="form-group m-t m-r" ng-repeat="value in filterOrder(objectInfo,'DATE')">
+        <label class="font-normal">{{value.desc}}</label>
+        <div class="input-group h-display date" date-picker>
+            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            <input type="text" class="form-control" ng-model="source[value.name]" placeholder="{{value.desc}}"
+                   ng-disabled="!value.editable"
+                   ng-class="(value.notBlank && !source[value.name]) ? 'required-field' : ''">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal inmodal" id="optionDlg-{{random}}" tabindex="-1" role="dialog" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <h3 class="modal-title">请选择</h3>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form role="form" class="form-inline">
+                        <div class="form-group">
+                            <label>编号</label>
+                            <input class="form-control h-display" type="text" ng-model="pageOption.no">
+                        </div>
+
+                        <div class="form-group">
+                            <label>名称</label>
+                            <input class="form-control h-display" type="text" ng-model="pageOption.name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div class="input-group h-display-btn">
+                                <button class="btn btn-white" ng-click="queryAction()"><i class="fa fa-search"></i>&nbsp;&nbsp;查询&nbsp;
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row m-t">
+                        <div class="col-md-12">
+                            <ul class="list-group">
+                                <li class="list-group-item pointer" ng-repeat="data in dataList"
+                                    ng-click="select(data)">
+                                    {{data.no}}&nbsp;|&nbsp;{{ data.name }}
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div pagination option="pageOption" callback="queryAction()"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-white" type="button" ng-click="close()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
