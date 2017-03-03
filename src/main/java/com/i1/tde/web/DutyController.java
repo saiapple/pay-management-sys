@@ -6,8 +6,8 @@ import com.i1.base.service.exception.ResourceNotFoundException;
 import com.i1.tde.domain.Duty;
 import com.i1.tde.service.DutyService;
 import com.i1.tde.service.query.DutyQuery;
-import com.i1.tde.web.dto.RuleInput;
-import com.i1.tde.web.dto.RuleUpdateInput;
+import com.i1.tde.web.dto.DutyInput;
+import com.i1.tde.web.dto.DutyUpdateInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -43,9 +43,9 @@ public class DutyController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
-    public Duty add(@Valid @RequestBody RuleInput ruleInput) throws BindException {
+    public Duty add(@Valid @RequestBody DutyInput dutyInput) throws BindException {
         Duty rule = new Duty();
-        DomainUtil.copyNotNullProperties(ruleInput, rule);
+        DomainUtil.copyNotNullProperties(dutyInput, rule);
 
         BindException exception = new BindException(rule, rule.getClass().getSimpleName());
         Validators.validateBean(exception, rule);
@@ -60,9 +60,9 @@ public class DutyController {
     }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.PATCH)
-    public Duty update(@PathVariable String uuid, @Valid @RequestBody RuleUpdateInput updateInput) throws BindException {
+    public Duty update(@PathVariable String uuid, @Valid @RequestBody DutyUpdateInput dutyUpdateInput) throws BindException {
         Duty rule = dutyService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Duty.class, uuid));
-        DomainUtil.copyNotNullProperties(updateInput, rule);
+        DomainUtil.copyNotNullProperties(dutyUpdateInput, rule);
 
         BindException exception = new BindException(rule, Duty.class.getSimpleName());
         Validators.validateBean(exception, rule);

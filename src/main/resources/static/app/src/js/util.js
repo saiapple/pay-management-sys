@@ -410,8 +410,19 @@ angular.module('IOne-Constant').constant('Constant', {
         {
             id: 1,
             uuid: RES_UUID_MAP.PRODUCTION.RES_UUID,
-            name: '商品管理',
+            name: '收银管理',
             isOpen: true,
+            icon: 'fa fa-cube',
+            subList: [
+                {id: '/pms-order', name: '流水管理', link: '/pms-order', uuid: ''},
+                {id: '/pms-duty', name: '班次管理', link: '/pms-duty', uuid: ''}
+            ]
+        },
+        {
+            id: 1,
+            uuid: RES_UUID_MAP.PRODUCTION.RES_UUID,
+            name: '商品管理',
+            isOpen: false,
             icon: 'fa fa-cube',
             subList: [
                 {id: '/catalogue', name: '目录模板管理', link: '/catalogue', uuid: RES_UUID_MAP.PRODUCTION.TEMPLATE.RES_UUID},
