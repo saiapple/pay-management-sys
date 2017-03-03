@@ -5,7 +5,7 @@ angular.module('IOne-Production').config(['$routeProvider', function($routeProvi
     })
 }]);
 
-angular.module('IOne-Production').controller('OrderController', function($scope, OrderMaster, OrderDetail, OrderExtendDetail, Constant) {
+angular.module('IOne-Production').controller('OrderController', function($scope, OrderService, Constant) {
     $scope.pageOption = {
         sizePerPage: 10,
         currentPage: 0,
@@ -25,7 +25,7 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
     };
 
     $scope.refreshList = function() {
-        OrderMaster.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, '', '', '', '', '', '', '', '').success(function(data) {
+        OrderService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
             $scope.itemList = data.content;
             $scope.pageOption.totalPage = data.totalPages;
             $scope.pageOption.totalElements = data.totalElements;

@@ -414,8 +414,9 @@ angular.module('IOne-Constant').constant('Constant', {
             isOpen: true,
             icon: 'fa fa-cube',
             subList: [
-                {id: '/pms-order', name: '流水管理', link: '/pms-order', uuid: ''},
-                {id: '/pms-duty', name: '班次管理', link: '/pms-duty', uuid: ''}
+                {id: '/pms-duty', name: '班次管理', link: '/pms-duty', uuid: ''},
+                {id: '/pms-order', name: '流水管理', link: '/pms-order', uuid: ''}
+
             ]
         },
         {

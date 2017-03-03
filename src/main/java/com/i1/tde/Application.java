@@ -6,7 +6,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.sql.DataSource;
@@ -14,6 +16,8 @@ import javax.sql.DataSource;
 @EnableAutoConfiguration
 @ComponentScan//(basePackages = {"com.bq.i1.etl.*", "com.bq.i1.tde.*"})
 @EnableJpaRepositories
+@EnableJpaAuditing
+@EnableAspectJAutoProxy
 public class Application {
 
     public static void main(String[] args) {

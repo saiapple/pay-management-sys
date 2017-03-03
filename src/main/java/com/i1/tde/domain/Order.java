@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * Created by Sai on 2017/3/2.
  */
 @Entity
-@Table(name = "order")
+@Table(name = "bill")
 public class Order extends MaintainDomainObj {
     private Duty duty;
     private BigDecimal amount;

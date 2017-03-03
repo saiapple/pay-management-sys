@@ -9,16 +9,16 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Sai on 2017/3/2.
  */
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public class MaintainDomainObj extends IdentifiableObject {
     private Date createTime;
     private Date updateTime;
@@ -27,14 +27,12 @@ public class MaintainDomainObj extends IdentifiableObject {
     private String createUserUuid;
     private String updateUserUuid;
 
-    @NotBlank
-    @Column(name = "name")
+    @CreatedDate
+    @Column(name = "create_time")
     public Date getCreateTime() {
         return createTime;
     }
 
-    @CreatedDate
-    @Column(name = "create_time")
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
@@ -49,7 +47,6 @@ public class MaintainDomainObj extends IdentifiableObject {
         this.updateTime = updateTime;
     }
 
-    @JsonIgnore
     @CreatedBy
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -60,9 +57,11 @@ public class MaintainDomainObj extends IdentifiableObject {
 
     public void setCreateUser(User createUser) {
         this.createUser = createUser;
+        if (this.createUser != null) {
+            this.createUserUuid = this.createUser.getUuid();
+        }
     }
 
-    @JsonIgnore
     @LastModifiedBy
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -73,8 +72,12 @@ public class MaintainDomainObj extends IdentifiableObject {
 
     public void setUpdateUser(User updateUser) {
         this.updateUser = updateUser;
+        if (this.updateUser != null) {
+            this.updateUserUuid = this.updateUser.getUuid();
+        }
     }
 
+    @Transient
     public String getCreateUserUuid() {
         return createUserUuid;
     }
@@ -83,6 +86,7 @@ public class MaintainDomainObj extends IdentifiableObject {
         this.createUserUuid = createUserUuid;
     }
 
+    @Transient
     public String getUpdateUserUuid() {
         return updateUserUuid;
     }

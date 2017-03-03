@@ -35,6 +35,10 @@ public class DutyQuery extends PageableQuery<Duty> {
 //            conditions.add(condition(from.getName()).eq(name));
 //        }
 
+        //setSort("-createTime");
+        ///setSort("-startTime");
+        orderBy(desc(from.getCreateTime()));
+
         return select(from);
     }
 }

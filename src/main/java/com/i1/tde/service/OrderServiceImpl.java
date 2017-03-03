@@ -4,12 +4,14 @@ import com.i1.tde.dao.OrderRepository;
 import com.i1.tde.domain.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 
 /**
  * Created by Sai on 2017/3/3.
  */
+@Service
 public class OrderServiceImpl implements OrderService {
     private OrderRepository repository;
     private EntityManager entityManager;

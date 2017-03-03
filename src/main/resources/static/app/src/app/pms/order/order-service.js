@@ -1,8 +1,8 @@
-angular.module('IOne-Production').service('PmsOrderService', function ($http, Constant) {
+angular.module('IOne-Production').service('OrderService', function ($http, Constant) {
     this.getAll = function (sizePerPage, page, filter) {
         var confirm = filter.confirm == 0 ? '' : filter.confirm;
         var status = filter.status == 0 ? '' : filter.status;
-        var url = 'departments?size=' + sizePerPage
+        var url = 'orders?size=' + sizePerPage
             + '&page=' + page;
 
         if (confirm !== '') {
@@ -24,18 +24,18 @@ angular.module('IOne-Production').service('PmsOrderService', function ($http, Co
     };
 
     this.modify = function (uuid, departmentUpdateInput) {
-        return $http.patch(Constant.BACKEND_BASE + '/departments/' + uuid, departmentUpdateInput);
+        return $http.patch(Constant.BACKEND_BASE + '/orders/' + uuid, departmentUpdateInput);
     };
 
     this.add = function (departmentInput) {
-        return $http.post(Constant.BACKEND_BASE + '/departments/', departmentInput);
+        return $http.post(Constant.BACKEND_BASE + '/orders/', departmentInput);
     };
 
     this.delete = function (uuid) {
-        return $http.delete(Constant.BACKEND_BASE + '/departments/' + uuid);
+        return $http.delete(Constant.BACKEND_BASE + '/orders/' + uuid);
     };
 
     this.getForParent = function (parentUuid) {
-        return $http.get(Constant.BACKEND_BASE + '/departments?parentUuid=' + parentUuid);
+        return $http.get(Constant.BACKEND_BASE + '/orders?parentUuid=' + parentUuid);
     };
 });
