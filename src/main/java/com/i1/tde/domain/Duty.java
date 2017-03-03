@@ -13,6 +13,16 @@ import java.util.Date;
 @Entity
 @Table(name = "duty")
 public class Duty extends MaintainDomainObj {
+    /**
+     * 状态码 : 无效
+     */
+    public static final String ACTIVE_0 = "0";
+    /**
+     * 状态码 : 有效;
+     */
+    public static final String ACTIVE_1 = "1";
+
+
     private BigDecimal cashAmount = BigDecimal.ZERO;
     private BigDecimal wxAmount = BigDecimal.ZERO;
     private BigDecimal zfbAmount = BigDecimal.ZERO;

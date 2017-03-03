@@ -5,13 +5,15 @@ angular.module('IOne-Production').config(['$routeProvider', function($routeProvi
     })
 }]);
 
-angular.module('IOne-Production').controller('OrderController', function($scope, OrderService, Constant) {
+angular.module('IOne-Production').controller('OrderController', function($scope, $mdDialog, OrderService, Constant) {
     $scope.pageOption = {
         sizePerPage: 10,
         currentPage: 0,
         totalPage: 100,
         totalElements: 100
     };
+    $scope.PMS_BILL_TYPES = Constant.PMS_BILL_TYPES;
+    $scope.PMS_BILL_PAY_TYPES = Constant.PMS_BILL_PAY_TYPES;
 
     $scope.listFilterOption = {
         status :  Constant.STATUS[0].value,
@@ -29,6 +31,15 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
             $scope.itemList = data.content;
             $scope.pageOption.totalPage = data.totalPages;
             $scope.pageOption.totalElements = data.totalElements;
+
+            if($scope.itemList != null && $scope.itemList.length > 0){
+                $scope.duty = $scope.itemList[0].duty;
+            }
+        }).error(function (response) {
+            $scope.itemList = [];
+            $scope.pageOption.totalPage = 0;
+            $scope.pageOption.totalElements = 0;
+            $scope.showError('获取信息失败，' + response.message);
         });
     };
 
@@ -57,21 +68,21 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
     /**
      * Show left detail panel when clicking the title
      */
-    $scope.showDetailPanelAction = function(item) {
-        $scope.selectedItem = item;
-        //OrderDetail.get($scope.selectedItem.uuid).success(function(data) {
-        //    $scope.orderDetailList = data.content;
-        //});
-        item.detailList = $scope.subItemList;
-    };
+    //$scope.showDetailPanelAction = function(item) {
+    //    $scope.selectedItem = item;
+    //    //OrderDetail.get($scope.selectedItem.uuid).success(function(data) {
+    //    //    $scope.orderDetailList = data.content;
+    //    //});
+    //    item.detailList = $scope.subItemList;
+    //};
 
     /**
      * Show advanced search panel which you can add more search condition
      */
-    $scope.showAdvancedSearchAction = function() {
-        $scope.displayAdvancedSearPanel = !$scope.displayAdvancedSearPanel;
-        $scope.selectedItem = null;
-    };
+    //$scope.showAdvancedSearchAction = function() {
+    //    $scope.displayAdvancedSearPanel = !$scope.displayAdvancedSearPanel;
+    //    $scope.selectedItem = null;
+    //};
 
     /**
      * Show more panel when clicking the 'show more' on every item
@@ -143,73 +154,93 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
         }
     };
 
-    /**
-     * Delete detail item
-     */
-    $scope.deleteDetailAction = function(detail) {
-        //TODO ...
-    };
+    $scope.showEditor = function (selectedItem) {
+        var action = "edit";
+        if(selectedItem === null){
+            action = "add";
+            selectedItem = {
+                "cashAmount": 0,
+                "wxAmount": 0,
+                "zfbAmount": 0,
+                "cardAmount": 0
 
-    $scope.selectItemAction = function(event, item) {
-        $scope.stopEventPropagation(event);
-        //TODO ...
-    };
+            };
+        }
 
-    $scope.confirmClickAction = function(event, item) {
-        $scope.stopEventPropagation(event);
-        console.info('confirm...');
-        //TODO ...
-    };
-
-    $scope.statusClickAction = function(event, item) {
-        $scope.stopEventPropagation(event);
-        console.info('status...');
-        //TODO ...
-    };
-
-    $scope.releaseClickAction = function(event, item) {
-        $scope.stopEventPropagation(event);
-        console.info('release...');
-        //TODO ...
-    };
-
-    $scope.deleteClickAction = function(event, item) {
-        $scope.stopEventPropagation(event);
-        console.info('delete...');
-        //TODO ...
-    };
-
-    $scope.confirmAllClickAction = function(event) {
-        $scope.stopEventPropagation(event);
-        console.info('confirm all...');
-        //TODO ...
-    };
-
-    $scope.statusAllClickAction = function(event) {
-        $scope.stopEventPropagation(event);
-        console.info('status all...');
-        //TODO ...
-    };
-
-    $scope.releaseAllClickAction = function(event) {
-        $scope.stopEventPropagation(event);
-        console.info('release all...');
-        //TODO ...
-    };
-
-    $scope.deleteAllClickAction = function(event) {
-        $scope.stopEventPropagation(event);
-        console.info('delete all...');
-        //TODO ...
-    };
-
-    $scope.selectAllAction = function() {
-        angular.forEach($scope.itemList, function(item) {
-            if($scope.selectAllFlag) {
-                item.selected = true;
-            } else {
-                item.selected = false;
+        $mdDialog.show({
+            controller: 'EditOrderController',
+            templateUrl: 'app/src/app/pms/order/orderEditor.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            locals: {
+                parentSelectedItem: selectedItem,
+                action: action
             }
-        })
+        }).then(function (data) {
+            var postData = {
+                "cashAmount": data.cashAmount,
+                "wxAmount": data.wxAmount,
+                "zfbAmount": data.zfbAmount,
+                "cardAmount": data.cardAmount
+            };
+
+            if(action === "edit") {
+                OrderService.modify(selectedItem.uuid, postData).success(function () {
+                    //$scope.updateSelectedItem(data);
+                    $scope.showInfo('修改班次成功');
+                    $scope.refreshList();
+                }).error(function (response) {
+                    $scope.showError('修改班次失败，' + response.message);
+                });
+            } else if(action === "add"){
+                postData.startTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+                OrderService.add(postData).success(function () {
+                    //$scope.updateSelectedItem(data);
+                    $scope.showInfo('新建班次成功');
+                    $scope.refreshList();
+                }).error(function (response) {
+                    $scope.showError('新建班次失败，' + response.message);
+                });
+            }
+        });
     };
+});
+
+angular.module('IOne-Production').controller('EditOrderController', function ($scope, $mdDialog, parentSelectedItem) {
+    $scope.selectedItem = {
+        "cashAmount": parentSelectedItem.cashAmount,
+        "wxAmount": parentSelectedItem.wxAmount,
+        "zfbAmount": parentSelectedItem.zfbAmount,
+        "cardAmount": parentSelectedItem.cardAmount,
+        "createTime": parentSelectedItem.createTime
+    };
+    //if (parentSelectedItem.deliverDate != null) {
+    //    $scope.selectedItem.deliverDate = new Date(parentSelectedItem.deliverDate);
+    //}
+    //if (parentSelectedItem.predictDeliverDate != null) {
+    //    $scope.selectedItem.predictDeliverDate = new Date(parentSelectedItem.predictDeliverDate);
+    //}
+
+    //$scope.pageOption = {
+    //    sizePerPage: 5,
+    //    currentPage: 0,
+    //    totalPage: 0,
+    //    totalElements: 0,
+    //    displayModel: 0
+    //};
+
+    $scope.save = function () {
+        $mdDialog.hide($scope.selectedItem);
+    };
+
+    $scope.cancelDlg = function () {
+        $mdDialog.cancel();
+    };
+
+    //$scope.selectCustomerAddressCallback = function (selectedCustomerAddress) {
+    //    $scope.selectedItem.receivePhone = selectedCustomerAddress.receivePhone;
+    //    $scope.selectedItem.receiveName = selectedCustomerAddress.receiveName;
+    //    $scope.selectedItem.receiveAddress = selectedCustomerAddress.receiveAddress;
+    //    $scope.selectedItem.customerAddress = selectedCustomerAddress;
+    //};
 });

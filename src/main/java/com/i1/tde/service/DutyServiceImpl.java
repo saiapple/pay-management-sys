@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 /**
  * Created by Sai on 2017/2/22.
@@ -36,4 +37,8 @@ public class DutyServiceImpl implements DutyService {
         this.entityManager = entityManager;
     }
 
+    @Override
+    public List<Duty> findByActive(String active) {
+        return repository.findByActive(active);
+    }
 }
