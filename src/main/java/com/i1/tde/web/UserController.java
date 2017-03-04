@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
-    public User getRule(@PathVariable String uuid) {
+    public User getOne(@PathVariable String uuid) {
 
         User user = userService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(User.class, uuid));
         return user;

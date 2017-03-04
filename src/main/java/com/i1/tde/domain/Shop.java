@@ -11,18 +11,9 @@ import java.util.Date;
  * Created by Sai on 2017/3/2.
  */
 @Entity
-@Table(name = "duty")
-public class Duty extends MaintainDomainObj {
-    /**
-     * 状态码 : 无效
-     */
-    public static final String ACTIVE_0 = "0";
-    /**
-     * 状态码 : 有效;
-     */
-    public static final String ACTIVE_1 = "1";
-
-
+@Table(name = "shop")
+public class Shop extends MaintainDomainObj {
+    private String name;
     private BigDecimal cashAmount = BigDecimal.ZERO;
     private BigDecimal wxAmount = BigDecimal.ZERO;
     private BigDecimal zfbAmount = BigDecimal.ZERO;
@@ -46,6 +37,15 @@ public class Duty extends MaintainDomainObj {
     private User manager;
     private String active;
     private BigDecimal profit = BigDecimal.ZERO;
+
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Column(name = "amount_cash")
     public BigDecimal getCashAmount() {

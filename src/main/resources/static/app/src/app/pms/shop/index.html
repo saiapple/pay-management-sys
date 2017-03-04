@@ -1,99 +1,6 @@
 <div class="main-panel">
     <div ng-show="ui_status == UI_STATUS.VIEW_UI_STATUS">
-        <!--<div layout="row" class="top-title">
-            &lt;!&ndash;<div flex="70" hide-sm hide-md class="left-title" ng-show="selectedItem" style="position: relative;">
-                <md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="editItemAction(selectedItem, 'PSO_ORDER_MST', '订单: ' + selectedItem.no)">
-                    <ng-md-icon icon="edit"></ng-md-icon>
-                </md-button>
-                <md-menu>
-                    <md-button class="md-icon-button close-btn" aria-label="More" style="float: left;" ng-click="$mdOpenMenu($event)">
-                        <ng-md-icon icon="menu"></ng-md-icon>
-                    </md-button>
-                    <md-menu-content width="2">
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="confirmClickAction($event, selectedItem)">
-                                <ng-md-icon icon="lock"></ng-md-icon>
-                                审核
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="statusClickAction($event, selectedItem)">
-                                <ng-md-icon icon="lock_open"></ng-md-icon>
-                                启用
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="releaseClickAction($event, selectedItem)">
-                                <ng-md-icon icon="send"></ng-md-icon>
-                                发布
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="deleteClickAction($event, selectedItem)">
-                                <ng-md-icon icon="delete"></ng-md-icon>
-                                删除
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-                <span>订单详细信息</span>
-                <md-button class="md-icon-button close-btn float-right" aria-label="More" ng-click="selectedItem = null">
-                    <ng-md-icon icon="chevron_left"></ng-md-icon>
-                </md-button>
-            </div>&ndash;&gt;
-            <div flex class="right-title">
-                &lt;!&ndash;<md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="showEditor(null)">&ndash;&gt;
-                    &lt;!&ndash;<ng-md-icon icon="add"></ng-md-icon>&ndash;&gt;
-                &lt;!&ndash;</md-button>&ndash;&gt;
-                <span>收银管理</span>
-                &lt;!&ndash;<md-menu>
-                    <md-button class="md-icon-button close-btn float-right" aria-label="More" ng-click="$mdOpenMenu($event)">
-                        <ng-md-icon icon="menu"></ng-md-icon>
-                    </md-button>
-                    <md-menu-content width="2">
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="confirmAllClickAction($event)">
-                                <ng-md-icon icon="lock"></ng-md-icon>
-                                批量审核
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="statusAllClickAction($event)">
-                                <ng-md-icon icon="lock_open"></ng-md-icon>
-                                批量启用
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="releaseAllClickAction($event)">
-                                <ng-md-icon icon="send"></ng-md-icon>
-                                批量发布
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="deleteAllClickAction($event)">
-                                <ng-md-icon icon="delete"></ng-md-icon>
-                                批量删除
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>&ndash;&gt;
-            </div>
-        </div>-->
-        <!--<div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 30px;padding-top: 3px;">-->
-            <!--<span flex="50">班次开始时间: {{pageOption.totalElements}}</span>-->
-            <!--<span flex="50">班次流水总数: {{pageOption.totalElements}}</span>-->
-            <!--&lt;!&ndash;<span flex="33">利润总数: </span>&ndash;&gt;-->
-        <!--</div>-->
-        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 40px;padding-top: 0;">
-            <div layout="row" flex="100" style="color:#7f8fa4" >
-                <div flex="20">
-                    <div layout-padding>开始时间 :  <span>{{currentDuty.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</span></div>
-                </div>
-                <div flex="20">
-                    <div layout-padding>流水总数 :  <span>{{pageOption.totalElements}}</span></div>
-                </div>
-            </div>
-        </div>
+
         <div layout="row" flex="100" layout-warp
              style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:skyblue;;height: 50px;padding-top: 10px;">
             <div flex="10" layout="column">
@@ -167,13 +74,15 @@
                 </span>
             </div>
         </div>
-        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 200px;padding-top: 0;">
+
+        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 230px;padding-top: 0;">
             <div layout="row" flex="100" style="color:#7f8fa4" >
                 <div flex="20">
                     <div layout-padding>总备用金 :  <span></span></div>
                     <div layout-padding>上分总额 :  <span></span></div>
                     <div layout-padding>下分总额 :  <span></span></div>
                     <div layout-padding>售卖总额 :  <span></span></div>
+                    <div layout-padding>支出总额 :  <span></span></div>
                     <div layout-padding>结余总额 :  <span></span></div>
                 </div>
                 <div flex="15">
@@ -181,6 +90,7 @@
                     <div layout-padding>现金上分总额 :  <span></span></div>
                     <div layout-padding>现金下分总额 :  <span></span></div>
                     <div layout-padding>现金售卖总额 :  <span></span></div>
+                    <div layout-padding>现金支出总额 :  <span></span></div>
                     <div layout-padding>现金结余 :  <span>{{currentDuty.currentCashAmount}}</span></div>
                 </div>
                 <div flex="15">
@@ -188,6 +98,7 @@
                     <div layout-padding>微信上分总额 :  <span></span></div>
                     <div layout-padding>微信下分总额 :  <span></span></div>
                     <div layout-padding>微信售卖总额 :  <span></span></div>
+                    <div layout-padding>---<span></span></div>
                     <div layout-padding>微信结余 :  <span>{{currentDuty.currentWxAmount}}</span></div>
                 </div>
                 <div flex="15">
@@ -195,6 +106,7 @@
                     <div layout-padding>支付宝上分总额 :  <span></span></div>
                     <div layout-padding>支付宝下分总额 :  <span></span></div>
                     <div layout-padding>支付宝售卖总额 :  <span></span></div>
+                    <div layout-padding>---<span></span></div>
                     <div layout-padding>支付宝结余 :  <span>{{currentDuty.currentZfbAmount}}</span></div>
                 </div>
                 <div flex="15">
@@ -202,6 +114,7 @@
                     <div layout-padding>刷卡上分总额 :  <span></span></div>
                     <div layout-padding>刷卡下分总额 :  <span></span></div>
                     <div layout-padding>刷卡售卖总额 :  <span></span></div>
+                    <div layout-padding>---<span></span></div>
                     <div layout-padding>刷卡结余 :  <span>{{currentDuty.currentZfbAmount}}</span></div>
                 </div>
                 <div flex="15">
@@ -209,6 +122,7 @@
                     <div layout-padding>筹码上分总额 :  <span></span></div>
                     <div layout-padding>筹码下分总额 :  <span></span></div>
                     <div layout-padding>筹码售卖总额<span></span></div>
+                    <div layout-padding>---<span></span></div>
                     <div layout-padding>筹码结余金额 :  <span>{{currentDuty.currentPosAmount}}</span></div>
                 </div>
             </div>
@@ -218,92 +132,47 @@
              style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:skyblue;;height: 50px;padding-top: 10px;">
             <div flex="10" layout="column">
                 <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[1].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_PAY_TYPES[1].name + PMS_BILL_TYPES[1].name}}
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[6].value, PMS_BILL_PAY_TYPES[1].value)">
+                        {{PMS_BILL_TYPES[6].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
                     </button>
                 </span>
             </div>
             <div flex="10" layout="column">
                 <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[1].value, PMS_BILL_PAY_TYPES[2].value)">
-                        {{PMS_BILL_PAY_TYPES[2].name + PMS_BILL_TYPES[1].name}}
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[7].value, PMS_BILL_PAY_TYPES[1].value)">
+                        {{PMS_BILL_TYPES[7].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
                     </button>
                 </span>
             </div>
             <div flex="10" layout="column">
                 <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[1].value, PMS_BILL_PAY_TYPES[3].value)">
-                        {{PMS_BILL_PAY_TYPES[3].name + PMS_BILL_TYPES[1].name}}
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[8].value, PMS_BILL_PAY_TYPES[1].value)">
+                        {{PMS_BILL_TYPES[8].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
                     </button>
                 </span>
             </div>
             <div flex="10" layout="column">
                 <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[1].value, PMS_BILL_PAY_TYPES[4].value)">
-                        {{PMS_BILL_PAY_TYPES[4].name + PMS_BILL_TYPES[1].name}}
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[9].value, PMS_BILL_PAY_TYPES[1].value)">
+                        {{PMS_BILL_TYPES[9].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
                     </button>
                 </span>
             </div>
             <div flex="10" layout="column">
                 <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[2].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_PAY_TYPES[1].name + PMS_BILL_TYPES[2].name}}
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[10].value, PMS_BILL_PAY_TYPES[1].value)">
+                        {{PMS_BILL_TYPES[10].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
                     </button>
                 </span>
             </div>
             <div flex="10" layout="column">
                 <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[2].value, PMS_BILL_PAY_TYPES[2].value)">
-                        {{PMS_BILL_PAY_TYPES[2].name + PMS_BILL_TYPES[2].name}}
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[11].value, PMS_BILL_PAY_TYPES[1].value)">
+                        {{PMS_BILL_TYPES[11].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
                     </button>
                 </span>
             </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[2].value, PMS_BILL_PAY_TYPES[3].value)">
-                        {{PMS_BILL_PAY_TYPES[3].name + PMS_BILL_TYPES[2].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[2].value, PMS_BILL_PAY_TYPES[4].value)">
-                        {{PMS_BILL_PAY_TYPES[4].name + PMS_BILL_TYPES[2].name}}
-                    </button>
-                </span>
-            </div>
-        </div>
 
-        <div layout="row" flex="100" layout-warp
-             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:skyblue;;height: 50px;padding-top: 10px;">
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[3].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_PAY_TYPES[1].name + PMS_BILL_TYPES[3].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[3].value, PMS_BILL_PAY_TYPES[2].value)">
-                        {{PMS_BILL_PAY_TYPES[2].name + PMS_BILL_TYPES[3].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[3].value, PMS_BILL_PAY_TYPES[3].value)">
-                        {{PMS_BILL_PAY_TYPES[3].name + PMS_BILL_TYPES[3].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[3].value, PMS_BILL_PAY_TYPES[6].value)">
-                        {{PMS_BILL_PAY_TYPES[6].name + PMS_BILL_TYPES[3].name}}
-                    </button>
-                </span>
-            </div>
         </div>
 
 
@@ -390,77 +259,45 @@
                         <input type="date" ng-model="listFilterOption.endDate">
                     </md-input-container>
                     <!--<md-input-container flex="15" style="margin-left: 50px;" ng-show="selectedItem == null">-->
-                    <!--<label>班次开始时间</label>-->
-                    <!--<md-select ng-model="listFilterOption.status">-->
-                    <!--<md-option ng-repeat="(key, value) in STATUS" ng-value="key">{{value.name}}</md-option>-->
-                    <!--</md-select>-->
+                        <!--<label>班次开始时间</label>-->
+                        <!--<md-select ng-model="listFilterOption.status">-->
+                            <!--<md-option ng-repeat="(key, value) in STATUS" ng-value="key">{{value.name}}</md-option>-->
+                        <!--</md-select>-->
                     <!--</md-input-container>-->
                     <!--<md-input-container flex="15" ng-show="selectedItem == null">-->
-                    <!--<label>班次结束时间</label>-->
-                    <!--<md-select ng-model="listFilterOption.confirm">-->
-                    <!--<md-option ng-repeat="(key, value) in CONFIRM" ng-value="key">{{value.name}}</md-option>-->
-                    <!--</md-select>-->
+                        <!--<label>班次结束时间</label>-->
+                        <!--<md-select ng-model="listFilterOption.confirm">-->
+                            <!--<md-option ng-repeat="(key, value) in CONFIRM" ng-value="key">{{value.name}}</md-option>-->
+                        <!--</md-select>-->
                     <!--</md-input-container>-->
                     <!--<md-input-container flex="15" ng-show="selectedItem == null">-->
-                    <!--<label>发布状态</label>-->
-                    <!--<md-select ng-model="listFilterOption.release">-->
-                    <!--<md-option ng-repeat="(key, value) in RELEASE" ng-value="key">{{value.name}}</md-option>-->
-                    <!--</md-select>-->
+                        <!--<label>发布状态</label>-->
+                        <!--<md-select ng-model="listFilterOption.release">-->
+                            <!--<md-option ng-repeat="(key, value) in RELEASE" ng-value="key">{{value.name}}</md-option>-->
+                        <!--</md-select>-->
                     <!--</md-input-container>-->
                     <md-input-container flex style="margin-left: 50px;" >
                         <label>输入关键字查询</label>
                         <input ng-model="theMax">
                     </md-input-container>
                     <!--<span style="padding-top: 10px;">-->
-                    <!--<md-button class="md-icon-button" aria-label="Eat cake" ng-click="showAdvancedSearchAction()">-->
-                    <!--<ng-md-icon icon="expand_more" ng-show="!displayAdvancedSearPanel"></ng-md-icon>-->
-                    <!--<ng-md-icon icon="expand_less" ng-show="displayAdvancedSearPanel"></ng-md-icon>-->
-                    <!--</md-button>-->
+                        <!--<md-button class="md-icon-button" aria-label="Eat cake" ng-click="showAdvancedSearchAction()">-->
+                            <!--<ng-md-icon icon="expand_more" ng-show="!displayAdvancedSearPanel"></ng-md-icon>-->
+                            <!--<ng-md-icon icon="expand_less" ng-show="displayAdvancedSearPanel"></ng-md-icon>-->
+                        <!--</md-button>-->
                     <!--</span>-->
                 </div>
                 <!-- advanced search-->
                 <!--<div layout="row" ng-show="displayAdvancedSearPanel">-->
-                <!--&lt;!&ndash; fill more searching here.&ndash;&gt;-->
-                <!--<div flex>-->
-                <!--Have you stuff here...-->
-                <!--</div>-->
-                <!--</div>-->
-                <!-- status panel-->
-
-                <!--<div layout="row" layout-warp-->
-                     <!--style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color: whitesmoke;position: relative;height: 100px;padding-top: 15px;">-->
-                    <!--<div layout="row" flex style="color:#7f8fa4" >-->
-                        <!--&lt;!&ndash;<div flex="20">-->
-                            <!--<div layout-padding>现金备用金 :  <span>{{currentDuty.cashAmount}}</span></div>-->
-                            <!--<div layout-padding>现金结余 :  <span>{{currentDuty.currentCashAmount}}</span></div>-->
-                        <!--</div>-->
-                        <!--<div flex="20">-->
-                            <!--<div layout-padding>微信备用金 :  <span>{{currentDuty.wxAmount}}</span></div>-->
-                            <!--<div layout-padding>微信结余 :  <span>{{currentDuty.currentWxAmount}}</span></div>-->
-
-                        <!--</div>-->
-                        <!--<div flex="20">-->
-                            <!--<div layout-padding>支付宝备用金 :  <span>{{currentDuty.zfbAmount}}</span></div>-->
-                            <!--<div layout-padding>支付宝结余 :  <span>{{currentDuty.currentZfbAmount}}</span></div>-->
-                        <!--</div>-->
-                        <!--<div flex="20">-->
-                            <!--<div layout-padding>筹码备用金额 :  <span>{{currentDuty.zfbAmount}}</span></div>-->
-                            <!--<div layout-padding>筹码结余金额 :  <span>{{currentDuty.currentZfbAmount}}</span></div>-->
-                        <!--</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash; fill more searching here.&ndash;&gt;-->
+                    <!--<div flex>-->
+                        <!--Have you stuff here...-->
                     <!--</div>-->
                 <!--</div>-->
+                <!-- status panel-->
                 <div ng-repeat="item in itemList | orderBy:sortByField" ng-class="selectedItem.no == item.no ? 'selected-item':''">
-                    <div >
+                    <div ><!--class="summary-item"-->
                         <div layout="row" layout-wrap>
-                            <!--<span style="position: absolute">-->
-                            <!--<md-checkbox ng-model="item.selected" aria-label="Checkbox" ng-click="selectItemAction($event, item)"></md-checkbox>-->
-                            <!--</span>-->
-                            <!--<div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px; font-weight: bold;">
-                                <span flex class="summary-item__title">&lt;!&ndash;ng-click="showDetailPanelAction(item)" &ndash;&gt;
-                                    {{item.startTime | date:'yyyy-MM-dd HH:mm:ss'}}&nbsp;&nbsp;&#45;&#45;&nbsp;&nbsp;{{item.endTime | date:'yyyy-MM-dd HH:mm:ss'}}
-                                </span>
-                                <span flex class="right-align">利润:{{item.profit}}</span>
-                            </div>-->
                             <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px;font-size: 14px;">
                                 <div layout="row" flex style="color:#7f8fa4" >
                                     <div flex="10">
@@ -521,20 +358,20 @@
         </div>
     </div>
 
-    <!--<div ng-if="ui_status != UI_STATUS.VIEW_UI_STATUS">-->
-        <!--<div layout="row" class="top-title">-->
-            <!--<div flex="100" class="left-title">-->
-                <!--<md-button class="md-icon-button close-btn" aria-label="More" ng-click="listItemAction()" style="float: left; margin-left: 36px;"  >-->
-                    <!--<ng-md-icon icon="chevron_left"></ng-md-icon>-->
-                <!--</md-button>-->
-                <!--<span>{{desc}}</span>-->
-                <!--<md-button class="md-icon-button close-btn" aria-label="More" ng-click="saveItemAction()">-->
-                    <!--<ng-md-icon icon="save"></ng-md-icon>-->
-                <!--</md-button>-->
-            <!--</div>-->
-        <!--</div>-->
+    <div ng-if="ui_status != UI_STATUS.VIEW_UI_STATUS">
+        <div layout="row" class="top-title">
+            <div flex="100" class="left-title">
+                <md-button class="md-icon-button close-btn" aria-label="More" ng-click="listItemAction()" style="float: left; margin-left: 36px;"  >
+                    <ng-md-icon icon="chevron_left"></ng-md-icon>
+                </md-button>
+                <span>{{desc}}</span>
+                <md-button class="md-icon-button close-btn" aria-label="More" ng-click="saveItemAction()">
+                    <ng-md-icon icon="save"></ng-md-icon>
+                </md-button>
+            </div>
+        </div>
 
-        <!--<object-editor class="object-editor" status="status" source="source" domain="domain"></object-editor>-->
-    <!--</div>-->
+        <object-editor class="object-editor" status="status" source="source" domain="domain"></object-editor>
+    </div>
 
 </div>

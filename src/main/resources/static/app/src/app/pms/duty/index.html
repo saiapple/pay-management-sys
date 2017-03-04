@@ -201,7 +201,7 @@
                 <!-- status panel-->
                 <div layout="row" layout-warp layout-padding layout-margin ng-show="!selectedItem" style="margin: 20px 0px 20px 0px; padding-left: 60px;background-color: whitesmoke;position: relative;height: 50px;padding-top: 15px;">
                     <span flex="20">班次总数: {{pageOption.totalElements}}</span>
-                    <span flex="20">利润总数: </span>
+                    <span flex="20">上水总数: </span>
                 </div>
                 <div ng-repeat="item in itemList | orderBy:sortByField" ng-class="selectedItem.no == item.no ? 'selected-item':''">
                     <div class="summary-item">
@@ -213,7 +213,7 @@
                                 <span flex class="summary-item__title"><!--ng-click="showDetailPanelAction(item)" -->
                                     {{item.startTime | date:'yyyy-MM-dd HH:mm:ss'}}&nbsp;&nbsp;--&nbsp;&nbsp;{{item.endTime | date:'yyyy-MM-dd HH:mm:ss'}}
                                 </span>
-                                <span flex class="right-align">利润:{{item.profit}}</span>
+                                <span flex class="right-align">上水:{{item.profit}}</span>
                             </div>
                             <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px;font-size: 14px;" layout-align="space-between center" ng-hide="selectedItem">
                                 <div layout="row" flex style="color:#7f8fa4" >
@@ -246,7 +246,10 @@
                                         发布
                                     </md-switch>-->
                                     <md-button class="md-button close-btn" aria-label="More" ng-click="showEditor(item)" style="position: relative;left: 15px; color:blue;">
-                                        编辑
+                                        上水
+                                    </md-button>
+                                    <md-button class="md-button close-btn" aria-label="More" ng-click="showEditor(item)" style="position: relative;left: 15px; color:blue;">
+                                        设定备用金
                                     </md-button>
                                     <md-button class="md-button close-btn" aria-label="More" ng-click="toggleMorePanelAction(item)" style="position: relative;left: 15px; color:blue;">
                                         查看流水

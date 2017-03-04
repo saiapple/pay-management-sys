@@ -35,7 +35,7 @@ public class DutyController {
     }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
-    public Duty getRule(@PathVariable String uuid) {
+    public Duty getOne(@PathVariable String uuid) {
 
         Duty rule = dutyService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Duty.class, uuid));
         return rule;

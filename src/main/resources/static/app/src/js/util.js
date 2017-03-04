@@ -410,13 +410,13 @@ angular.module('IOne-Constant').constant('Constant', {
         {
             id: 1,
             uuid: RES_UUID_MAP.PRODUCTION.RES_UUID,
-            name: '收银管理',
+            name: '店面管理',
             isOpen: true,
             icon: 'fa fa-cube',
             subList: [
+                {id: '/pms-shop', name: '店面支出', link: '/pms-shop', uuid: ''},
                 {id: '/pms-duty', name: '班次管理', link: '/pms-duty', uuid: ''},
-                {id: '/pms-order', name: '流水管理', link: '/pms-order', uuid: ''}
-
+                {id: '/pms-order', name: '收银管理', link: '/pms-order', uuid: ''}
             ]
         },
         {
@@ -861,16 +861,25 @@ angular.module('IOne-Constant').constant('Constant', {
 
 
 
-
     'PMS_BILL_TYPES':{
         1: {value: '1', name: '上分'},
         2: {value: '2', name: '下分'},
-        3: {value: '3', name: '售卖'}
+        3: {value: '3', name: '售卖'},
+        4: {value: '4', name: '加备用金'},
+        5: {value: '5', name: '减备用金'},
+        6: {value: '6', name: '工资支出'},
+        7: {value: '7', name: '买烟支出'},
+        8: {value: '8', name: '酒水支出'},
+        9: {value: '9', name: '买菜支出'},
+        10: {value: '10', name: '房租水电支出'},
+        11: {value: '11', name: '其他支出'}
     },
     'PMS_BILL_PAY_TYPES':{
         1: {value: '1', name: '现金'},
         2: {value: '2', name: '微信'},
         3: {value: '3', name: '支付宝'},
-        4: {value: '3', name: '借款'}
+        4: {value: '4', name: '刷卡'},
+        5: {value: '5', name: '借款'},
+        6: {value: '6', name: '筹码'}
     }
 });

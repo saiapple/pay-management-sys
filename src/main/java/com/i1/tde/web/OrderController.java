@@ -52,7 +52,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
-    public Order getRule(@PathVariable String uuid) {
+    public Order getOne(@PathVariable String uuid) {
 
         Order order = orderService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Order.class, uuid));
         return order;
