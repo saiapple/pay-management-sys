@@ -43,6 +43,7 @@ public class OrderQuery extends PageableQuery<Order> {
             conditions.add(condition(from.getDuty().getUuid()).eq(dutyUuid));
         }
 
+        orderBy(desc(from.getCreateTime()));
         return select(from);
     }
 }

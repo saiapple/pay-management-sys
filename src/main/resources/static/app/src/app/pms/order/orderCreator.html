@@ -3,20 +3,6 @@
         <div flex>
             <form name="editDuty" novalidate>
                 <md-input-container>
-                    <md-select ng-model="workingItem.type">
-                        <md-option ng-repeat="(key, value) in PMS_BILL_TYPES" ng-value="key">
-                            {{value.name}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-                <md-input-container>
-                    <md-select ng-model="workingItem.payType">
-                        <md-option ng-repeat="(key, value) in PMS_BILL_PAY_TYPES" ng-value="key">
-                            {{value.name}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-                <md-input-container>
                     <label>{{PMS_BILL_PAY_TYPES[workingItem.payType].name}}{{PMS_BILL_TYPES[workingItem.type].name}}金额</label>
                     <input name="text" type="number" ng-model="workingItem.amount">
                 </md-input-container>
@@ -24,6 +10,10 @@
                     <label>备注</label>
                     <input name="text" type="text" ng-model="workingItem.comment">
                 </md-input-container>
+                <!--<md-input-container ng-disabled="true">
+                    <label>收货人地址</label>
+                    <input name="text" ng-disabled="true" type="text" ng-model="workingItem.receiveAddress">
+                </md-input-container>-->
             </form>
             <div layout="row">
                 <md-button ng-click="save()">

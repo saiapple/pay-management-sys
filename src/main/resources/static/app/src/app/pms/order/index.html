@@ -1,7 +1,7 @@
 <div class="main-panel">
     <div ng-show="ui_status == UI_STATUS.VIEW_UI_STATUS">
-        <div layout="row" class="top-title">
-            <!--<div flex="70" hide-sm hide-md class="left-title" ng-show="selectedItem" style="position: relative;">
+        <!--<div layout="row" class="top-title">
+            &lt;!&ndash;<div flex="70" hide-sm hide-md class="left-title" ng-show="selectedItem" style="position: relative;">
                 <md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="editItemAction(selectedItem, 'PSO_ORDER_MST', '订单: ' + selectedItem.no)">
                     <ng-md-icon icon="edit"></ng-md-icon>
                 </md-button>
@@ -40,13 +40,13 @@
                 <md-button class="md-icon-button close-btn float-right" aria-label="More" ng-click="selectedItem = null">
                     <ng-md-icon icon="chevron_left"></ng-md-icon>
                 </md-button>
-            </div>-->
+            </div>&ndash;&gt;
             <div flex class="right-title">
-                <md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="showEditor(null)">
-                    <ng-md-icon icon="add"></ng-md-icon>
-                </md-button>
+                &lt;!&ndash;<md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="showEditor(null)">&ndash;&gt;
+                    &lt;!&ndash;<ng-md-icon icon="add"></ng-md-icon>&ndash;&gt;
+                &lt;!&ndash;</md-button>&ndash;&gt;
                 <span>收银管理</span>
-                <!--<md-menu>
+                &lt;!&ndash;<md-menu>
                     <md-button class="md-icon-button close-btn float-right" aria-label="More" ng-click="$mdOpenMenu($event)">
                         <ng-md-icon icon="menu"></ng-md-icon>
                     </md-button>
@@ -76,9 +76,105 @@
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>
-                </md-menu>-->
+                </md-menu>&ndash;&gt;
+            </div>
+        </div>-->
+        <!--<div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 30px;padding-top: 3px;">-->
+            <!--<span flex="50">班次开始时间: {{pageOption.totalElements}}</span>-->
+            <!--<span flex="50">班次流水总数: {{pageOption.totalElements}}</span>-->
+            <!--&lt;!&ndash;<span flex="33">利润总数: </span>&ndash;&gt;-->
+        <!--</div>-->
+        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 100px;padding-top: 15px;">
+            <div layout="row" flex="100" style="color:#7f8fa4" >
+                <div flex="20">
+                    <div layout-padding>开始时间 :  <span>{{currentDuty.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</span></div>
+                    <div layout-padding>流水总数 :  <span>{{pageOption.totalElements}}</span></div>
+                </div>
+                <div flex="20">
+                    <div layout-padding>现金备用金 :  <span>{{currentDuty.cashAmount}}</span></div>
+                    <div layout-padding>现金结余 :  <span>{{currentDuty.currentCashAmount}}</span></div>
+                </div>
+                <div flex="20">
+                    <div layout-padding>微信备用金 :  <span>{{currentDuty.wxAmount}}</span></div>
+                    <div layout-padding>微信结余 :  <span>{{currentDuty.currentWxAmount}}</span></div>
+                </div>
+                <div flex="20">
+                    <div layout-padding>支付宝备用金 :  <span>{{currentDuty.zfbAmount}}</span></div>
+                    <div layout-padding>支付宝结余 :  <span>{{currentDuty.currentZfbAmount}}</span></div>
+                </div>
+                <div flex="20">
+                    <div layout-padding>卡牌备用金额 :  <span>{{currentDuty.zfbAmount}}</span></div>
+                    <div layout-padding>卡牌结余金额 :  <span>{{currentDuty.currentZfbAmount}}</span></div>
+                </div>
             </div>
         </div>
+        <div layout="row" flex="100" layout-warp
+             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:skyblue;;height: 50px;padding-top: 10px;">
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[1].value, PMS_BILL_PAY_TYPES[1].value)">
+                        {{PMS_BILL_PAY_TYPES[1].name + PMS_BILL_TYPES[1].name}}
+                    </button>
+                </span>
+            </div>
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[1].value, PMS_BILL_PAY_TYPES[2].value)">
+                        {{PMS_BILL_PAY_TYPES[2].name + PMS_BILL_TYPES[1].name}}
+                    </button>
+                </span>
+            </div>
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[1].value, PMS_BILL_PAY_TYPES[3].value)">
+                        {{PMS_BILL_PAY_TYPES[3].name + PMS_BILL_TYPES[1].name}}
+                    </button>
+                </span>
+            </div>
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[2].value, PMS_BILL_PAY_TYPES[1].value)">
+                        {{PMS_BILL_PAY_TYPES[1].name + PMS_BILL_TYPES[2].name}}
+                    </button>
+                </span>
+            </div>
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[2].value, PMS_BILL_PAY_TYPES[2].value)">
+                        {{PMS_BILL_PAY_TYPES[2].name + PMS_BILL_TYPES[2].name}}
+                    </button>
+                </span>
+            </div>
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[2].value, PMS_BILL_PAY_TYPES[3].value)">
+                        {{PMS_BILL_PAY_TYPES[3].name + PMS_BILL_TYPES[2].name}}
+                    </button>
+                </span>
+            </div>
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[3].value, PMS_BILL_PAY_TYPES[1].value)">
+                        {{PMS_BILL_PAY_TYPES[1].name + PMS_BILL_TYPES[3].name}}
+                    </button>
+                </span>
+            </div>
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[3].value, PMS_BILL_PAY_TYPES[2].value)">
+                        {{PMS_BILL_PAY_TYPES[2].name + PMS_BILL_TYPES[3].name}}
+                    </button>
+                </span>
+            </div>
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[3].value, PMS_BILL_PAY_TYPES[3].value)">
+                        {{PMS_BILL_PAY_TYPES[3].name + PMS_BILL_TYPES[3].name}}
+                    </button>
+                </span>
+            </div>
+        </div>
+
 
         <div layout="row" class="main-body border">
             <!--<div flex="70" hide-sm hide-md layout="column" class="left-body" ng-show="selectedItem">
@@ -199,33 +295,29 @@
                 <!--</div>-->
                 <!--</div>-->
                 <!-- status panel-->
-                <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 30px;padding-top: 3px;">
-                    <span flex="50">班次开始时间: {{pageOption.totalElements}}</span>
-                    <span flex="50">班次流水总数: {{pageOption.totalElements}}</span>
-                    <!--<span flex="33">利润总数: </span>-->
-                </div>
-                <div layout="row" layout-warp
-                     style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color: whitesmoke;position: relative;height: 100px;padding-top: 15px;">
-                    <div layout="row" flex style="color:#7f8fa4" >
-                        <div flex="20">
-                            <div layout-padding>现金备用金 :  <span>{{duty.cashAmount}}</span></div>
-                            <div layout-padding>现金结余 :  <span>{{duty.currentCashAmount}}</span></div>
-                        </div>
-                        <div flex="20">
-                            <div layout-padding>微信备用金 :  <span>{{duty.wxAmount}}</span></div>
-                            <div layout-padding>微信结余 :  <span>{{duty.currentWxAmount}}</span></div>
 
-                        </div>
-                        <div flex="20">
-                            <div layout-padding>支付宝备用金 :  <span>{{duty.zfbAmount}}</span></div>
-                            <div layout-padding>支付宝结余 :  <span>{{duty.currentZfbAmount}}</span></div>
-                        </div>
-                        <div flex="20">
-                            <div layout-padding>卡牌备用金额 :  <span>{{duty.zfbAmount}}</span></div>
-                            <div layout-padding>卡牌结余金额 :  <span>{{duty.currentZfbAmount}}</span></div>
-                        </div>
-                    </div>
-                </div>
+                <!--<div layout="row" layout-warp-->
+                     <!--style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color: whitesmoke;position: relative;height: 100px;padding-top: 15px;">-->
+                    <!--<div layout="row" flex style="color:#7f8fa4" >-->
+                        <!--&lt;!&ndash;<div flex="20">-->
+                            <!--<div layout-padding>现金备用金 :  <span>{{currentDuty.cashAmount}}</span></div>-->
+                            <!--<div layout-padding>现金结余 :  <span>{{currentDuty.currentCashAmount}}</span></div>-->
+                        <!--</div>-->
+                        <!--<div flex="20">-->
+                            <!--<div layout-padding>微信备用金 :  <span>{{currentDuty.wxAmount}}</span></div>-->
+                            <!--<div layout-padding>微信结余 :  <span>{{currentDuty.currentWxAmount}}</span></div>-->
+
+                        <!--</div>-->
+                        <!--<div flex="20">-->
+                            <!--<div layout-padding>支付宝备用金 :  <span>{{currentDuty.zfbAmount}}</span></div>-->
+                            <!--<div layout-padding>支付宝结余 :  <span>{{currentDuty.currentZfbAmount}}</span></div>-->
+                        <!--</div>-->
+                        <!--<div flex="20">-->
+                            <!--<div layout-padding>卡牌备用金额 :  <span>{{currentDuty.zfbAmount}}</span></div>-->
+                            <!--<div layout-padding>卡牌结余金额 :  <span>{{currentDuty.currentZfbAmount}}</span></div>-->
+                        <!--</div>&ndash;&gt;-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div ng-repeat="item in itemList | orderBy:sortByField" ng-class="selectedItem.no == item.no ? 'selected-item':''">
                     <div >
                         <div layout="row" layout-wrap>
@@ -260,7 +352,7 @@
                                     </div>
                                 </div>
                                 <div layout="row" layout-align="end center">
-                                    <md-button class="md-button close-btn" aria-label="More" ng-click="showEditor(item)" style="position: relative;left: 15px; color:blue;">
+                                    <md-button class="md-button close-btn" aria-label="More" ng-click="showModifyEditor(item)" style="position: relative;left: 15px; color:blue;">
                                         编辑
                                     </md-button>
                                 </div>
@@ -298,20 +390,20 @@
         </div>
     </div>
 
-    <div ng-if="ui_status != UI_STATUS.VIEW_UI_STATUS">
-        <div layout="row" class="top-title">
-            <div flex="100" class="left-title">
-                <md-button class="md-icon-button close-btn" aria-label="More" ng-click="listItemAction()" style="float: left; margin-left: 36px;"  >
-                    <ng-md-icon icon="chevron_left"></ng-md-icon>
-                </md-button>
-                <span>{{desc}}</span>
-                <md-button class="md-icon-button close-btn" aria-label="More" ng-click="saveItemAction()">
-                    <ng-md-icon icon="save"></ng-md-icon>
-                </md-button>
-            </div>
-        </div>
+    <!--<div ng-if="ui_status != UI_STATUS.VIEW_UI_STATUS">-->
+        <!--<div layout="row" class="top-title">-->
+            <!--<div flex="100" class="left-title">-->
+                <!--<md-button class="md-icon-button close-btn" aria-label="More" ng-click="listItemAction()" style="float: left; margin-left: 36px;"  >-->
+                    <!--<ng-md-icon icon="chevron_left"></ng-md-icon>-->
+                <!--</md-button>-->
+                <!--<span>{{desc}}</span>-->
+                <!--<md-button class="md-icon-button close-btn" aria-label="More" ng-click="saveItemAction()">-->
+                    <!--<ng-md-icon icon="save"></ng-md-icon>-->
+                <!--</md-button>-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <object-editor class="object-editor" status="status" source="source" domain="domain"></object-editor>
-    </div>
+        <!--<object-editor class="object-editor" status="status" source="source" domain="domain"></object-editor>-->
+    <!--</div>-->
 
 </div>

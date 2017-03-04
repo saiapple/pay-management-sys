@@ -64,6 +64,9 @@ public class OrderController {
         Order order = new Order();
         DomainUtil.copyNotNullProperties(orderInput, order);
 
+        Duty duty = dutyService.findOne(orderInput.getDutyUuid()).orElseThrow(() -> new ResourceNotFoundException(Duty.class, orderInput.getDutyUuid()));
+        order.setDuty(duty);
+
         BindException exception = new BindException(order, order.getClass().getSimpleName());
         Validators.validateBean(exception, order);
 

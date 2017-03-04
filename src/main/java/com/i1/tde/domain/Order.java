@@ -30,7 +30,7 @@ public class Order extends MaintainDomainObj {
         this.duty = duty;
     }
 
-    @NotBlank
+    //@NotBlank
     @Column(name = "amount")
     public BigDecimal getAmount() {
         return amount;
