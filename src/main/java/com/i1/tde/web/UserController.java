@@ -4,6 +4,8 @@ import com.i1.base.domain.DomainUtil;
 import com.i1.base.domain.validator.Validators;
 import com.i1.base.service.exception.ResourceNotFoundException;
 import com.i1.tde.domain.User;
+import com.i1.tde.security.SpringSecurityAuditorAware;
+import com.i1.tde.security.UserAwareUserDetails;
 import com.i1.tde.service.UserService;
 import com.i1.tde.service.query.UserQuery;
 import com.i1.tde.web.dto.UserInput;
@@ -11,6 +13,7 @@ import com.i1.tde.web.dto.UserUpdateInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +26,20 @@ import javax.validation.Valid;
 @RequestMapping("users")
 public class UserController {
     private UserService userService;
+    protected SpringSecurityAuditorAware springSecurityAuditorAware;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setSpringSecurityAuditorAware(SpringSecurityAuditorAware springSecurityAuditorAware) {
+        this.springSecurityAuditorAware = springSecurityAuditorAware;
+    }
+
+    protected User currentUser() {
+        return springSecurityAuditorAware.getCurrentAuditor();
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -80,6 +93,27 @@ public class UserController {
     @RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
     public void delete(@PathVariable String uuid) {
         userService.delete(uuid);
+    }
+
+    @RequestMapping(value = "/resetPassword/", method = RequestMethod.PATCH)
+    public User resetPassword(@Valid @RequestBody UserInput input) throws BindException {
+        User user = null;
+        boolean isAdmin = false;
+        if (input.getName() != null) {
+            UserDetails userDetails = userService.loadUserByUsername(input.getName());
+            if (userDetails != null && ((UserAwareUserDetails) userDetails).getUser().getRole().equals(User.ROLE_1)) {
+                user = ((UserAwareUserDetails) userDetails).getUser();
+                isAdmin = true;
+            } else {
+                throw new RuntimeException("用户不存在！");
+            }
+        } else {
+            user = currentUser();
+        }
+
+        userService.resetPassword(user, input, isAdmin);
+        return user;
+
     }
 
 }

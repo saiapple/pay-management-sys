@@ -1,0 +1,40 @@
+<md-dialog style="padding: 30px;min-width:750px; max-width: 900px;max-height: 500px;">
+    <div layout="row">
+        <div flex>
+            <form name="editDuty" validate>
+                <md-input-container>
+                    <label>姓名</label>
+                    <input name="text" type="text" ng-model="selectedItem.nickName">
+                </md-input-container>
+                <md-input-container>
+                    <label>账户名</label>
+                    <input name="text" type="text" ng-model="selectedItem.name">
+                </md-input-container>
+                <md-input-container>
+                    <label>密码</label>
+                    <input name="text" type="password" ng-model="selectedItem.password">
+                </md-input-container>
+                <md-input-container>
+                    <label>确认密码</label>
+                    <input name="text" type="password" ng-model="selectedItem.confirmPassword">
+                </md-input-container>
+                <!--<md-input-container>
+                    <label>角色</label>
+                    <input name="text" type="number" ng-model="selectedItem.role">
+                </md-input-container>-->
+                <md-input-container>
+                    <label>角色</label>
+                    <md-select ng-model="selectedItem.role">
+                        <md-option ng-repeat="(key, value) in PMS_USER_ROLES" ng-value="key">{{value.name}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </form>
+            <div layout="row">
+                <md-button ng-click="save()">
+                    <i class="fa fa-check"></i>&nbsp;确定
+                </md-button>
+                <md-button ng-click="cancelDlg()"><i class="fa fa-times"></i>&nbsp;取消</md-button>
+            </div>
+        </div>
+    </div>
+</md-dialog>

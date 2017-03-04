@@ -50,7 +50,7 @@ public class AuthController {
 
     private UserLoginOutput createUserLoginOutput(User user) {
         //return new UserLoginOutput(user.getName(), Integer.parseInt(user.getType()), user.getUserUuid());
-        return new UserLoginOutput(user.getName(), 1, user.getUuid());
+        return new UserLoginOutput(user.getName(), user.getNickName(), 1, user.getUuid());
     }
 
     @RequestMapping(value = "/auth/logout", method = RequestMethod.POST)

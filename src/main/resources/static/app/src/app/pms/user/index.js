@@ -1,20 +1,18 @@
 angular.module('IOne-Production').config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/pms-shop', {
-        controller: 'ShopController',
-        templateUrl: 'app/src/app/pms/shop/index.html'
+    $routeProvider.when('/pms-user', {
+        controller: 'UserController',
+        templateUrl: 'app/src/app/pms/user/index.html'
     })
 }]);
 
-angular.module('IOne-Production').controller('ShopController', function($scope, $mdDialog, ShopService, OrderService, Constant) {
+angular.module('IOne-Production').controller('UserController', function($scope, $mdDialog, UserService, Constant) {
     $scope.pageOption = {
         sizePerPage: 10,
         currentPage: 0,
         totalPage: 100,
         totalElements: 100
     };
-
-    $scope.PMS_BILL_TYPES = Constant.PMS_BILL_TYPES;
-    $scope.PMS_BILL_PAY_TYPES = Constant.PMS_BILL_PAY_TYPES;
+    $scope.PMS_USER_ROLES = Constant.PMS_USER_ROLES;
 
     $scope.listFilterOption = {
         status :  Constant.STATUS[0].value,
@@ -28,25 +26,10 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
     };
 
     $scope.refreshList = function() {
-        //ShopService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
-        //    $scope.itemList = data.content;
-        //    $scope.pageOption.totalPage = data.totalPages;
-        //    $scope.pageOption.totalElements = data.totalElements;
-        //});
-
-        OrderService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
+        UserService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
             $scope.itemList = data.content;
             $scope.pageOption.totalPage = data.totalPages;
             $scope.pageOption.totalElements = data.totalElements;
-
-            if($scope.itemList != null && $scope.itemList.length > 0){
-                $scope.currentDuty = $scope.itemList[0].duty;
-            }
-        }).error(function (response) {
-            $scope.itemList = [];
-            $scope.pageOption.totalPage = 0;
-            $scope.pageOption.totalElements = 0;
-            $scope.showError('获取信息失败，' + response.message);
         });
     };
 
@@ -166,17 +149,16 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
         if(selectedItem === null){
             action = "add";
             selectedItem = {
-                "cashAmount": 0,
-                "wxAmount": 0,
-                "zfbAmount": 0,
-                "cardAmount": 0
-
+                "name": undefined,
+                "nickName": undefined,
+                "password": undefined,
+                "confirmPassword": undefined
             };
         }
 
         $mdDialog.show({
-            controller: 'EditShopController',
-            templateUrl: 'app/src/app/pms/duty/dutyEditor.html',
+            controller: 'EditUserController',
+            templateUrl: 'app/src/app/pms/user/userEditor.html',
             parent: angular.element(document.body),
             targetEvent: event,
             locals: {
@@ -185,121 +167,40 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
             }
         }).then(function (data) {
             var postData = {
-                "cashAmount": data.cashAmount,
-                "wxAmount": data.wxAmount,
-                "zfbAmount": data.zfbAmount,
-                "cardAmount": data.cardAmount
+                "name": data.name,
+                "nickName": data.nickName,
+                "password": data.password
             };
 
             if(action === "edit") {
-                ShopService.modify(selectedItem.uuid, postData).success(function () {
+                UserService.modify(selectedItem.uuid, postData).success(function () {
                     //$scope.updateSelectedItem(data);
-                    $scope.showInfo('修改班次成功');
+                    $scope.showInfo('修改人员成功');
                     $scope.refreshList();
                 }).error(function (response) {
-                    $scope.showError('修改班次失败，' + response.message);
+                    $scope.showError('修改人员失败，' + response.message);
                 });
             } else if(action === "add"){
                 postData.startTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-                ShopService.add(postData).success(function () {
+                UserService.add(postData).success(function () {
                     //$scope.updateSelectedItem(data);
-                    $scope.showInfo('新建班次成功');
+                    $scope.showInfo('新建人员成功');
                     $scope.refreshList();
                 }).error(function (response) {
-                    $scope.showError('新建班次失败，' + response.message);
+                    $scope.showError('新建人员失败，' + response.message);
                 });
             }
-        });
-    };
-
-    /* 添加支出流水 */
-    $scope.showAddEditor = function (type, payType) {
-        var addItem = {
-            "amount": 0,
-            "type": type,
-            "payType": payType,
-            "dutyUuid": 'sys-management',//$scope.currentDuty.uuid,
-            "comment": ''
-        };
-        $mdDialog.show({
-            controller: 'AddOrderController',
-            templateUrl: 'app/src/app/pms/shop/orderCreator.html',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            locals: {
-                workingItem: addItem
-            }
-        }).then(function (data) {
-            var postData = {
-                "amount": data.amount,
-                "type": data.type,
-                "payType": data.payType,
-                "comment": data.comment,
-                "dutyUuid": data.dutyUuid
-            };
-
-            //postData.startTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-            OrderService.add(postData).success(function () {
-                //$scope.updateSelectedItem(data);
-                $scope.showInfo('操作成功');
-                $scope.refreshList();
-            }).error(function (response) {
-                $scope.showError('操作失败，' + response.message);
-            });
-        });
-    };
-
-    /* 修改支出流水 */
-    $scope.showModifyEditor = function (item) {
-        $mdDialog.show({
-            controller: 'EditOrderController',
-            templateUrl: 'app/src/app/pms/shop/orderEditor.html',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            locals: {
-                workingItem: item
-            }
-        }).then(function (data) {
-            var postData = {
-                "amount": data.amount,
-                "type": data.type,
-                "payType": data.payType,
-                "comment": data.comment,
-                "dutyUuid": data.dutyUuid
-            };
-
-            OrderService.modify(item.uuid, postData).success(function () {
-                $scope.showInfo('操作成功');
-                $scope.refreshList();
-            }).error(function (response) {
-                $scope.showError('操作失败，' + response.message);
-            });
         });
     };
 });
 
-angular.module('IOne-Production').controller('EditShopController', function ($scope, $mdDialog, parentSelectedItem) {
+angular.module('IOne-Production').controller('EditUserController', function ($scope, $mdDialog, Constant, parentSelectedItem) {
     $scope.selectedItem = {
-        "cashAmount": parentSelectedItem.cashAmount,
-        "wxAmount": parentSelectedItem.wxAmount,
-        "zfbAmount": parentSelectedItem.zfbAmount,
-        "cardAmount": parentSelectedItem.cardAmount,
-        "createTime": parentSelectedItem.createTime
+        "name": parentSelectedItem.name,
+        "nickName": parentSelectedItem.nickName,
+        "password": parentSelectedItem.password
     };
-    //if (parentSelectedItem.deliverDate != null) {
-    //    $scope.selectedItem.deliverDate = new Date(parentSelectedItem.deliverDate);
-    //}
-    //if (parentSelectedItem.predictDeliverDate != null) {
-    //    $scope.selectedItem.predictDeliverDate = new Date(parentSelectedItem.predictDeliverDate);
-    //}
-
-    //$scope.pageOption = {
-    //    sizePerPage: 5,
-    //    currentPage: 0,
-    //    totalPage: 0,
-    //    totalElements: 0,
-    //    displayModel: 0
-    //};
+    $scope.PMS_USER_ROLES = Constant.PMS_USER_ROLES;
 
     $scope.save = function () {
         $mdDialog.hide($scope.selectedItem);
@@ -308,11 +209,4 @@ angular.module('IOne-Production').controller('EditShopController', function ($sc
     $scope.cancelDlg = function () {
         $mdDialog.cancel();
     };
-
-    //$scope.selectCustomerAddressCallback = function (selectedCustomerAddress) {
-    //    $scope.selectedItem.receivePhone = selectedCustomerAddress.receivePhone;
-    //    $scope.selectedItem.receiveName = selectedCustomerAddress.receiveName;
-    //    $scope.selectedItem.receiveAddress = selectedCustomerAddress.receiveAddress;
-    //    $scope.selectedItem.customerAddress = selectedCustomerAddress;
-    //};
 });

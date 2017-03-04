@@ -414,9 +414,10 @@ angular.module('IOne-Constant').constant('Constant', {
             isOpen: true,
             icon: 'fa fa-cube',
             subList: [
-                {id: '/pms-shop', name: '店面支出', link: '/pms-shop', uuid: ''},
+                {id: '/pms-shop', name: '支出管理', link: '/pms-shop', uuid: ''},
                 {id: '/pms-duty', name: '班次管理', link: '/pms-duty', uuid: ''},
-                {id: '/pms-order', name: '收银管理', link: '/pms-order', uuid: ''}
+                {id: '/pms-order', name: '收银管理', link: '/pms-order', uuid: ''},
+                {id: '/pms-user', name: '人员管理', link: '/pms-user', uuid: ''}
             ]
         },
         {
@@ -881,5 +882,9 @@ angular.module('IOne-Constant').constant('Constant', {
         4: {value: '4', name: '刷卡'},
         5: {value: '5', name: '借款'},
         6: {value: '6', name: '筹码'}
+    },
+    'PMS_USER_ROLES':{
+        1: {value: '1', name: '管理员'},
+        2: {value: '2', name: '收银员'}
     }
 });

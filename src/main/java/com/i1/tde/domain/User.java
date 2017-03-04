@@ -16,6 +16,9 @@ import java.util.Date;
 @Entity
 @Table(name = "user")
 public class User extends IdentifiableObject {
+    public static final String ROLE_1 = "1";
+    public static final String ROLE_2 = "2";
+
     private String name;
     private String nickName;
     @JsonIgnore

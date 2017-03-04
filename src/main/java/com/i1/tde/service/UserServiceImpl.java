@@ -1,9 +1,11 @@
 package com.i1.tde.service;
 
 import com.google.common.collect.ImmutableMap;
+import com.i1.base.service.exception.ResourceNotFoundException;
 import com.i1.tde.dao.UserRepository;
 import com.i1.tde.domain.User;
 import com.i1.tde.security.UserAwareUserDetails;
+import com.i1.tde.web.dto.UserInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +36,13 @@ public class UserServiceImpl implements UserService{
 
     public static final String ADMIN = "admin";
     public static final String ADMIN_UUID = "9CCB1898-C964-4B6E-AF48-EEBA18C31C5E";
+
+    private ShaPasswordEncoder encoder;
+
+    @Autowired
+    public void setShaPasswordEncoder(ShaPasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
 
     @Autowired
     private UserRepository repository;
@@ -99,5 +109,31 @@ public class UserServiceImpl implements UserService{
         }};
 
         return new UserAwareUserDetails(user, authorities);
+    }
+
+    @Override
+    public void resetPassword(User user, UserInput input, Boolean isAdmin) {
+        String newPassword = null;
+        if (!isAdmin) {
+            if (null == input.getPassword()) {
+                throw new RuntimeException("原始密码为空！");
+            }
+            if (null == input.getNewPassword()) {
+                throw new RuntimeException("新密码为空！");
+            }
+            String currentPassword = user.getPassword();
+            String oldPassword = encoder.encodePassword(input.getPassword(), user.getSalt());
+            if (currentPassword.equalsIgnoreCase(oldPassword)) {
+                newPassword = encoder.encodePassword(input.getNewPassword(), user.getSalt());
+            } else {
+                throw new RuntimeException("原始密码不正确！");
+            }
+        } else {
+            newPassword = encoder.encodePassword(input.getNewPassword(), user.getSalt());
+        }
+
+        User updateUser = this.findOne(user.getUuid()).orElseThrow(() -> new ResourceNotFoundException(User.class, user.getUuid()));
+        updateUser.setPassword(newPassword);
+        this.update(updateUser);
     }
 }
