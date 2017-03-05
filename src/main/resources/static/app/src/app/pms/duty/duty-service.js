@@ -47,4 +47,8 @@ angular.module('IOne-Production').service('DutyService', function ($http, Consta
     this.delete = function (uuid) {
         return $http.delete(Constant.BACKEND_BASE + '/duties/' + uuid);
     };
+
+    this.getReport = function (uuid) {
+        return $http.get(Constant.BACKEND_BASE + '/duties/' + uuid + '/report');
+    };
 });

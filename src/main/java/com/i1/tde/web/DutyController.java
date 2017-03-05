@@ -4,6 +4,8 @@ import com.i1.base.domain.DomainUtil;
 import com.i1.base.domain.validator.Validators;
 import com.i1.base.service.exception.ResourceNotFoundException;
 import com.i1.tde.domain.Duty;
+import com.i1.tde.domain.DutyReport;
+import com.i1.tde.service.ReportService;
 import com.i1.tde.service.DutyService;
 import com.i1.tde.service.query.DutyQuery;
 import com.i1.tde.web.dto.DutyInput;
@@ -23,10 +25,16 @@ import javax.validation.Valid;
 @RequestMapping("duties")
 public class DutyController {
     private DutyService dutyService;
+    private ReportService dutyReportService;
 
     @Autowired
     public void setDutyService(DutyService dutyService) {
         this.dutyService = dutyService;
+    }
+
+    @Autowired
+    public void setDutyReportService(ReportService dutyReportService) {
+        this.dutyReportService = dutyReportService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -39,6 +47,13 @@ public class DutyController {
 
         Duty rule = dutyService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Duty.class, uuid));
         return rule;
+    }
+
+    @RequestMapping(value = "/{uuid}/report", method = RequestMethod.GET)
+    public DutyReport getReport(@PathVariable String uuid) {
+        Duty duty = dutyService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Duty.class, uuid));
+        DutyReport dutyReport = dutyReportService.generateDutyReport(duty);
+        return dutyReport;
     }
 
     @ResponseStatus(HttpStatus.CREATED)

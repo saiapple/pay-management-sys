@@ -35,4 +35,19 @@ public class OrderServiceImpl implements OrderService {
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
+    @Override
+    public void cascadeAdd(Order order) {
+
+    }
+
+    @Override
+    public void cascadeUpdate(Order order) {
+
+    }
+
+    @Override
+    public void cascadeDelete(Order order) {
+
+    }
 }

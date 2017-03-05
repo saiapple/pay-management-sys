@@ -31,12 +31,12 @@ public class Shop extends MaintainDomainObj {
     private BigDecimal card1Count = BigDecimal.ZERO;
     private BigDecimal card5Count = BigDecimal.ZERO;
     private BigDecimal card10Count = BigDecimal.ZERO;
-    private Date startTime;
-    private Date endTime;
-    private User owner;
-    private User manager;
-    private String active;
-    private BigDecimal profit = BigDecimal.ZERO;
+//    private Date startTime;
+//    private Date endTime;
+//    private User owner;
+//    private User manager;
+//    private String active;
+//    private BigDecimal profit = BigDecimal.ZERO;
 
     @Column(name = "name")
     public String getName() {
@@ -200,61 +200,61 @@ public class Shop extends MaintainDomainObj {
         this.card10Count = card10Count;
     }
 
-    @Column(name = "start_time")
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    @Column(name = "end_time")
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner_uuid")
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "manager_uuid")
-    public User getManager() {
-        return manager;
-    }
-
-    public void setManager(User manager) {
-        this.manager = manager;
-    }
-
-    @Column(name = "active")
-    public String getActive() {
-        return active;
-    }
-
-    public void setActive(String active) {
-        this.active = active;
-    }
-
-    @Column(name = "profit")
-    public BigDecimal getProfit() {
-        return profit;
-    }
-
-    public void setProfit(BigDecimal profit) {
-        this.profit = profit;
-    }
+//    @Column(name = "start_time")
+//    public Date getStartTime() {
+//        return startTime;
+//    }
+//
+//    public void setStartTime(Date startTime) {
+//        this.startTime = startTime;
+//    }
+//
+//    @Column(name = "end_time")
+//    public Date getEndTime() {
+//        return endTime;
+//    }
+//
+//    public void setEndTime(Date endTime) {
+//        this.endTime = endTime;
+//    }
+//
+//    @NotFound(action = NotFoundAction.IGNORE)
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "owner_uuid")
+//    public User getOwner() {
+//        return owner;
+//    }
+//
+//    public void setOwner(User owner) {
+//        this.owner = owner;
+//    }
+//
+//    @NotFound(action = NotFoundAction.IGNORE)
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "manager_uuid")
+//    public User getManager() {
+//        return manager;
+//    }
+//
+//    public void setManager(User manager) {
+//        this.manager = manager;
+//    }
+//
+//    @Column(name = "active")
+//    public String getActive() {
+//        return active;
+//    }
+//
+//    public void setActive(String active) {
+//        this.active = active;
+//    }
+//
+//    @Column(name = "profit")
+//    public BigDecimal getProfit() {
+//        return profit;
+//    }
+//
+//    public void setProfit(BigDecimal profit) {
+//        this.profit = profit;
+//    }
 }

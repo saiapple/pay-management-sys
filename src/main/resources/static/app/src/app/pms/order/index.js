@@ -5,7 +5,7 @@ angular.module('IOne-Production').config(['$routeProvider', function($routeProvi
     })
 }]);
 
-angular.module('IOne-Production').controller('OrderController', function($scope, $mdDialog, OrderService, Constant) {
+angular.module('IOne-Production').controller('OrderController', function($scope, $mdDialog, OrderService, DutyService, Constant) {
     $scope.pageOption = {
         sizePerPage: 10,
         currentPage: 0,
@@ -34,6 +34,15 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
 
             if($scope.itemList != null && $scope.itemList.length > 0){
                 $scope.currentDuty = $scope.itemList[0].duty;
+                // 获取班次统计报表
+                if($scope.currentDuty != null){
+                    DutyService.getReport($scope.currentDuty.uuid).success(function(rep){
+                        $scope.currentDutyReport = rep;
+                    }).error(function(error){
+                        $scope.showError('获取班次统计信息失败，' + error.message);
+                    });
+                }
+
             }
         }).error(function (response) {
             $scope.itemList = [];

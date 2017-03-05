@@ -40,6 +40,7 @@ public class Duty extends MaintainDomainObj {
     private BigDecimal card1Count = BigDecimal.ZERO;
     private BigDecimal card5Count = BigDecimal.ZERO;
     private BigDecimal card10Count = BigDecimal.ZERO;
+    private Shop shop;
     private Date startTime;
     private Date endTime;
     private User owner;
@@ -198,6 +199,17 @@ public class Duty extends MaintainDomainObj {
 
     public void setCard10Count(BigDecimal card10Count) {
         this.card10Count = card10Count;
+    }
+
+    @NotFound(action = NotFoundAction.EXCEPTION)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "shop_uuid")
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     @Column(name = "start_time")

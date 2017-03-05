@@ -1,89 +1,6 @@
 <div class="main-panel">
     <div ng-show="ui_status == UI_STATUS.VIEW_UI_STATUS">
-        <!--<div layout="row" class="top-title">
-            &lt;!&ndash;<div flex="70" hide-sm hide-md class="left-title" ng-show="selectedItem" style="position: relative;">
-                <md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="editItemAction(selectedItem, 'PSO_ORDER_MST', '订单: ' + selectedItem.no)">
-                    <ng-md-icon icon="edit"></ng-md-icon>
-                </md-button>
-                <md-menu>
-                    <md-button class="md-icon-button close-btn" aria-label="More" style="float: left;" ng-click="$mdOpenMenu($event)">
-                        <ng-md-icon icon="menu"></ng-md-icon>
-                    </md-button>
-                    <md-menu-content width="2">
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="confirmClickAction($event, selectedItem)">
-                                <ng-md-icon icon="lock"></ng-md-icon>
-                                审核
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="statusClickAction($event, selectedItem)">
-                                <ng-md-icon icon="lock_open"></ng-md-icon>
-                                启用
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="releaseClickAction($event, selectedItem)">
-                                <ng-md-icon icon="send"></ng-md-icon>
-                                发布
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="deleteClickAction($event, selectedItem)">
-                                <ng-md-icon icon="delete"></ng-md-icon>
-                                删除
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-                <span>订单详细信息</span>
-                <md-button class="md-icon-button close-btn float-right" aria-label="More" ng-click="selectedItem = null">
-                    <ng-md-icon icon="chevron_left"></ng-md-icon>
-                </md-button>
-            </div>&ndash;&gt;
-            <div flex class="right-title">
-                &lt;!&ndash;<md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="showEditor(null)">&ndash;&gt;
-                    &lt;!&ndash;<ng-md-icon icon="add"></ng-md-icon>&ndash;&gt;
-                &lt;!&ndash;</md-button>&ndash;&gt;
-                <span>收银管理</span>
-                &lt;!&ndash;<md-menu>
-                    <md-button class="md-icon-button close-btn float-right" aria-label="More" ng-click="$mdOpenMenu($event)">
-                        <ng-md-icon icon="menu"></ng-md-icon>
-                    </md-button>
-                    <md-menu-content width="2">
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="confirmAllClickAction($event)">
-                                <ng-md-icon icon="lock"></ng-md-icon>
-                                批量审核
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="statusAllClickAction($event)">
-                                <ng-md-icon icon="lock_open"></ng-md-icon>
-                                批量启用
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="releaseAllClickAction($event)">
-                                <ng-md-icon icon="send"></ng-md-icon>
-                                批量发布
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button class="md-button" aria-label="More" ng-click="deleteAllClickAction($event)">
-                                <ng-md-icon icon="delete"></ng-md-icon>
-                                批量删除
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>&ndash;&gt;
-            </div>
-        </div>-->
-        <!--<div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 30px;padding-top: 3px;">-->
-            <!--<span flex="50">班次开始时间: {{pageOption.totalElements}}</span>-->
-            <!--<span flex="50">班次流水总数: {{pageOption.totalElements}}</span>-->
-            <!--&lt;!&ndash;<span flex="33">利润总数: </span>&ndash;&gt;-->
-        <!--</div>-->
+
         <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 40px;padding-top: 0;">
             <div layout="row" flex="100" style="color:#7f8fa4" >
                 <div flex="20">
@@ -94,6 +11,7 @@
                 </div>
             </div>
         </div>
+
         <div layout="row" flex="100" layout-warp
              style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:skyblue;;height: 50px;padding-top: 10px;">
             <div flex="10" layout="column">
@@ -167,49 +85,50 @@
                 </span>
             </div>
         </div>
+
         <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 200px;padding-top: 0;">
             <div layout="row" flex="100" style="color:#7f8fa4" >
                 <div flex="20">
-                    <div layout-padding>总备用金 :  <span></span></div>
-                    <div layout-padding>上分总额 :  <span></span></div>
-                    <div layout-padding>下分总额 :  <span></span></div>
-                    <div layout-padding>售卖总额 :  <span></span></div>
-                    <div layout-padding>结余总额 :  <span></span></div>
+                    <div layout-padding>总备用金 :  <span>{{currentDutyReport.totalAmount}}</span></div>
+                    <div layout-padding>上分总额 :  <span>{{currentDutyReport.upAmount}}</span></div>
+                    <div layout-padding>下分总额 :  <span>{{currentDutyReport.downAmount}}</span></div>
+                    <div layout-padding>售卖总额 :  <span>{{currentDutyReport.saleAmount}}</span></div>
+                    <div layout-padding>结余总额 :  <span>{{currentDutyReport.currentTotalAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>现金备用金 :  <span>{{currentDuty.cashAmount}}</span></div>
-                    <div layout-padding>现金上分总额 :  <span></span></div>
-                    <div layout-padding>现金下分总额 :  <span></span></div>
-                    <div layout-padding>现金售卖总额 :  <span></span></div>
-                    <div layout-padding>现金结余 :  <span>{{currentDuty.currentCashAmount}}</span></div>
+                    <div layout-padding>现金备用金 :  <span>{{currentDutyReport.cashAmount}}</span></div>
+                    <div layout-padding>现金上分总额 :  <span>{{currentDutyReport.cashUpAmount}}</span></div>
+                    <div layout-padding>现金下分总额 :  <span>{{currentDutyReport.cashDownAmount}}</span></div>
+                    <div layout-padding>现金售卖总额 :  <span>{{currentDutyReport.cardSaleAmount}}</span></div>
+                    <div layout-padding>现金结余 :  <span>{{currentDutyReport.currentCashAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>微信备用金 :  <span>{{currentDuty.wxAmount}}</span></div>
-                    <div layout-padding>微信上分总额 :  <span></span></div>
-                    <div layout-padding>微信下分总额 :  <span></span></div>
-                    <div layout-padding>微信售卖总额 :  <span></span></div>
-                    <div layout-padding>微信结余 :  <span>{{currentDuty.currentWxAmount}}</span></div>
+                    <div layout-padding>微信备用金 :  <span>{{currentDutyReport.wxAmount}}</span></div>
+                    <div layout-padding>微信上分总额 :  <span>{{currentDutyReport.wxUpAmount}}</span></div>
+                    <div layout-padding>微信下分总额 :  <span>{{currentDutyReport.wxDownAmount}}</span></div>
+                    <div layout-padding>微信售卖总额 :  <span>{{currentDutyReport.wxSaleAmount}}</span></div>
+                    <div layout-padding>微信结余 :  <span>{{currentDutyReport.currentWxAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>支付宝备用金 :  <span>{{currentDuty.zfbAmount}}</span></div>
-                    <div layout-padding>支付宝上分总额 :  <span></span></div>
-                    <div layout-padding>支付宝下分总额 :  <span></span></div>
-                    <div layout-padding>支付宝售卖总额 :  <span></span></div>
-                    <div layout-padding>支付宝结余 :  <span>{{currentDuty.currentZfbAmount}}</span></div>
+                    <div layout-padding>支付宝备用金 :  <span>{{currentDutyReport.zfbAmount}}</span></div>
+                    <div layout-padding>支付宝上分总额 :  <span>{{currentDutyReport.zfbUpAmount}}</span></div>
+                    <div layout-padding>支付宝下分总额 :  <span>{{currentDutyReport.zfbDownAmount}}</span></div>
+                    <div layout-padding>支付宝售卖总额 :  <span>{{currentDutyReport.zfbSaleAmount}}</span></div>
+                    <div layout-padding>支付宝结余 :  <span>{{currentDutyReport.currentZfbAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>刷卡备用金 :  <span>{{currentDuty.posAmount}}</span></div>
-                    <div layout-padding>刷卡上分总额 :  <span></span></div>
-                    <div layout-padding>刷卡下分总额 :  <span></span></div>
-                    <div layout-padding>刷卡售卖总额 :  <span></span></div>
-                    <div layout-padding>刷卡结余 :  <span>{{currentDuty.currentZfbAmount}}</span></div>
+                    <div layout-padding>刷卡备用金 :  <span>{{currentDutyReport.posAmount}}</span></div>
+                    <div layout-padding>刷卡上分总额 :  <span>{{currentDutyReport.posUpAmount}}</span></div>
+                    <div layout-padding>刷卡下分总额 :  <span>{{currentDutyReport.posDownAmount}}</span></div>
+                    <div layout-padding>刷卡售卖总额 :  <span>{{currentDutyReport.posSaleAmount}}</span></div>
+                    <div layout-padding>刷卡结余 :  <span>{{currentDutyReport.currentPosAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>筹码备用金额 :  <span>{{currentDuty.zfbAmount}}</span></div>
-                    <div layout-padding>筹码上分总额 :  <span></span></div>
-                    <div layout-padding>筹码下分总额 :  <span></span></div>
-                    <div layout-padding>筹码售卖总额<span></span></div>
-                    <div layout-padding>筹码结余金额 :  <span>{{currentDuty.currentPosAmount}}</span></div>
+                    <div layout-padding>筹码备用金额 :  <span>{{currentDutyReport.zfbAmount}}</span></div>
+                    <div layout-padding>筹码上分总额 :  <span>---</span></div>
+                    <div layout-padding>筹码下分总额 :  <span>---</span></div>
+                    <div layout-padding>筹码售卖总额：  <span>{{currentDutyReport.cardSaleAmount}}</span></div>
+                    <div layout-padding>筹码结余金额 :  <span>{{currentDutyReport.currentCardAmount}}</span></div>
                 </div>
             </div>
         </div>

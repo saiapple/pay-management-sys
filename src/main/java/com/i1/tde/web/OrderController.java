@@ -53,7 +53,6 @@ public class OrderController {
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
     public Order getOne(@PathVariable String uuid) {
-
         Order order = orderService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Order.class, uuid));
         return order;
     }
@@ -75,6 +74,7 @@ public class OrderController {
         }
 
         orderService.add(order);
+        //orderService.cascadeAdd(order);
 
         return order;
     }
@@ -91,7 +91,8 @@ public class OrderController {
             throw exception;
         }
 
-        orderService.update(order);
+        //orderService.update(order);
+        orderService.cascadeAdd(order);
 
         return order;
     }
@@ -99,7 +100,8 @@ public class OrderController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
     public void delete(@PathVariable String uuid) {
-        orderService.delete(uuid);
+        Order order = orderService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Order.class, uuid));
+        orderService.cascadeDelete(order);
     }
 
 }
