@@ -3,9 +3,8 @@ package com.i1.tde.web;
 import com.i1.base.domain.DomainUtil;
 import com.i1.base.domain.validator.Validators;
 import com.i1.base.service.exception.ResourceNotFoundException;
-import com.i1.tde.domain.Duty;
 import com.i1.tde.domain.Shop;
-import com.i1.tde.domain.ShopReport;
+import com.i1.tde.domain.StatisticsReport;
 import com.i1.tde.service.ReportService;
 import com.i1.tde.service.ShopService;
 import com.i1.tde.service.query.ShopQuery;
@@ -51,9 +50,9 @@ public class ShopController {
     }
 
     @RequestMapping(value = "/{uuid}/report", method = RequestMethod.GET)
-    public ShopReport getReport(@PathVariable String uuid) {
+    public StatisticsReport getReport(@PathVariable String uuid) {
         Shop shop = shopService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Shop.class, uuid));
-        ShopReport shopReport = reportService.generateShopReport(shop);
+        StatisticsReport shopReport = reportService.generateReport(shop);
         return shopReport;
     }
 

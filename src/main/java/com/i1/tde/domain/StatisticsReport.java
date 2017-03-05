@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 /**
  * Created by Sai on 2017/3/5.
  */
-public class DutyReport {
+public class StatisticsReport {
     private BigDecimal totalAmount = BigDecimal.ZERO;
     private BigDecimal cashAmount = BigDecimal.ZERO;
     private BigDecimal wxAmount = BigDecimal.ZERO;

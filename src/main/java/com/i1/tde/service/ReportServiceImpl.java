@@ -37,60 +37,62 @@ public class ReportServiceImpl implements ReportService {
 
 
     @Override
-    public ShopReport generateShopReport(Shop shop) {
-        ShopReport shopReport = new ShopReport();
-        DomainUtil.copyNotNullProperties(shop, shopReport);
+    public StatisticsReport generateReport(Shop shop) {
+        StatisticsReport report = new StatisticsReport();
+        DomainUtil.copyNotNullProperties(shop, report);
 
-        List<Map<String, Object>> orderReports  = jdbcTemplate.queryForList("select type as billType, pay_type as payType, sum(amount) as amount from bill group by type, pay_type", ImmutableMap.of());
-        for(Map<String, Object> orderReportMap : orderReports){
-            countOrderIntoReport(shopReport, orderReportMap);
-        }
-
-        BigDecimal totalAmount = shop.getCashAmount()
-                .add(shop.getWxAmount())
-                .add(shop.getZfbAmount())
-                .add(shop.getPosAmount())
-                .add(shop.getCardAmount());
-        shopReport.setTotalAmount(totalAmount);
-
-        BigDecimal currentTotalAmount = shop.getCurrentCashAmount()
-                .add(shop.getCurrentWxAmount())
-                .add(shop.getCurrentZfbAmount())
-                .add(shop.getCurrentPosAmount())
-                .add(shop.getCurrentCardAmount());
-        shopReport.setCurrentTotalAmount(currentTotalAmount);
-
-        return shopReport;
-    }
-
-    @Override
-    public DutyReport generateDutyReport(Duty duty) {
-        ShopReport report = new ShopReport();
-        DomainUtil.copyNotNullProperties(duty, report);
-
-        List<Map<String, Object>> orderReports  = jdbcTemplate.queryForList("select type as billType, pay_type as payType, sum(amount) as amount from bill where duty_uuid = :dutyUuid group by type, pay_type", ImmutableMap.of("dutyUuid", duty.getUuid()));
+        List<Map<String, Object>> orderReports
+                = jdbcTemplate.queryForList("select type as billType, pay_type as payType, sum(amount) as amount from bill group by type, pay_type", ImmutableMap.of());
         for(Map<String, Object> orderReportMap : orderReports){
             countOrderIntoReport(report, orderReportMap);
         }
 
-        BigDecimal totalAmount = duty.getCashAmount()
-                .add(duty.getWxAmount())
-                .add(duty.getZfbAmount())
-                .add(duty.getPosAmount())
-                .add(duty.getCardAmount());
-        report.setTotalAmount(totalAmount);
-
-        BigDecimal currentTotalAmount = duty.getCurrentCashAmount()
-                .add(duty.getCurrentWxAmount())
-                .add(duty.getCurrentZfbAmount())
-                .add(duty.getCurrentPosAmount())
-                .add(duty.getCurrentCardAmount());
-        report.setCurrentTotalAmount(currentTotalAmount);
+        countTotal(report);
 
         return report;
     }
 
-    private void countOrderIntoReport(ShopReport report, Map<String, Object> orderReportMap){
+    @Override
+    public StatisticsReport generateReport(Duty duty) {
+        StatisticsReport report = new StatisticsReport();
+        DomainUtil.copyNotNullProperties(duty, report);
+
+        List<Map<String, Object>> orderReports
+                = jdbcTemplate.queryForList("select type as billType, pay_type as payType, sum(amount) as amount from bill where duty_uuid = :dutyUuid group by type, pay_type", ImmutableMap.of("dutyUuid", duty.getUuid()));
+        for(Map<String, Object> orderReportMap : orderReports){
+            countOrderIntoReport(report, orderReportMap);
+        }
+
+        countTotal(report);
+
+        return report;
+    }
+
+    private void countTotal(StatisticsReport report) {
+        BigDecimal totalAmount = report.getCashAmount()
+                .add(report.getWxAmount())
+                .add(report.getZfbAmount())
+                .add(report.getPosAmount())
+                .add(report.getCardAmount());
+        report.setTotalAmount(totalAmount);
+
+        BigDecimal currentTotalAmount = report.getCurrentCashAmount()
+                .add(report.getCurrentWxAmount())
+                .add(report.getCurrentZfbAmount())
+                .add(report.getCurrentPosAmount())
+                .add(report.getCurrentCardAmount());
+        report.setCurrentTotalAmount(currentTotalAmount);
+
+        BigDecimal totalPayAmount = report.getCashPayAmount()
+                .add(report.getWxPayAmount())
+                .add(report.getZfbPayAmount())
+                .add(report.getPosPayAmount());
+//                .add(report.getCardPayAmount())
+//                .add(report.getLendPayAmount())
+        report.setPayAmount(totalPayAmount);
+    }
+
+    private void countOrderIntoReport(StatisticsReport report, Map<String, Object> orderReportMap){
         OrderReport orderReport = new OrderReport();
         orderReport.setAmount((BigDecimal) orderReportMap.get("amount"));
         orderReport.setBillType((String)orderReportMap.get("billType"));
@@ -198,16 +200,27 @@ public class ReportServiceImpl implements ReportService {
                 || Constant.PMS_BILL_TYPES.PAY_VEGETABLES.equalsIgnoreCase(orderReport.getBillType())){
             switch (orderReport.getPayType()){
                 case Constant.PMS_PAY_TYPES.CASH:
-                    report.setPayAmount(report.getPayAmount().add(orderReport.getAmount()));
-                    report.setCashPayAmount(report.getCashPayAmount().add(orderReport.getAmount()));
+                    report.setCashPayAmount(orderReport.getAmount());
                     break;
 
                 case Constant.PMS_PAY_TYPES.WX:
+                    report.setWxPayAmount(orderReport.getAmount());
+                    break;
+
                 case Constant.PMS_PAY_TYPES.ZFB:
+                    report.setZfbPayAmount(orderReport.getAmount());
+                    break;
+
                 case Constant.PMS_PAY_TYPES.POS:
+                    report.setPosPayAmount(orderReport.getAmount());
+                    break;
+
                 case Constant.PMS_PAY_TYPES.CARD:
+                    //report.setCardPayAmount(orderReport.getAmount());
+                    break;
+
                 case Constant.PMS_PAY_TYPES.LEND:
-                    report.setPayAmount(report.getPayAmount().add(orderReport.getAmount()));
+                    //report.setLendPayAmount(orderReport.getAmount());
                     break;
 
                 default: throw new RuntimeException("无法识别的付款类型, PAY_TYPE: " + orderReport.getPayType());
