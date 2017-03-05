@@ -8,9 +8,8 @@ import org.torpedoquery.jpa.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.torpedoquery.jpa.Torpedo.from;
-import static org.torpedoquery.jpa.Torpedo.orderBy;
-import static org.torpedoquery.jpa.Torpedo.select;
+import static org.torpedoquery.jpa.Torpedo.*;
+import static org.torpedoquery.jpa.Torpedo.and;
 import static org.torpedoquery.jpa.TorpedoFunction.desc;
 
 /**
@@ -35,6 +34,10 @@ public class ShopQuery extends PageableQuery<Shop> {
 //        if (StringUtils.isNotBlank(name)) {
 //            conditions.add(condition(from.getName()).eq(name));
 //        }
+
+        if (!conditions.isEmpty()) {
+            where(and(conditions));
+        }
 
         //setSort("-createTime");
         ///setSort("-startTime");

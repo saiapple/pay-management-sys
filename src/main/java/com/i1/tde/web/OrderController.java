@@ -63,7 +63,12 @@ public class OrderController {
         Order order = new Order();
         DomainUtil.copyNotNullProperties(orderInput, order);
 
-        Duty duty = dutyService.findOne(orderInput.getDutyUuid()).orElseThrow(() -> new ResourceNotFoundException(Duty.class, orderInput.getDutyUuid()));
+        Duty duty;
+        if(OrderInput.SHOP_LEVEL_YES.equalsIgnoreCase(orderInput.getIsShopLevel())){
+            duty = dutyService.findSysDuty();
+        } else {
+            duty = dutyService.findOne(orderInput.getDutyUuid()).orElseThrow(() -> new ResourceNotFoundException(Duty.class, orderInput.getDutyUuid()));
+        }
         order.setDuty(duty);
 
         BindException exception = new BindException(order, order.getClass().getSimpleName());
@@ -73,8 +78,7 @@ public class OrderController {
             throw exception;
         }
 
-        orderService.add(order);
-        //orderService.cascadeAdd(order);
+        orderService.cascadeAdd(order);
 
         return order;
     }

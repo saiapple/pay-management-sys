@@ -6,11 +6,15 @@ import java.math.BigDecimal;
  * Created by Sai on 2017/3/3.
  */
 public class OrderInput {
+    public static final String SHOP_LEVEL_YES = "1";
+    public static final String SHOP_LEVEL_NO = "0";
+
     private BigDecimal amount;
     private String type;
     private String payType;
     private String comment;
     private String dutyUuid;
+    private String isShopLevel;
 
     public BigDecimal getAmount() {
         return amount;
@@ -50,5 +54,13 @@ public class OrderInput {
 
     public void setDutyUuid(String dutyUuid) {
         this.dutyUuid = dutyUuid;
+    }
+
+    public String getIsShopLevel() {
+        return isShopLevel;
+    }
+
+    public void setIsShopLevel(String isShopLevel) {
+        this.isShopLevel = isShopLevel;
     }
 }

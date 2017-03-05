@@ -8,8 +8,7 @@ import org.torpedoquery.jpa.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.torpedoquery.jpa.Torpedo.from;
-import static org.torpedoquery.jpa.Torpedo.select;
+import static org.torpedoquery.jpa.Torpedo.*;
 
 /**
  * Created by Sai on 2017/3/3.
@@ -33,6 +32,10 @@ public class UserQuery extends PageableQuery<User> {
 //        if (StringUtils.isNotBlank(name)) {
 //            conditions.add(condition(from.getName()).eq(name));
 //        }
+
+        if (!conditions.isEmpty()) {
+            where(and(conditions));
+        }
 
         return select(from);
     }

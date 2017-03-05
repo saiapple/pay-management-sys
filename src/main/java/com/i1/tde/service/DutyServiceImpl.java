@@ -41,4 +41,14 @@ public class DutyServiceImpl implements DutyService {
     public List<Duty> findByActive(String active) {
         return repository.findByActive(active);
     }
+
+    @Override
+    public Duty findSysDuty() {
+        List<Duty> dutyList = repository.findByActive(Duty.ACTIVE_SYS);
+        if(dutyList == null || dutyList.size() != 1){
+            throw new RuntimeException("找不到系统内部班次");
+        }
+
+        return dutyList.get(0);
+    }
 }

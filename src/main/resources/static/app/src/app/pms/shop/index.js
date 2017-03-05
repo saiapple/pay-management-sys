@@ -236,7 +236,8 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
                 "type": data.type,
                 "payType": data.payType,
                 "comment": data.comment,
-                "dutyUuid": data.dutyUuid
+                "dutyUuid": data.dutyUuid,
+                "isShopLevel": '1'
             };
 
             //postData.startTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
@@ -266,7 +267,8 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
                 "type": data.type,
                 "payType": data.payType,
                 "comment": data.comment,
-                "dutyUuid": data.dutyUuid
+                "dutyUuid": data.dutyUuid,
+                "isShopLevel": '1'
             };
 
             OrderService.modify(item.uuid, postData).success(function () {

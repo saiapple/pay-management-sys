@@ -16,6 +16,10 @@ public class Duty extends MaintainDomainObj {
     /**
      * 状态码 : 无效
      */
+    public static final String ACTIVE_SYS = "-1";
+    /**
+     * 状态码 : 无效
+     */
     public static final String ACTIVE_0 = "0";
     /**
      * 状态码 : 有效;

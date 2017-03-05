@@ -863,6 +863,7 @@ angular.module('IOne-Constant').constant('Constant', {
 
 
     'PMS_BILL_TYPES':{
+        0: {value: '0', name: '全部'},
         1: {value: '1', name: '上分'},
         2: {value: '2', name: '下分'},
         3: {value: '3', name: '售卖'},
@@ -876,6 +877,7 @@ angular.module('IOne-Constant').constant('Constant', {
         11: {value: '11', name: '其他支出'}
     },
     'PMS_BILL_PAY_TYPES':{
+        0: {value: '0', name: '全部'},
         1: {value: '1', name: '现金'},
         2: {value: '2', name: '微信'},
         3: {value: '3', name: '支付宝'},

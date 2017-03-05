@@ -17,6 +17,8 @@ import static org.torpedoquery.jpa.Torpedo.*;
  */
 public class DutyQuery extends PageableQuery<Duty> {
     String name;
+    String showSys;
+    String active;
 
     public String getName() {
         return name;
@@ -26,14 +28,38 @@ public class DutyQuery extends PageableQuery<Duty> {
         this.name = name;
     }
 
+    public String getShowSys() {
+        return showSys;
+    }
+
+    public void setShowSys(String showSys) {
+        this.showSys = showSys;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
     @Override
     public Query<Duty> buildQuery() {
         Duty from = from(Duty.class);
         List<OnGoingLogicalCondition> conditions = new ArrayList<>();
 
-//        if (StringUtils.isNotBlank(name)) {
-//            conditions.add(condition(from.getName()).eq(name));
-//        }
+        if (!StringUtils.isNotBlank(showSys)) {
+            conditions.add(condition(from.getActive()).neq(Duty.ACTIVE_SYS));
+        }
+
+        if (StringUtils.isNotBlank(active)) {
+            conditions.add(condition(from.getActive()).eq(active));
+        }
+
+        if (!conditions.isEmpty()) {
+            where(and(conditions));
+        }
 
         //setSort("-createTime");
         ///setSort("-startTime");

@@ -11,4 +11,5 @@ import java.util.List;
  */
 public interface DutyService extends CrudService<Duty>, QueryService<Duty> {
     List<Duty> findByActive(String active);
+    Duty findSysDuty();
 }

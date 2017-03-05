@@ -27,13 +27,9 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
     };
 
     $scope.refreshList = function() {
-        OrderService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
-            $scope.itemList = data.content;
-            $scope.pageOption.totalPage = data.totalPages;
-            $scope.pageOption.totalElements = data.totalElements;
-
-            if($scope.itemList != null && $scope.itemList.length > 0){
-                $scope.currentDuty = $scope.itemList[0].duty;
+        DutyService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, {'active':'1'}).success(function(rep){
+            if(rep.totalElements === 1){
+                $scope.currentDuty = rep.content[0];
                 // 获取班次统计报表
                 if($scope.currentDuty != null){
                     DutyService.getReport($scope.currentDuty.uuid).success(function(rep){
@@ -43,12 +39,23 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
                     });
                 }
 
+                //获取班次流水
+                $scope.listFilterOption.dutyUuid = $scope.currentDuty.uuid;
+                OrderService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
+                    $scope.itemList = data.content;
+                    $scope.pageOption.totalPage = data.totalPages;
+                    $scope.pageOption.totalElements = data.totalElements;
+                }).error(function (response) {
+                    $scope.itemList = [];
+                    $scope.pageOption.totalPage = 0;
+                    $scope.pageOption.totalElements = 0;
+                    $scope.showError('获取信息失败，' + response.message);
+                });
+            } else {
+                $scope.showError('获取活动班次失败');
             }
-        }).error(function (response) {
-            $scope.itemList = [];
-            $scope.pageOption.totalPage = 0;
-            $scope.pageOption.totalElements = 0;
-            $scope.showError('获取信息失败，' + response.message);
+        }).error(function(error){
+            $scope.showError('获取活动班次失败，' + error.message);
         });
     };
 

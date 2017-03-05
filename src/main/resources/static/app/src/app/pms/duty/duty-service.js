@@ -3,23 +3,15 @@
  */
 angular.module('IOne-Production').service('DutyService', function ($http, Constant) {
     this.getAll = function (sizePerPage, page, filter) {
-        //var confirm = filter.confirm == 0 ? '' : filter.confirm;
-        //var status = filter.status == 0 ? '' : filter.status;
         var url = 'duties?size=' + sizePerPage
             + '&page=' + page;
 
-        //if (confirm !== '') {
-        //    url = url + '&confirm=' + confirm;
-        //}
-        //if (status !== '') {
-        //    url = url + '&status=' + status;
-        //}
-        //if (filter.no != null) {
-        //    url = url + '&no=' + filter.no;
-        //}
-        //if (filter.name != null) {
-        //    url = url + '&name=' + filter.name;
-        //}
+        if (filter.active != null) {
+            url = url + '&active=' + filter.active;
+        }
+        if (filter.showSys != null) {
+            url = url + '&showSys=' + filter.showSys;
+        }
         if (filter.startDate !== null && filter.startDate !== undefined) {
             var startDate = new Date(filter.startDate);
             startDate = moment(startDate).format('YYYY-MM-DD 00:00:00');

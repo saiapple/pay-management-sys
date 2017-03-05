@@ -124,7 +124,7 @@
                     <div layout-padding>刷卡结余 :  <span>{{currentDutyReport.currentPosAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>筹码备用金额 :  <span>{{currentDutyReport.zfbAmount}}</span></div>
+                    <div layout-padding>筹码备用金额 :  <span>{{currentDutyReport.cardAmount}}</span></div>
                     <div layout-padding>筹码上分总额 :  <span>---</span></div>
                     <div layout-padding>筹码下分总额 :  <span>---</span></div>
                     <div layout-padding>筹码售卖总额：  <span>{{currentDutyReport.cardSaleAmount}}</span></div>
@@ -296,10 +296,7 @@
             </div>-->
             <div flex class="right-body">
                 <!-- basic search-->
-                <div class="search-bar" layout="row" style="position: relative">
-                    <!--<span style="position: absolute; top: 15px; left: 10px;">
-                        <md-checkbox ng-model="selectAllFlag" aria-label="Checkbox" ng-change="selectAllAction()"></md-checkbox>
-                    </span>-->
+                <!--<div class="search-bar" layout="row" style="position: relative">
                     <md-input-container flex="30" style="margin-left: 50px;">
                         <label class="label">起始日期：</label>
                         <input type="date" ng-model="listFilterOption.startDate">
@@ -308,35 +305,11 @@
                         <label class="label">结束日期：</label>
                         <input type="date" ng-model="listFilterOption.endDate">
                     </md-input-container>
-                    <!--<md-input-container flex="15" style="margin-left: 50px;" ng-show="selectedItem == null">-->
-                    <!--<label>班次开始时间</label>-->
-                    <!--<md-select ng-model="listFilterOption.status">-->
-                    <!--<md-option ng-repeat="(key, value) in STATUS" ng-value="key">{{value.name}}</md-option>-->
-                    <!--</md-select>-->
-                    <!--</md-input-container>-->
-                    <!--<md-input-container flex="15" ng-show="selectedItem == null">-->
-                    <!--<label>班次结束时间</label>-->
-                    <!--<md-select ng-model="listFilterOption.confirm">-->
-                    <!--<md-option ng-repeat="(key, value) in CONFIRM" ng-value="key">{{value.name}}</md-option>-->
-                    <!--</md-select>-->
-                    <!--</md-input-container>-->
-                    <!--<md-input-container flex="15" ng-show="selectedItem == null">-->
-                    <!--<label>发布状态</label>-->
-                    <!--<md-select ng-model="listFilterOption.release">-->
-                    <!--<md-option ng-repeat="(key, value) in RELEASE" ng-value="key">{{value.name}}</md-option>-->
-                    <!--</md-select>-->
-                    <!--</md-input-container>-->
                     <md-input-container flex style="margin-left: 50px;" >
                         <label>输入关键字查询</label>
                         <input ng-model="theMax">
                     </md-input-container>
-                    <!--<span style="padding-top: 10px;">-->
-                    <!--<md-button class="md-icon-button" aria-label="Eat cake" ng-click="showAdvancedSearchAction()">-->
-                    <!--<ng-md-icon icon="expand_more" ng-show="!displayAdvancedSearPanel"></ng-md-icon>-->
-                    <!--<ng-md-icon icon="expand_less" ng-show="displayAdvancedSearPanel"></ng-md-icon>-->
-                    <!--</md-button>-->
-                    <!--</span>-->
-                </div>
+                </div>-->
                 <!-- advanced search-->
                 <!--<div layout="row" ng-show="displayAdvancedSearPanel">-->
                 <!--&lt;!&ndash; fill more searching here.&ndash;&gt;-->

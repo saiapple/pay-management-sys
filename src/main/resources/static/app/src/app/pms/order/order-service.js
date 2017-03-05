@@ -5,7 +5,7 @@ angular.module('IOne-Production').service('OrderService', function ($http, Const
         var url = 'orders?size=' + sizePerPage
             + '&page=' + page;
 
-        if (confirm !== '') {
+        /*if (confirm !== '') {
             url = url + '&confirm=' + confirm;
         }
         if (status !== '') {
@@ -16,9 +16,25 @@ angular.module('IOne-Production').service('OrderService', function ($http, Const
         }
         if (filter.name != null) {
             url = url + '&name=' + filter.name;
+        }*/
+        if (filter.dutyUuid != null) {
+            url = url + '&dutyUuid=' + filter.dutyUuid;
+        }
+        if (filter.type != null) {
+            url = url + '&type=' + filter.type;
         }
         if (filter.searchKeyWord != null) {
-            url = url + '&searchKeyWord=' + filter.searchKeyWord;
+            url = url + '&comment=' + filter.searchKeyWord;
+        }
+        if (filter.startDate !== null && filter.startDate !== undefined) {
+            var startDate = new Date(filter.startDate);
+            startDate = moment(startDate).format('YYYY-MM-DD 00:00:00');
+            url = url + '&startDate=' + startDate;
+        }
+        if (filter.endDate !== null && filter.endDate !== undefined) {
+            var endDate = new Date(filter.endDate);
+            endDate = moment(endDate).format('YYYY-MM-DD 23:59:59');
+            url = url + '&endDate=' + endDate;
         }
         return $http.get(Constant.BACKEND_BASE + url);
     };

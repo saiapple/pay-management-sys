@@ -59,19 +59,25 @@ public class DutyController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
     public Duty add(@Valid @RequestBody DutyInput dutyInput) throws BindException {
-        Duty rule = new Duty();
-        DomainUtil.copyNotNullProperties(dutyInput, rule);
+        Duty duty = new Duty();
+        DomainUtil.copyNotNullProperties(dutyInput, duty);
 
-        BindException exception = new BindException(rule, rule.getClass().getSimpleName());
-        Validators.validateBean(exception, rule);
+        duty.setCurrentCashAmount(duty.getCashAmount());
+        duty.setCurrentCardAmount(duty.getCardAmount());
+        duty.setCurrentPosAmount(duty.getPosAmount());
+        duty.setCurrentWxAmount(duty.getWxAmount());
+        duty.setCurrentZfbAmount(duty.getZfbAmount());
+
+        BindException exception = new BindException(duty, duty.getClass().getSimpleName());
+        Validators.validateBean(exception, duty);
 
         if (exception.hasErrors()) {
             throw exception;
         }
 
-        dutyService.add(rule);
+        dutyService.add(duty);
 
-        return rule;
+        return duty;
     }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.PATCH)
