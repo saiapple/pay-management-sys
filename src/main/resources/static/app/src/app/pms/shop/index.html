@@ -78,52 +78,52 @@
         <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 230px;padding-top: 0;">
             <div layout="row" flex="100" style="color:#7f8fa4" >
                 <div flex="20">
-                    <div layout-padding>总备用金 :  <span></span></div>
-                    <div layout-padding>上分总额 :  <span></span></div>
-                    <div layout-padding>下分总额 :  <span></span></div>
-                    <div layout-padding>售卖总额 :  <span></span></div>
-                    <div layout-padding>支出总额 :  <span></span></div>
-                    <div layout-padding>结余总额 :  <span></span></div>
+                    <div layout-padding>总备用金 :  <span>{{currentReport.totalAmount}}</span></div>
+                    <div layout-padding>上分总额 :  <span>{{currentReport.upAmount}}</span></div>
+                    <div layout-padding>下分总额 :  <span>{{currentReport.downAmount}}</span></div>
+                    <div layout-padding>售卖总额 :  <span>{{currentReport.saleAmount}}</span></div>
+                    <div layout-padding>支出总额 :  <span>{{currentReport.payAmount}}</span></div>
+                    <div layout-padding>结余总额 :  <span>{{currentReport.currentTotalAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>现金备用金 :  <span>{{currentDuty.cashAmount}}</span></div>
-                    <div layout-padding>现金上分总额 :  <span></span></div>
-                    <div layout-padding>现金下分总额 :  <span></span></div>
-                    <div layout-padding>现金售卖总额 :  <span></span></div>
-                    <div layout-padding>现金支出总额 :  <span></span></div>
-                    <div layout-padding>现金结余 :  <span>{{currentDuty.currentCashAmount}}</span></div>
+                    <div layout-padding>现金备用金 :  <span>{{currentReport.cashAmount}}</span></div>
+                    <div layout-padding>现金上分总额 :  <span>{{currentReport.cashUpAmount}}</span></div>
+                    <div layout-padding>现金下分总额 :  <span>{{currentReport.cashDownAmount}}</span></div>
+                    <div layout-padding>现金售卖总额 :  <span>{{currentReport.cardSaleAmount}}</span></div>
+                    <div layout-padding>现金支出总额 :  <span>{{currentReport.cashPayAmount}}</span></div>
+                    <div layout-padding>现金结余 :  <span>{{currentReport.currentCashAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>微信备用金 :  <span>{{currentDuty.wxAmount}}</span></div>
-                    <div layout-padding>微信上分总额 :  <span></span></div>
-                    <div layout-padding>微信下分总额 :  <span></span></div>
-                    <div layout-padding>微信售卖总额 :  <span></span></div>
+                    <div layout-padding>微信备用金 :  <span>{{currentReport.wxAmount}}</span></div>
+                    <div layout-padding>微信上分总额 :  <span>{{currentReport.wxUpAmount}}</span></div>
+                    <div layout-padding>微信下分总额 :  <span>{{currentReport.wxDownAmount}}</span></div>
+                    <div layout-padding>微信售卖总额 :  <span>{{currentReport.wxSaleAmount}}</span></div>
                     <div layout-padding>---<span></span></div>
-                    <div layout-padding>微信结余 :  <span>{{currentDuty.currentWxAmount}}</span></div>
+                    <div layout-padding>微信结余 :  <span>{{currentReport.currentWxAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>支付宝备用金 :  <span>{{currentDuty.zfbAmount}}</span></div>
-                    <div layout-padding>支付宝上分总额 :  <span></span></div>
-                    <div layout-padding>支付宝下分总额 :  <span></span></div>
-                    <div layout-padding>支付宝售卖总额 :  <span></span></div>
+                    <div layout-padding>支付宝备用金 :  <span>{{currentReport.zfbAmount}}</span></div>
+                    <div layout-padding>支付宝上分总额 :  <span>{{currentReport.zfbUpAmount}}</span></div>
+                    <div layout-padding>支付宝下分总额 :  <span>{{currentReport.zfbDownAmount}}</span></div>
+                    <div layout-padding>支付宝售卖总额 :  <span>{{currentReport.zfbSaleAmount}}</span></div>
                     <div layout-padding>---<span></span></div>
-                    <div layout-padding>支付宝结余 :  <span>{{currentDuty.currentZfbAmount}}</span></div>
+                    <div layout-padding>支付宝结余 :  <span>{{currentReport.currentZfbAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>刷卡备用金 :  <span>{{currentDuty.posAmount}}</span></div>
-                    <div layout-padding>刷卡上分总额 :  <span></span></div>
-                    <div layout-padding>刷卡下分总额 :  <span></span></div>
-                    <div layout-padding>刷卡售卖总额 :  <span></span></div>
+                    <div layout-padding>刷卡备用金 :  <span>{{currentReport.posAmount}}</span></div>
+                    <div layout-padding>刷卡上分总额 :  <span>{{currentReport.posUpAmount}}</span></div>
+                    <div layout-padding>刷卡下分总额 :  <span>{{currentReport.posDownAmount}}</span></div>
+                    <div layout-padding>刷卡售卖总额 :  <span>{{currentReport.posSaleAmount}}</span></div>
                     <div layout-padding>---<span></span></div>
-                    <div layout-padding>刷卡结余 :  <span>{{currentDuty.currentZfbAmount}}</span></div>
+                    <div layout-padding>刷卡结余 :  <span>{{currentReport.currentPosAmount}}</span></div>
                 </div>
                 <div flex="15">
-                    <div layout-padding>筹码备用金额 :  <span>{{currentDuty.zfbAmount}}</span></div>
-                    <div layout-padding>筹码上分总额 :  <span></span></div>
-                    <div layout-padding>筹码下分总额 :  <span></span></div>
-                    <div layout-padding>筹码售卖总额<span></span></div>
+                    <div layout-padding>筹码备用金额 :  <span>{{currentReport.zfbAmount}}</span></div>
+                    <div layout-padding>筹码上分总额 :  <span>---</span></div>
+                    <div layout-padding>筹码下分总额 :  <span>---</span></div>
+                    <div layout-padding>筹码售卖总额：  <span>{{currentReport.cardSaleAmount}}</span></div>
                     <div layout-padding>---<span></span></div>
-                    <div layout-padding>筹码结余金额 :  <span>{{currentDuty.currentPosAmount}}</span></div>
+                    <div layout-padding>筹码结余金额 :  <span>{{currentReport.currentCardAmount}}</span></div>
                 </div>
             </div>
         </div>

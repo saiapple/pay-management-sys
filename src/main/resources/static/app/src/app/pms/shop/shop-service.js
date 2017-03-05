@@ -5,7 +5,7 @@ angular.module('IOne-Production').service('ShopService', function ($http, Consta
     this.getAll = function (sizePerPage, page, filter) {
         //var confirm = filter.confirm == 0 ? '' : filter.confirm;
         //var status = filter.status == 0 ? '' : filter.status;
-        var url = 'duties?size=' + sizePerPage
+        var url = 'shops?size=' + sizePerPage
             + '&page=' + page;
 
         //if (confirm !== '') {
@@ -37,14 +37,18 @@ angular.module('IOne-Production').service('ShopService', function ($http, Consta
     };
 
     this.modify = function (uuid, dutyUpdateInput) {
-        return $http.patch(Constant.BACKEND_BASE + '/duties/' + uuid, dutyUpdateInput);
+        return $http.patch(Constant.BACKEND_BASE + '/shops/' + uuid, dutyUpdateInput);
     };
 
     this.add = function (dutyInput) {
-        return $http.post(Constant.BACKEND_BASE + '/duties/', dutyInput);
+        return $http.post(Constant.BACKEND_BASE + '/shops/', dutyInput);
     };
 
     this.delete = function (uuid) {
-        return $http.delete(Constant.BACKEND_BASE + '/duties/' + uuid);
+        return $http.delete(Constant.BACKEND_BASE + '/shops/' + uuid);
+    };
+
+    this.getReport = function (uuid) {
+        return $http.get(Constant.BACKEND_BASE + '/shops/' + uuid + '/report');
     };
 });

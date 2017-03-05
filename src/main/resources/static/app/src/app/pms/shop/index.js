@@ -28,25 +28,26 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
     };
 
     $scope.refreshList = function() {
-        //ShopService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
-        //    $scope.itemList = data.content;
-        //    $scope.pageOption.totalPage = data.totalPages;
-        //    $scope.pageOption.totalElements = data.totalElements;
-        //});
+        ShopService.getReport('1').success(function(rep){ //'1' 默认店面UUID
+            $scope.currentReport = rep;
 
-        OrderService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
-            $scope.itemList = data.content;
-            $scope.pageOption.totalPage = data.totalPages;
-            $scope.pageOption.totalElements = data.totalElements;
+            //获取流水信息
+            OrderService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
+                $scope.itemList = data.content;
+                $scope.pageOption.totalPage = data.totalPages;
+                $scope.pageOption.totalElements = data.totalElements;
 
-            if($scope.itemList != null && $scope.itemList.length > 0){
-                $scope.currentDuty = $scope.itemList[0].duty;
-            }
-        }).error(function (response) {
-            $scope.itemList = [];
-            $scope.pageOption.totalPage = 0;
-            $scope.pageOption.totalElements = 0;
-            $scope.showError('获取信息失败，' + response.message);
+                if($scope.itemList != null && $scope.itemList.length > 0){
+                    $scope.currentDuty = $scope.itemList[0].duty;
+                }
+            }).error(function (response) {
+                $scope.itemList = [];
+                $scope.pageOption.totalPage = 0;
+                $scope.pageOption.totalElements = 0;
+                $scope.showError('获取信息失败，' + response.message);
+            });
+        }).error(function(error){
+            $scope.showError('获取统计信息失败，' + error.message);
         });
     };
 

@@ -43,10 +43,6 @@ public class ReportServiceImpl implements ReportService {
 
         List<Map<String, Object>> orderReports  = jdbcTemplate.queryForList("select type as billType, pay_type as payType, sum(amount) as amount from bill group by type, pay_type", ImmutableMap.of());
         for(Map<String, Object> orderReportMap : orderReports){
-            OrderReport orderReport = new OrderReport();
-            orderReport.setAmount((BigDecimal) orderReportMap.get("amount"));
-            orderReport.setBillType((String)orderReportMap.get("billType"));
-            orderReport.setPayType((String)orderReportMap.get("payType"));
             countOrderIntoReport(shopReport, orderReportMap);
         }
 
@@ -187,6 +183,31 @@ public class ReportServiceImpl implements ReportService {
 
                 case Constant.PMS_PAY_TYPES.CARD:
                     report.setCardSaleAmount(orderReport.getAmount());
+                    break;
+
+                default: throw new RuntimeException("无法识别的付款类型, PAY_TYPE: " + orderReport.getPayType());
+            }
+        }
+
+        // 支出 (目前统计成总额，不分类统计)
+        else if(Constant.PMS_BILL_TYPES.PAY_DRINK.equalsIgnoreCase(orderReport.getBillType())
+                || Constant.PMS_BILL_TYPES.PAY_OTHER.equalsIgnoreCase(orderReport.getBillType())
+                || Constant.PMS_BILL_TYPES.PAY_RENT.equalsIgnoreCase(orderReport.getBillType())
+                || Constant.PMS_BILL_TYPES.PAY_SALARY.equalsIgnoreCase(orderReport.getBillType())
+                || Constant.PMS_BILL_TYPES.PAY_SMOKE.equalsIgnoreCase(orderReport.getBillType())
+                || Constant.PMS_BILL_TYPES.PAY_VEGETABLES.equalsIgnoreCase(orderReport.getBillType())){
+            switch (orderReport.getPayType()){
+                case Constant.PMS_PAY_TYPES.CASH:
+                    report.setPayAmount(report.getPayAmount().add(orderReport.getAmount()));
+                    report.setCashPayAmount(report.getCashPayAmount().add(orderReport.getAmount()));
+                    break;
+
+                case Constant.PMS_PAY_TYPES.WX:
+                case Constant.PMS_PAY_TYPES.ZFB:
+                case Constant.PMS_PAY_TYPES.POS:
+                case Constant.PMS_PAY_TYPES.CARD:
+                case Constant.PMS_PAY_TYPES.LEND:
+                    report.setPayAmount(report.getPayAmount().add(orderReport.getAmount()));
                     break;
 
                 default: throw new RuntimeException("无法识别的付款类型, PAY_TYPE: " + orderReport.getPayType());

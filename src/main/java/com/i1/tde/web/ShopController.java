@@ -3,7 +3,10 @@ package com.i1.tde.web;
 import com.i1.base.domain.DomainUtil;
 import com.i1.base.domain.validator.Validators;
 import com.i1.base.service.exception.ResourceNotFoundException;
+import com.i1.tde.domain.Duty;
 import com.i1.tde.domain.Shop;
+import com.i1.tde.domain.ShopReport;
+import com.i1.tde.service.ReportService;
 import com.i1.tde.service.ShopService;
 import com.i1.tde.service.query.ShopQuery;
 import com.i1.tde.web.dto.ShopInput;
@@ -23,10 +26,16 @@ import javax.validation.Valid;
 @RequestMapping("shops")
 public class ShopController {
     private ShopService shopService;
+    private ReportService reportService;
 
     @Autowired
     public void setShopService(ShopService dutyService) {
         this.shopService = dutyService;
+    }
+
+    @Autowired
+    public void setReportService(ReportService reportService) {
+        this.reportService = reportService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -39,6 +48,13 @@ public class ShopController {
 
         Shop shop = shopService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Shop.class, uuid));
         return shop;
+    }
+
+    @RequestMapping(value = "/{uuid}/report", method = RequestMethod.GET)
+    public ShopReport getReport(@PathVariable String uuid) {
+        Shop shop = shopService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Shop.class, uuid));
+        ShopReport shopReport = reportService.generateShopReport(shop);
+        return shopReport;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
