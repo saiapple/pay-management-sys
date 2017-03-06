@@ -236,6 +236,18 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
             });
         });
     };
+
+    $scope.deleteClickAction = function(item) {
+        $scope.showConfirm('', '确认删除吗？', function () {
+            OrderService.delete(item.uuid).success(function() {
+                //$scope.itemList.splice($scope.itemList.indexOf(item), 1);
+                $scope.refreshList();
+                $scope.showInfo('删除成功');
+            }).error(function (response) {
+                $scope.showError('删除失败，' + response.message);
+            });
+        });
+    };
 });
 
 angular.module('IOne-Production').controller('AddOrderController', function ($scope, $mdDialog, Constant, workingItem) {

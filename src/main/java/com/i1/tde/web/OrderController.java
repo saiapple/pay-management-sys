@@ -95,8 +95,7 @@ public class OrderController {
             throw exception;
         }
 
-        //orderService.update(order);
-        orderService.cascadeAdd(order);
+        orderService.cascadeUpdate(order, orderUpdateInput);
 
         return order;
     }

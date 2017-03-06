@@ -213,7 +213,7 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
         });
     };
 
-    /* 添加支出流水 */
+    /* 添加流水 */
     $scope.showAddEditor = function (type, payType) {
         var addItem = {
             "amount": 0,
@@ -251,7 +251,7 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
         });
     };
 
-    /* 修改支出流水 */
+    /* 修改流水 */
     $scope.showModifyEditor = function (item) {
         $mdDialog.show({
             controller: 'EditOrderController',
@@ -276,6 +276,19 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
                 $scope.refreshList();
             }).error(function (response) {
                 $scope.showError('操作失败，' + response.message);
+            });
+        });
+    };
+
+    /* 删除流水 */
+    $scope.deleteClickAction = function(item) {
+        $scope.showConfirm('', '确认删除吗？', function () {
+            OrderService.delete(item.uuid).success(function() {
+                //$scope.itemList.splice($scope.itemList.indexOf(item), 1);
+                $scope.refreshList();
+                $scope.showInfo('删除成功');
+            }).error(function (response) {
+                $scope.showError('删除失败，' + response.message);
             });
         });
     };
