@@ -6,7 +6,7 @@
                     <label>姓名</label>
                     <input name="text" type="text" ng-model="selectedItem.nickName">
                 </md-input-container>
-                <md-input-container>
+                <md-input-container ng-disable="action == 'edit'">
                     <label>账户名</label>
                     <input name="text" type="text" ng-model="selectedItem.name">
                 </md-input-container>

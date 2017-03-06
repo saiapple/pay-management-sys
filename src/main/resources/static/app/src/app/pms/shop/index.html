@@ -75,7 +75,7 @@
             </div>
         </div>
 
-        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 230px;padding-top: 0;">
+        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 270px;padding-top: 0;">
             <div layout="row" flex="100" style="color:#7f8fa4" >
                 <div flex="20">
                     <div layout-padding>总备用金 :  <span>{{currentReport.totalAmount}}</span></div>
@@ -84,6 +84,7 @@
                     <div layout-padding>售卖总额 :  <span>{{currentReport.saleAmount}}</span></div>
                     <div layout-padding>支出总额 :  <span>{{currentReport.payAmount}}</span></div>
                     <div layout-padding>结余总额 :  <span>{{currentReport.currentTotalAmount}}</span></div>
+                    <div layout-padding>上水后结余总额 :  <span>{{currentReport.currentTotalAmountWithProfit}}</span></div>
                 </div>
                 <div flex="15">
                     <div layout-padding>现金备用金 :  <span>{{currentReport.cashAmount}}</span></div>
@@ -92,6 +93,7 @@
                     <div layout-padding>现金售卖总额 :  <span>{{currentReport.cardSaleAmount}}</span></div>
                     <div layout-padding>现金支出总额 :  <span>{{currentReport.cashPayAmount}}</span></div>
                     <div layout-padding>现金结余 :  <span>{{currentReport.currentCashAmount}}</span></div>
+                    <div layout-padding>上水总额 :  <span>{{currentReport.profit}}</span></div>
                 </div>
                 <div flex="15">
                     <div layout-padding>微信备用金 :  <span>{{currentReport.wxAmount}}</span></div>

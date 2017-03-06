@@ -144,6 +144,18 @@ angular.module('IOne-Production').controller('UserController', function($scope, 
         }
     };
 
+    $scope.deleteClickAction = function(item) {
+        $scope.showConfirm('', '确认删除吗？', function () {
+            UserService.delete(item.uuid).success(function() {
+                //$scope.itemList.splice($scope.itemList.indexOf(item), 1);
+                $scope.refreshList();
+                $scope.showInfo('删除成功');
+            }).error(function (response) {
+                $scope.showError('删除失败，' + response.message);
+            });
+        });
+    };
+
     $scope.showEditor = function (selectedItem) {
         var action = "edit";
         if(selectedItem === null){
@@ -152,7 +164,8 @@ angular.module('IOne-Production').controller('UserController', function($scope, 
                 "name": undefined,
                 "nickName": undefined,
                 "password": undefined,
-                "confirmPassword": undefined
+                "confirmPassword": undefined,
+                "role": undefined
             };
         }
 
@@ -169,7 +182,9 @@ angular.module('IOne-Production').controller('UserController', function($scope, 
             var postData = {
                 "name": data.name,
                 "nickName": data.nickName,
-                "password": data.password
+                "password": data.password,
+                "confirmPassword": data.confirmPassword,
+                "role": data.role
             };
 
             if(action === "edit") {
@@ -194,12 +209,14 @@ angular.module('IOne-Production').controller('UserController', function($scope, 
     };
 });
 
-angular.module('IOne-Production').controller('EditUserController', function ($scope, $mdDialog, Constant, parentSelectedItem) {
+angular.module('IOne-Production').controller('EditUserController', function ($scope, $mdDialog, Constant, parentSelectedItem, action) {
     $scope.selectedItem = {
         "name": parentSelectedItem.name,
         "nickName": parentSelectedItem.nickName,
-        "password": parentSelectedItem.password
+        "password": parentSelectedItem.password,
+        "role": parentSelectedItem.role
     };
+    $scope.action = action;
     $scope.PMS_USER_ROLES = Constant.PMS_USER_ROLES;
 
     $scope.save = function () {

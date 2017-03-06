@@ -22,10 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Sai on 2017/3/2.
@@ -135,5 +132,24 @@ public class UserServiceImpl implements UserService{
         User updateUser = this.findOne(user.getUuid()).orElseThrow(() -> new ResourceNotFoundException(User.class, user.getUuid()));
         updateUser.setPassword(newPassword);
         this.update(updateUser);
+    }
+
+    @Override
+    public boolean checkExists(String userName) {
+        List<User> userList = repository.findByName(userName);
+        if(userList != null && userList.size() > 0){
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public User findByName(String userName) {
+        List<User> userList = repository.findByName(userName);
+        if(userList != null && userList.size() == 1){
+            return userList.get(0);
+        }
+        return null;
     }
 }

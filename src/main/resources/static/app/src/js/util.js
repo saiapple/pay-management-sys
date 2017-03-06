@@ -409,15 +409,15 @@ angular.module('IOne-Constant').constant('Constant', {
     'MENU_LIST': [
         {
             id: 1,
-            uuid: RES_UUID_MAP.PRODUCTION.RES_UUID,
+            uuid: '1',
             name: '店面管理',
             isOpen: true,
             icon: 'fa fa-cube',
             subList: [
-                {id: '/pms-shop', name: '店面支出', link: '/pms-shop', uuid: ''},
-                {id: '/pms-duty', name: '班次管理', link: '/pms-duty', uuid: ''},
-                {id: '/pms-order', name: '值班收银', link: '/pms-order', uuid: ''},
-                {id: '/pms-user', name: '人员管理', link: '/pms-user', uuid: ''}
+                {id: '/pms-shop', name: '店面支出', link: '/pms-shop', uuid: '1-1'},
+                {id: '/pms-duty', name: '班次管理', link: '/pms-duty', uuid: '1-2'},
+                {id: '/pms-order', name: '值班收银', link: '/pms-order', uuid: '1-3'},
+                {id: '/pms-user', name: '人员管理', link: '/pms-user', uuid: '1-4'}
             ]
         }/*,
         {
@@ -886,7 +886,7 @@ angular.module('IOne-Constant').constant('Constant', {
         6: {value: '6', name: '筹码'}
     },
     'PMS_USER_ROLES':{
-        1: {value: '1', name: '管理员'},
+        1: {value: '1', name: '经理'},
         2: {value: '2', name: '收银员'}
     },
     'PMS_DEFAULT_SHOP_UUID': '1',

@@ -11,4 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface UserService extends CrudService<User>, QueryService<User>, UserDetailsService {
     void resetPassword(User user, UserInput input, Boolean isAdmin);
+    boolean checkExists(String userName);
+    User findByName(String userName);
 }

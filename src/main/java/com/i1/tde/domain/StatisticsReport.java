@@ -7,6 +7,7 @@ import java.math.BigDecimal;
  * Created by Sai on 2017/3/5.
  */
 public class StatisticsReport {
+    private BigDecimal profit = BigDecimal.ZERO;
     private BigDecimal totalAmount = BigDecimal.ZERO;
     private BigDecimal cashAmount = BigDecimal.ZERO;
     private BigDecimal wxAmount = BigDecimal.ZERO;
@@ -20,6 +21,7 @@ public class StatisticsReport {
     private BigDecimal currentZfbAmount = BigDecimal.ZERO;
     private BigDecimal currentCardAmount = BigDecimal.ZERO;
     private BigDecimal currentPosAmount = BigDecimal.ZERO;
+    private BigDecimal currentTotalAmountWithProfit = BigDecimal.ZERO;
 
     private BigDecimal upAmount = BigDecimal.ZERO;
     private BigDecimal cashUpAmount = BigDecimal.ZERO;
@@ -312,5 +314,21 @@ public class StatisticsReport {
 
     public void setPosPayAmount(BigDecimal posPayAmount) {
         this.posPayAmount = posPayAmount;
+    }
+
+    public BigDecimal getProfit() {
+        return profit;
+    }
+
+    public void setProfit(BigDecimal profit) {
+        this.profit = profit;
+    }
+
+    public BigDecimal getCurrentTotalAmountWithProfit() {
+        return currentTotalAmountWithProfit;
+    }
+
+    public void setCurrentTotalAmountWithProfit(BigDecimal currentTotalAmountWithProfit) {
+        this.currentTotalAmountWithProfit = currentTotalAmountWithProfit;
     }
 }

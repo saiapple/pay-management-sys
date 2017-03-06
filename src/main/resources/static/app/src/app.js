@@ -121,10 +121,6 @@ angular.module('IOne').controller('MainController', function($rootScope, $scope,
         toastr["warning"](info)
     };
 
-
-
-
-
     $scope.showConfirm = function(title, content, success_fn, fail_fn) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
@@ -299,12 +295,12 @@ angular.module('IOne').controller('MainController', function($rootScope, $scope,
     };
 
     //Get all sys resources including role and function
-    ResService.getAll('', '', true).success(function(data) {
-        $scope.resDataMap = {};
-        angular.forEach(data, function(value, index) {
-            $scope.resDataMap[value.sysRes.uuid] = value;
-        });
-    });
+    //ResService.getAll('', '', true).success(function(data) {
+    //    $scope.resDataMap = {};
+    //    angular.forEach(data, function(value, index) {
+    //        $scope.resDataMap[value.sysRes.uuid] = value;
+    //    });
+    //});
 
 
     $scope.isAdmin = function() {
@@ -314,13 +310,30 @@ angular.module('IOne').controller('MainController', function($rootScope, $scope,
     $scope.currentUser = $scope.globals.currentUser.username;
     $scope.displayName = $cookieStore.get('displayName');
     $scope.displayType = $cookieStore.get('displayType');
+    $scope.role = $cookieStore.get('role');
 
-    OrderMaster.getOrderMasterCount(Constant.AUDIT[1].value,Constant.STATUS[1].value ,Constant.TRANSFER_PSO_FLAG[2].value,RES_UUID_MAP.PSO.ORDER.LIST_PAGE.RES_UUID).success(function(data) {
-        $scope.menuList[1].subList[1].suffix = data;
-    });
-    SalesOrderMaster.getOrderMasterCount(Constant.AUDIT[1].value,Constant.STATUS[1].value ,Constant.TRANSFER_PSO_FLAG[2].value,RES_UUID_MAP.PSO.SO.LIST_PAGE.RES_UUID).success(function(data) {
-        $scope.menuList[1].subList[2].suffix = data;
-    });
+    $scope.initRes = function(role){
+        $scope.resDataMap = {};
+        if(role == Constant.PMS_USER_ROLES[1].value
+            || role == Constant.PMS_USER_ROLES[2].value){
+            $scope.resDataMap['1'] = true;
+            //$scope.resDataMap['1-1'] = true;
+            //$scope.resDataMap['1-2'] = true;
+            $scope.resDataMap['1-3'] = true;
+            //$scope.resDataMap['1-4'] = true;
+        }
+    };
+    $scope.initRes($scope.role);
+    //if(!$scope.isAdmin()){
+    //    $scope.lockMenu(false);
+    //}
+
+    //OrderMaster.getOrderMasterCount(Constant.AUDIT[1].value,Constant.STATUS[1].value ,Constant.TRANSFER_PSO_FLAG[2].value,RES_UUID_MAP.PSO.ORDER.LIST_PAGE.RES_UUID).success(function(data) {
+    //    $scope.menuList[1].subList[1].suffix = data;
+    //});
+    //SalesOrderMaster.getOrderMasterCount(Constant.AUDIT[1].value,Constant.STATUS[1].value ,Constant.TRANSFER_PSO_FLAG[2].value,RES_UUID_MAP.PSO.SO.LIST_PAGE.RES_UUID).success(function(data) {
+    //    $scope.menuList[1].subList[2].suffix = data;
+    //});
 
     $scope.stopEventPropagation = function(event) {
         event.stopPropagation();
@@ -333,8 +346,7 @@ angular.module('IOne').controller('MainController', function($rootScope, $scope,
             parent: angular.element(document.body),
             targetEvent: event
         }).then(function(data) {
-            $scope.userPassword = data;
-            UserService.modifyPassword($scope.userPassword).success(function() {
+            UserService.modify($scope.globals.currentUser.username, data).success(function() {
                              $scope.showInfo('修改密码成功。');
                     }).error(function(data) {
                            $scope.showError(data.message);

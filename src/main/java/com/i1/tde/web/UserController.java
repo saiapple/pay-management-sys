@@ -13,6 +13,7 @@ import com.i1.tde.web.dto.UserUpdateInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,9 @@ import javax.validation.Valid;
 public class UserController {
     private UserService userService;
     protected SpringSecurityAuditorAware springSecurityAuditorAware;
+
+    @Autowired
+    private ShaPasswordEncoder encoder;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -56,9 +60,29 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
-    public User add(@Valid @RequestBody UserInput orderInput) throws BindException {
+    public User add(@Valid @RequestBody UserInput userInput) throws BindException {
         User user = new User();
-        DomainUtil.copyNotNullProperties(orderInput, user);
+        DomainUtil.copyNotNullProperties(userInput, user);
+
+        if(userInput.getName() == null){
+            throw new RuntimeException("账户不能为空");
+        }
+        if(userInput.getRole() == null){
+            throw new RuntimeException("角色不能为空");
+        }
+        if(userInput.getPassword() == null){
+            throw new RuntimeException("密码不能为空");
+        }
+        if(!userInput.getPassword().equalsIgnoreCase(userInput.getConfirmPassword())){
+            throw new RuntimeException("两次密码输入不一致");
+        }
+
+        if(userService.checkExists(userInput.getName())){
+            throw new RuntimeException("用户名已存在");
+        }
+
+        String encodedPwd = encoder.encodePassword(user.getPassword(), User.getSalt());
+        user.setPassword(encodedPwd);
 
         BindException exception = new BindException(user, user.getClass().getSimpleName());
         Validators.validateBean(exception, user);
@@ -73,9 +97,32 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.PATCH)
-    public User update(@PathVariable String uuid, @Valid @RequestBody UserUpdateInput orderUpdateInput) throws BindException {
-        User user = userService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(User.class, uuid));
-        DomainUtil.copyNotNullProperties(orderUpdateInput, user);
+    public User update(@PathVariable String uuid, @Valid @RequestBody UserUpdateInput userUpdateInput) throws BindException {
+        //User user = userService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(User.class, uuid));
+        //DomainUtil.copyNotNullProperties(userUpdateInput, user);
+
+        User user = userService.findByName(uuid);
+        if(user == null){
+            throw new ResourceNotFoundException(User.class, uuid);
+        }
+
+        if(userUpdateInput.getPassword() == null){
+            throw new RuntimeException("密码不能为空");
+        }
+        if(userUpdateInput.getNewPassword() == null){
+            throw new RuntimeException("密码不能为空");
+        }
+        if(!userUpdateInput.getNewPassword().equalsIgnoreCase(userUpdateInput.getNewPasswordConfirm())){
+            throw new RuntimeException("两次密码输入不一致");
+        }
+
+        String encodedPwd = encoder.encodePassword(userUpdateInput.getPassword(), User.getSalt());
+        if(!user.getPassword().equals(encodedPwd)){
+            throw new RuntimeException("输入密码错误");
+        }
+
+        encodedPwd = encoder.encodePassword(userUpdateInput.getNewPassword(), User.getSalt());
+        user.setPassword(encodedPwd);
 
         BindException exception = new BindException(user, User.class.getSimpleName());
         Validators.validateBean(exception, user);

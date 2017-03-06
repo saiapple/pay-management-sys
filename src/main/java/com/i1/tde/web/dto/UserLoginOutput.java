@@ -9,6 +9,7 @@ public class UserLoginOutput {
     private int type;
     private String userUuid;
     private String displayName;
+    private String role;
 
     @Deprecated
     public UserLoginOutput(String userName, int type) {
@@ -16,11 +17,12 @@ public class UserLoginOutput {
         this.type = type;
     }
 
-    public UserLoginOutput(String userName, String displayName, int type, String userUuid) {
+    public UserLoginOutput(String userName, String displayName, int type, String userUuid, String role) {
         this.userName = userName;
         this.type = type;
         this.userUuid = userUuid;
         this.displayName = displayName;
+        this.role = role;
     }
 
     public String getUserName() {
@@ -53,5 +55,13 @@ public class UserLoginOutput {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

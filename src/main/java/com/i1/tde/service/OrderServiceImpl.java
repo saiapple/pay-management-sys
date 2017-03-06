@@ -188,7 +188,7 @@ public class OrderServiceImpl implements OrderService {
         duty.setUpAmount(duty.getUpAmount().add(amount));
         shop.setUpAmount(shop.getUpAmount().add(amount));
 
-        addCurrentAmount(payType, amount, duty, shop, isSysDuty(duty));
+        addCurrentAmount(payType, amount, duty, shop, true);
     }
 
     private void rollback_up(String payType, BigDecimal amount, Duty duty, Shop shop){
@@ -200,7 +200,7 @@ public class OrderServiceImpl implements OrderService {
         duty.setUpAmount(duty.getUpAmount().subtract(amount));
         shop.setUpAmount(shop.getUpAmount().subtract(amount));
 
-        subtractCurrentAmount(payType, amount, duty, shop, isSysDuty(duty));
+        subtractCurrentAmount(payType, amount, duty, shop, true);
     }
 
     private void down(String payType, BigDecimal amount, Duty duty, Shop shop){
@@ -212,7 +212,7 @@ public class OrderServiceImpl implements OrderService {
         duty.setUpAmount(duty.getDownAmount().add(amount));
         shop.setUpAmount(shop.getDownAmount().add(amount));
 
-        subtractCurrentAmount(payType, amount, duty, shop, isSysDuty(duty));
+        subtractCurrentAmount(payType, amount, duty, shop, true);
     }
 
     private void rollback_down(String payType, BigDecimal amount, Duty duty, Shop shop){
@@ -224,21 +224,21 @@ public class OrderServiceImpl implements OrderService {
         duty.setUpAmount(duty.getDownAmount().subtract(amount));
         shop.setUpAmount(shop.getDownAmount().subtract(amount));
 
-        addCurrentAmount(payType, amount, duty, shop, isSysDuty(duty));
+        addCurrentAmount(payType, amount, duty, shop, true);
     }
 
     private void sale(String payType, BigDecimal amount, Duty duty, Shop shop){
         duty.setSaleAmount(duty.getSaleAmount().add(amount));
         shop.setSaleAmount(shop.getSaleAmount().add(amount));
 
-        addCurrentAmount(payType, amount, duty, shop, isSysDuty(duty));
+        addCurrentAmount(payType, amount, duty, shop, true);
     }
 
     private void rollback_sale(String payType, BigDecimal amount, Duty duty, Shop shop){
         duty.setSaleAmount(duty.getSaleAmount().subtract(amount));
         shop.setSaleAmount(shop.getSaleAmount().subtract(amount));
 
-        subtractCurrentAmount(payType, amount, duty, shop, isSysDuty(duty));
+        subtractCurrentAmount(payType, amount, duty, shop, true);
     }
 
     // 支出
@@ -246,60 +246,14 @@ public class OrderServiceImpl implements OrderService {
         duty.setPayAmount(duty.getPayAmount().add(amount));
         shop.setPayAmount(shop.getPayAmount().add(amount));
 
-        switch(payType){
-            case Constant.PMS_PAY_TYPES.CASH:
-                duty.setCurrentCashAmount(duty.getCashAmount().add(amount));
-                shop.setCurrentCashAmount(shop.getCashAmount().add(amount));
-                break;
-            /*case Constant.PMS_PAY_TYPES.WX:
-                duty.setCurrentWxAmount(duty.getCurrentWxAmount().add(amount));
-                shop.setCurrentWxAmount(shop.getCurrentWxAmount().add(amount));
-                break;
-            case Constant.PMS_PAY_TYPES.ZFB:
-                duty.setCurrentZfbAmount(duty.getCurrentZfbAmount().add(amount));
-                shop.setCurrentZfbAmount(shop.getCurrentZfbAmount().add(amount));
-                break;
-            case Constant.PMS_PAY_TYPES.POS:
-                duty.setCurrentPosAmount(duty.getCurrentPosAmount().add(amount));
-                shop.setCurrentPosAmount(shop.getCurrentPosAmount().add(amount));
-                break;
-            case Constant.PMS_PAY_TYPES.LEND:
-                break;
-            case Constant.PMS_PAY_TYPES.CARD:
-                break;*/
-
-            default: throw new RuntimeException("不支持的支付类型, PAY_TYPE: " + payType);
-        }
+        subtractCurrentAmount(payType, amount, duty, shop, true);
     }
 
     private void rollback_pay(String payType, BigDecimal amount, Duty duty, Shop shop){
         duty.setPayAmount(duty.getPayAmount().subtract(amount));
         shop.setPayAmount(shop.getPayAmount().subtract(amount));
 
-        switch(payType){
-            case Constant.PMS_PAY_TYPES.CASH:
-                duty.setCurrentCashAmount(duty.getCashAmount().subtract(amount));
-                shop.setCurrentCashAmount(shop.getCashAmount().subtract(amount));
-                break;
-            /*case Constant.PMS_PAY_TYPES.WX:
-                duty.setCurrentWxAmount(duty.getCurrentWxAmount().add(amount));
-                shop.setCurrentWxAmount(shop.getCurrentWxAmount().add(amount));
-                break;
-            case Constant.PMS_PAY_TYPES.ZFB:
-                duty.setCurrentZfbAmount(duty.getCurrentZfbAmount().add(amount));
-                shop.setCurrentZfbAmount(shop.getCurrentZfbAmount().add(amount));
-                break;
-            case Constant.PMS_PAY_TYPES.POS:
-                duty.setCurrentPosAmount(duty.getCurrentPosAmount().add(amount));
-                shop.setCurrentPosAmount(shop.getCurrentPosAmount().add(amount));
-                break;
-            case Constant.PMS_PAY_TYPES.LEND:
-                break;
-            case Constant.PMS_PAY_TYPES.CARD:
-                break;*/
-
-            default: throw new RuntimeException("不支持的支付类型, PAY_TYPE: " + payType);
-        }
+        addCurrentAmount(payType, amount, duty, shop, true);
     }
 
     private void increaseBYJ(String payType, BigDecimal amount, Duty duty, Shop shop){
@@ -307,20 +261,30 @@ public class OrderServiceImpl implements OrderService {
         switch(payType){
             case Constant.PMS_PAY_TYPES.CASH:
                 duty.setCashAmount(duty.getCashAmount().add(amount));
+                if(isSysDuty(duty))
+                    shop.setCashAmount(shop.getCashAmount().add(amount));
                 break;
             case Constant.PMS_PAY_TYPES.WX:
                 duty.setWxAmount(duty.getWxAmount().add(amount));
+                if(isSysDuty(duty))
+                    shop.setWxAmount(shop.getWxAmount().add(amount));
                 break;
             case Constant.PMS_PAY_TYPES.ZFB:
                 duty.setZfbAmount(duty.getZfbAmount().add(amount));
+                if(isSysDuty(duty))
+                    shop.setZfbAmount(shop.getZfbAmount().add(amount));
                 break;
             case Constant.PMS_PAY_TYPES.POS:
                 duty.setPosAmount(duty.getPosAmount().add(amount));
+                if(isSysDuty(duty))
+                    shop.setPosAmount(shop.getPosAmount().add(amount));
                 break;
             /*case Constant.PMS_PAY_TYPES.LEND:
                 break;*/
             case Constant.PMS_PAY_TYPES.CARD:
                 duty.setCardAmount(duty.getCardAmount().add(amount));
+                if(isSysDuty(duty))
+                    shop.setCardAmount(shop.getCardAmount().add(amount));
                 break;
 
             default: throw new RuntimeException("不支持的支付类型, PAY_TYPE: " + payType);
@@ -338,20 +302,30 @@ public class OrderServiceImpl implements OrderService {
         switch(payType){
             case Constant.PMS_PAY_TYPES.CASH:
                 duty.setCashAmount(duty.getCashAmount().subtract(amount));
+                if(isSysDuty(duty))
+                    shop.setCashAmount(shop.getCashAmount().subtract(amount));
                 break;
             case Constant.PMS_PAY_TYPES.WX:
                 duty.setWxAmount(duty.getWxAmount().subtract(amount));
+                if(isSysDuty(duty))
+                    shop.setWxAmount(shop.getWxAmount().subtract(amount));
                 break;
             case Constant.PMS_PAY_TYPES.ZFB:
                 duty.setZfbAmount(duty.getZfbAmount().subtract(amount));
+                if(isSysDuty(duty))
+                    shop.setZfbAmount(shop.getZfbAmount().subtract(amount));
                 break;
             case Constant.PMS_PAY_TYPES.POS:
                 duty.setPosAmount(duty.getPosAmount().subtract(amount));
+                if(isSysDuty(duty))
+                    shop.setPosAmount(shop.getPosAmount().subtract(amount));
                 break;
             /*case Constant.PMS_PAY_TYPES.LEND:
                 break;*/
             case Constant.PMS_PAY_TYPES.CARD:
                 duty.setCardAmount(duty.getCardAmount().subtract(amount));
+                if(isSysDuty(duty))
+                    shop.setCardAmount(shop.getCardAmount().subtract(amount));
                 break;
 
             default: throw new RuntimeException("不支持的支付类型, PAY_TYPE: " + payType);
@@ -371,33 +345,33 @@ public class OrderServiceImpl implements OrderService {
     /***
      * 进钱操作调用此更新当前剩余金额
      */
-    private void addCurrentAmount(String payType, BigDecimal amount, Duty duty, Shop shop, boolean isInternalDuty) {
+    private void addCurrentAmount(String payType, BigDecimal amount, Duty duty, Shop shop, boolean toUpdateShop) {
         switch(payType){
             case Constant.PMS_PAY_TYPES.CASH:
                 duty.setCurrentCashAmount(duty.getCurrentCashAmount().add(amount));
-                if(isInternalDuty)
+                if(toUpdateShop)
                     shop.setCurrentCashAmount(shop.getCurrentCashAmount().add(amount));
                 break;
             case Constant.PMS_PAY_TYPES.WX:
                 duty.setCurrentWxAmount(duty.getCurrentWxAmount().add(amount));
-                if(isInternalDuty)
+                if(toUpdateShop)
                     shop.setCurrentWxAmount(shop.getCurrentWxAmount().add(amount));
                 break;
             case Constant.PMS_PAY_TYPES.ZFB:
                 duty.setCurrentZfbAmount(duty.getCurrentZfbAmount().add(amount));
-                if(isInternalDuty)
+                if(toUpdateShop)
                     shop.setCurrentZfbAmount(shop.getCurrentZfbAmount().add(amount));
                 break;
             case Constant.PMS_PAY_TYPES.POS:
                 duty.setCurrentPosAmount(duty.getCurrentPosAmount().add(amount));
-                if(isInternalDuty)
+                if(toUpdateShop)
                     shop.setCurrentPosAmount(shop.getCurrentPosAmount().add(amount));
                 break;
             /*case Constant.PMS_PAY_TYPES.LEND:
                 break;*/
             case Constant.PMS_PAY_TYPES.CARD:
                 duty.setCurrentCardAmount(duty.getCurrentCardAmount().add(amount));
-                if(isInternalDuty)
+                if(toUpdateShop)
                     shop.setCurrentCardAmount(shop.getCurrentCardAmount().add(amount));
                 break;
 
@@ -408,33 +382,33 @@ public class OrderServiceImpl implements OrderService {
     /***
      * 出钱操作调用此更新当前剩余金额
      */
-    private void subtractCurrentAmount(String payType, BigDecimal amount, Duty duty, Shop shop, boolean isInternalDuty) {
+    private void subtractCurrentAmount(String payType, BigDecimal amount, Duty duty, Shop shop, boolean toUpdateShop) {
         switch(payType){
             case Constant.PMS_PAY_TYPES.CASH:
                 duty.setCurrentCashAmount(duty.getCurrentCashAmount().subtract(amount));
-                if(isInternalDuty)
+                if(toUpdateShop)
                     shop.setCurrentCashAmount(shop.getCurrentCashAmount().subtract(amount));
                 break;
             case Constant.PMS_PAY_TYPES.WX:
                 duty.setCurrentWxAmount(duty.getCurrentWxAmount().subtract(amount));
-                if(isInternalDuty)
+                if(toUpdateShop)
                     shop.setCurrentWxAmount(shop.getCurrentWxAmount().subtract(amount));
                 break;
             case Constant.PMS_PAY_TYPES.ZFB:
                 duty.setCurrentZfbAmount(duty.getCurrentZfbAmount().subtract(amount));
-                if(isInternalDuty)
+                if(toUpdateShop)
                     shop.setCurrentZfbAmount(shop.getCurrentZfbAmount().subtract(amount));
                 break;
             case Constant.PMS_PAY_TYPES.POS:
                 duty.setCurrentPosAmount(duty.getCurrentPosAmount().subtract(amount));
-                if(isInternalDuty)
+                if(toUpdateShop)
                     shop.setCurrentPosAmount(shop.getCurrentPosAmount().subtract(amount));
                 break;
             /*case Constant.PMS_PAY_TYPES.LEND:
                 break;*/
             case Constant.PMS_PAY_TYPES.CARD:
                 duty.setCurrentCardAmount(duty.getCurrentCardAmount().subtract(amount));
-                if(isInternalDuty)
+                if(toUpdateShop)
                     shop.setCurrentCardAmount(shop.getCurrentCardAmount().subtract(amount));
                 break;
 

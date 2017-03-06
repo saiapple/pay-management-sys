@@ -80,10 +80,15 @@
                                     </div>
                                 </div>
                                 <div layout="row" layout-align="end center">
+                                    <md-button ng-if="item.name != 'admin'" class="md-button close-btn" aria-label="More" ng-click="deleteClickAction(item)" style="position: relative;left: 15px; color:blue;">
+                                        删除
+                                    </md-button>
+                                </div>
+                                <!--<div layout="row" layout-align="end center">
                                     <md-button class="md-button close-btn" aria-label="More" ng-click="showEditor(item)" style="position: relative;left: 15px; color:blue;">
                                         编辑
                                     </md-button>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>

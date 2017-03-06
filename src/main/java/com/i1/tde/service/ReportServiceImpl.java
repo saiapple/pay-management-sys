@@ -49,6 +49,9 @@ public class ReportServiceImpl implements ReportService {
 
         countTotal(report);
 
+        report.setProfit(shop.getProfit());
+        report.setCurrentTotalAmountWithProfit(report.getCurrentTotalAmount().add(report.getProfit()));
+
         return report;
     }
 

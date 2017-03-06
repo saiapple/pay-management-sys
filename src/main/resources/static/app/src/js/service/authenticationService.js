@@ -22,6 +22,7 @@ angular.module('IOne-login').service('AuthenticationService', function (Base64, 
         $cookieStore.put('globals', $rootScope.globals);
         $cookieStore.put('displayName', loginResponse.nickName);
         $cookieStore.put('displayType', loginResponse.userName);
+        $cookieStore.put('role', loginResponse.role);
     };
 
     this.ClearCredentials = function () {

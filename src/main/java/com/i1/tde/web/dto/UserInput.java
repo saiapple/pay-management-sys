@@ -9,6 +9,7 @@ public class UserInput {
     private String password;
     private String newPassword;
     private String role;
+    private String confirmPassword;
 
     public String getName() {
         return name;
@@ -48,5 +49,13 @@ public class UserInput {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

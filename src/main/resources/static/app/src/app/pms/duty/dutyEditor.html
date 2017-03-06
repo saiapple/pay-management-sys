@@ -6,6 +6,7 @@
                     <label class="label">开始时间：</label>
                     <span>{{selectedItem.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                 </md-input-container>-->
+
                 <md-input-container>
                     <label>现金备用金</label>
                     <input name="text" type="number" ng-model="selectedItem.cashAmount">
@@ -23,7 +24,7 @@
                     <input name="text" type="number" ng-model="selectedItem.cardAmount">
                 </md-input-container>
                 <md-input-container>
-                    <label>刷卡备用金</label>
+                    <label>POS刷卡备用金</label>
                     <input name="text" type="number" ng-model="selectedItem.posAmount">
                 </md-input-container>
             </form>
