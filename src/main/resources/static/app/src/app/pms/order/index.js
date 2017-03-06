@@ -27,7 +27,7 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
     };
 
     $scope.refreshList = function() {
-        DutyService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, {'active':'1'}).success(function(rep){
+        DutyService.getAll(5, 0, {'active':'1'}).success(function(rep){
             if(rep.totalElements === 1){
                 $scope.currentDuty = rep.content[0];
                 // 获取班次统计报表

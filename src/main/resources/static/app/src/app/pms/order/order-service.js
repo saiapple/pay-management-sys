@@ -1,7 +1,6 @@
 angular.module('IOne-Production').service('OrderService', function ($http, Constant) {
     this.getAll = function (sizePerPage, page, filter) {
-        var confirm = filter.confirm == 0 ? '' : filter.confirm;
-        var status = filter.status == 0 ? '' : filter.status;
+        var type = filter.type == 0 ? '' : filter.type;
         var url = 'orders?size=' + sizePerPage
             + '&page=' + page;
 
@@ -21,7 +20,7 @@ angular.module('IOne-Production').service('OrderService', function ($http, Const
             url = url + '&dutyUuid=' + filter.dutyUuid;
         }
         if (filter.type != null) {
-            url = url + '&type=' + filter.type;
+            url = url + '&type=' + type;
         }
         if (filter.searchKeyWord != null) {
             url = url + '&comment=' + filter.searchKeyWord;
