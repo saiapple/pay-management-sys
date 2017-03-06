@@ -1,19 +1,10 @@
 <div class="main-panel">
     <div ng-show="ui_status == UI_STATUS.VIEW_UI_STATUS">
 
-        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 40px;padding-top: 0;">
-            <div layout="row" flex="100" style="color:#7f8fa4" >
-                <div flex="20">
-                    <div layout-padding>开始时间 :  <span>{{currentDuty.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</span></div>
-                </div>
-                <div flex="20">
-                    <div layout-padding>流水总数 :  <span>{{pageOption.totalElements}}</span></div>
-                </div>
-            </div>
-        </div>
+
 
         <div layout="row" flex="100" layout-warp
-             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:skyblue;;height: 50px;padding-top: 10px;">
+             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:rgb(79, 73, 73);;height: 60px;padding-top: 15px;">
             <div flex="10" layout="column">
                 <span>
                     <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[4].value, PMS_BILL_PAY_TYPES[1].value)">
@@ -86,7 +77,18 @@
             </div>
         </div>
 
-        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:silver;position: relative;height: 200px;padding-top: 0;">
+        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:#FFFFFF;position: relative;height: 40px;padding-top: 0;">
+            <div layout="row" flex="100" style="color:#7f8fa4" >
+                <div flex="20">
+                    <div layout-padding>开始时间 :  <span>{{currentDuty.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</span></div>
+                </div>
+                <div flex="20">
+                    <div layout-padding>流水总数 :  <span>{{pageOption.totalElements}}</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:#FFFFFF;position: relative;height: 200px;padding-top: 0;">
             <div layout="row" flex="100" style="color:#7f8fa4" >
                 <div flex="20">
                     <div layout-padding>总备用金 :  <span>{{currentDutyReport.totalAmount}}</span></div>
@@ -134,7 +136,7 @@
         </div>
 
         <div layout="row" flex="100" layout-warp
-             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:skyblue;;height: 50px;padding-top: 10px;">
+             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:rgb(79, 73, 73);height: 50px;padding-top: 15px;">
             <div flex="10" layout="column">
                 <span>
                     <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[1].value, PMS_BILL_PAY_TYPES[1].value)">
@@ -194,7 +196,7 @@
         </div>
 
         <div layout="row" flex="100" layout-warp
-             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:skyblue;;height: 50px;padding-top: 10px;">
+             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:rgb(79, 73, 73);height: 50px;padding-top: 10px;">
             <div flex="10" layout="column">
                 <span>
                     <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[3].value, PMS_BILL_PAY_TYPES[1].value)">
