@@ -7,25 +7,13 @@
                     <span>{{selectedItem.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                 </md-input-container>-->
                 <md-input-container>
-                    <label>现金备用金</label>
-                    <input name="text" type="number" ng-model="selectedItem.cashAmount">
+                    <label>上水金额</label>
+                    <input name="text" type="number" ng-model="selectedItem.profit">
                 </md-input-container>
-                <md-input-container>
-                    <label>微信备用金</label>
-                    <input name="text" type="number" ng-model="selectedItem.wxAmount">
-                </md-input-container>
-                <md-input-container>
-                    <label>支付宝备用金</label>
-                    <input name="text" type="number" ng-model="selectedItem.zfbAmount">
-                </md-input-container>
-                <md-input-container>
-                    <label>卡牌备用金</label>
-                    <input name="text" type="number" ng-model="selectedItem.cardAmount">
-                </md-input-container>
-                <md-input-container>
-                    <label>刷卡备用金</label>
-                    <input name="text" type="number" ng-model="selectedItem.posAmount">
-                </md-input-container>
+                <!--<md-input-container ng-disabled="true">
+                    <label>收货人地址</label>
+                    <input name="text" ng-disabled="true" type="text" ng-model="selectedItem.receiveAddress">
+                </md-input-container>-->
             </form>
             <div layout="row">
                 <md-button ng-click="save()">

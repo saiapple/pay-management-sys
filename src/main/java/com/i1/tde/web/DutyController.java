@@ -4,9 +4,11 @@ import com.i1.base.domain.DomainUtil;
 import com.i1.base.domain.validator.Validators;
 import com.i1.base.service.exception.ResourceNotFoundException;
 import com.i1.tde.domain.Duty;
+import com.i1.tde.domain.Shop;
 import com.i1.tde.domain.StatisticsReport;
 import com.i1.tde.service.ReportService;
 import com.i1.tde.service.DutyService;
+import com.i1.tde.service.ShopService;
 import com.i1.tde.service.query.DutyQuery;
 import com.i1.tde.web.dto.DutyInput;
 import com.i1.tde.web.dto.DutyUpdateInput;
@@ -26,6 +28,7 @@ import javax.validation.Valid;
 public class DutyController {
     private DutyService dutyService;
     private ReportService dutyReportService;
+    private ShopService shopService;
 
     @Autowired
     public void setDutyService(DutyService dutyService) {
@@ -35,6 +38,11 @@ public class DutyController {
     @Autowired
     public void setDutyReportService(ReportService dutyReportService) {
         this.dutyReportService = dutyReportService;
+    }
+
+    @Autowired
+    public void setShopService(ShopService shopService) {
+        this.shopService = shopService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -59,6 +67,8 @@ public class DutyController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
     public Duty add(@Valid @RequestBody DutyInput dutyInput) throws BindException {
+        Shop shop = shopService.findOne(dutyInput.getShopUuid()).orElseThrow(() -> new ResourceNotFoundException(Shop.class, dutyInput.getShopUuid()));
+
         Duty duty = new Duty();
         DomainUtil.copyNotNullProperties(dutyInput, duty);
 
@@ -67,6 +77,8 @@ public class DutyController {
         duty.setCurrentPosAmount(duty.getPosAmount());
         duty.setCurrentWxAmount(duty.getWxAmount());
         duty.setCurrentZfbAmount(duty.getZfbAmount());
+        duty.setActive(Duty.ACTIVE_0);
+        duty.setShop(shop);
 
         BindException exception = new BindException(duty, duty.getClass().getSimpleName());
         Validators.validateBean(exception, duty);
@@ -82,19 +94,19 @@ public class DutyController {
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.PATCH)
     public Duty update(@PathVariable String uuid, @Valid @RequestBody DutyUpdateInput dutyUpdateInput) throws BindException {
-        Duty rule = dutyService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Duty.class, uuid));
-        DomainUtil.copyNotNullProperties(dutyUpdateInput, rule);
+        Duty duty = dutyService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Duty.class, uuid));
+        //DomainUtil.copyNotNullProperties(dutyUpdateInput, duty);
 
-        BindException exception = new BindException(rule, Duty.class.getSimpleName());
-        Validators.validateBean(exception, rule);
+        BindException exception = new BindException(duty, Duty.class.getSimpleName());
+        Validators.validateBean(exception, duty);
 
         if (exception.hasErrors()) {
             throw exception;
         }
 
-        dutyService.update(rule);
+        dutyService.cascadeUpdate(duty, dutyUpdateInput);
 
-        return rule;
+        return duty;
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

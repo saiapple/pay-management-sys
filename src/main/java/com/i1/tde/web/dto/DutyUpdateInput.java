@@ -11,17 +11,8 @@ public class DutyUpdateInput {
     private BigDecimal wxAmount;
     private BigDecimal zfbAmount;
     private BigDecimal cardAmount;
-    private BigDecimal currentCashAmount;
-    private BigDecimal currentWxAmount;
-    private BigDecimal currentZfbAmount;
-    private BigDecimal currentCardAmount;
-    private BigDecimal card1Count;
-    private BigDecimal card5Count;
-    private BigDecimal card10Count;
-    private Date startTime;
-    private Date endTime;
-    private String ownerUuid;
-    private String managerUuid;
+    private BigDecimal posAmount;
+    private BigDecimal profit;
     private String active;
 
     public BigDecimal getCashAmount() {
@@ -56,92 +47,20 @@ public class DutyUpdateInput {
         this.cardAmount = cardAmount;
     }
 
-    public BigDecimal getCurrentCashAmount() {
-        return currentCashAmount;
+    public BigDecimal getPosAmount() {
+        return posAmount;
     }
 
-    public void setCurrentCashAmount(BigDecimal currentCashAmount) {
-        this.currentCashAmount = currentCashAmount;
+    public void setPosAmount(BigDecimal posAmount) {
+        this.posAmount = posAmount;
     }
 
-    public BigDecimal getCurrentWxAmount() {
-        return currentWxAmount;
+    public BigDecimal getProfit() {
+        return profit;
     }
 
-    public void setCurrentWxAmount(BigDecimal currentWxAmount) {
-        this.currentWxAmount = currentWxAmount;
-    }
-
-    public BigDecimal getCurrentZfbAmount() {
-        return currentZfbAmount;
-    }
-
-    public void setCurrentZfbAmount(BigDecimal currentZfbAmount) {
-        this.currentZfbAmount = currentZfbAmount;
-    }
-
-    public BigDecimal getCurrentCardAmount() {
-        return currentCardAmount;
-    }
-
-    public void setCurrentCardAmount(BigDecimal currentCardAmount) {
-        this.currentCardAmount = currentCardAmount;
-    }
-
-    public BigDecimal getCard1Count() {
-        return card1Count;
-    }
-
-    public void setCard1Count(BigDecimal card1Count) {
-        this.card1Count = card1Count;
-    }
-
-    public BigDecimal getCard5Count() {
-        return card5Count;
-    }
-
-    public void setCard5Count(BigDecimal card5Count) {
-        this.card5Count = card5Count;
-    }
-
-    public BigDecimal getCard10Count() {
-        return card10Count;
-    }
-
-    public void setCard10Count(BigDecimal card10Count) {
-        this.card10Count = card10Count;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getOwnerUuid() {
-        return ownerUuid;
-    }
-
-    public void setOwnerUuid(String ownerUuid) {
-        this.ownerUuid = ownerUuid;
-    }
-
-    public String getManagerUuid() {
-        return managerUuid;
-    }
-
-    public void setManagerUuid(String managerUuid) {
-        this.managerUuid = managerUuid;
+    public void setProfit(BigDecimal profit) {
+        this.profit = profit;
     }
 
     public String getActive() {

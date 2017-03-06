@@ -13,6 +13,8 @@ import java.util.Date;
 @Entity
 @Table(name = "shop")
 public class Shop extends MaintainDomainObj {
+    public static final String DEFAULT_SHOP_UUID = "1";
+
     private String name;
     private BigDecimal cashAmount = BigDecimal.ZERO;
     private BigDecimal wxAmount = BigDecimal.ZERO;
@@ -31,6 +33,7 @@ public class Shop extends MaintainDomainObj {
     private BigDecimal card1Count = BigDecimal.ZERO;
     private BigDecimal card5Count = BigDecimal.ZERO;
     private BigDecimal card10Count = BigDecimal.ZERO;
+    private BigDecimal profit = BigDecimal.ZERO;
 //    private Date startTime;
 //    private Date endTime;
 //    private User owner;
@@ -200,7 +203,16 @@ public class Shop extends MaintainDomainObj {
         this.card10Count = card10Count;
     }
 
-//    @Column(name = "start_time")
+    @Column(name = "profit")
+    public BigDecimal getProfit() {
+        return profit;
+    }
+
+    public void setProfit(BigDecimal profit) {
+        this.profit = profit;
+    }
+
+    //    @Column(name = "start_time")
 //    public Date getStartTime() {
 //        return startTime;
 //    }

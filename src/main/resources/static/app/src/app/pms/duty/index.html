@@ -180,10 +180,10 @@
                             <!--<md-option ng-repeat="(key, value) in RELEASE" ng-value="key">{{value.name}}</md-option>-->
                         <!--</md-select>-->
                     <!--</md-input-container>-->
-                    <md-input-container flex style="margin-left: 50px;" >
+                    <!--<md-input-container flex style="margin-left: 50px;" >
                         <label>输入关键字查询</label>
                         <input ng-model="searchKeyWord">
-                    </md-input-container>
+                    </md-input-container>-->
                     <!--<span style="padding-top: 10px;">-->
                         <!--<md-button class="md-icon-button" aria-label="Eat cake" ng-click="showAdvancedSearchAction()">-->
                             <!--<ng-md-icon icon="expand_more" ng-show="!displayAdvancedSearPanel"></ng-md-icon>-->
@@ -201,59 +201,63 @@
                 <!-- status panel-->
                 <div layout="row" layout-warp layout-padding layout-margin ng-show="!selectedItem" style="margin: 20px 0px 20px 0px; padding-left: 60px;background-color: whitesmoke;position: relative;height: 50px;padding-top: 15px;">
                     <span flex="20">班次总数: {{pageOption.totalElements}}</span>
-                    <span flex="20">上水总数: </span>
+                    <span flex="20">上水总额: </span>
                 </div>
                 <div ng-repeat="item in itemList | orderBy:sortByField" ng-class="selectedItem.no == item.no ? 'selected-item':''">
-                    <div class="summary-item">
+                    <div >
                         <div layout="row" layout-wrap>
                             <!--<span style="position: absolute">-->
                                 <!--<md-checkbox ng-model="item.selected" aria-label="Checkbox" ng-click="selectItemAction($event, item)"></md-checkbox>-->
                             <!--</span>-->
-                            <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px; font-weight: bold;">
+                            <div flex="100" layout="row" style="padding-left: 50px;padding-top: 15px; font-weight: bold;">
                                 <span flex class="summary-item__title"><!--ng-click="showDetailPanelAction(item)" -->
                                     {{item.startTime | date:'yyyy-MM-dd HH:mm:ss'}}&nbsp;&nbsp;--&nbsp;&nbsp;{{item.endTime | date:'yyyy-MM-dd HH:mm:ss'}}
                                 </span>
-                                <span flex class="right-align">上水:{{item.profit}}</span>
+                                <span ng-show="item.active=='-1'" flex class="right-align" style="padding-right: 60px;">系统班次</span>
+                                <span ng-show="item.active=='0'" flex class="right-align" style="padding-right: 60px;">未开始</span>
+                                <span ng-show="item.active=='1'" flex class="right-align" style="padding-right: 60px;">进行中</span>
+                                <span ng-show="item.active=='2'" flex class="right-align" style="padding-right: 60px;">已结束</span>
                             </div>
-                            <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px;font-size: 14px;" layout-align="space-between center" ng-hide="selectedItem">
+                            <div flex="100" layout="row" style="padding-left: 50px; padding-top: 5px;font-size: 14px;" layout-align="space-between center" ng-hide="selectedItem">
                                 <div layout="row" flex style="color:#7f8fa4" >
-                                    <div flex="20">
+                                    <div flex="25">
                                         <div layout-padding>现金备用金 :  <span>{{item.cashAmount}}</span></div>
-                                        <div layout-padding>现金结余 :  <span>{{item.currentCashAmount}}</span></div>
-                                    </div>
-                                    <div flex="20">
                                         <div layout-padding>微信备用金 :  <span>{{item.wxAmount}}</span></div>
-                                        <div layout-padding>微信结余 :  <span>{{item.currentWxAmount}}</span></div>
-
-                                    </div>
-                                    <div flex="20">
                                         <div layout-padding>支付宝备用金 :  <span>{{item.zfbAmount}}</span></div>
-                                        <div layout-padding>支付宝结余 :  <span>{{item.currentZfbAmount}}</span></div>
+                                        <div layout-padding>筹码备用金额 :  <span>{{item.cardAmount}}</span></div>
+                                        <div layout-padding>刷卡备用金额 :  <span>{{item.posAmount}}</span></div>
                                     </div>
-                                    <div flex="20">
-                                        <div layout-padding>卡牌备用金额 :  <span>{{item.zfbAmount}}</span></div>
-                                        <div layout-padding>卡牌结余金额 :  <span>{{item.currentZfbAmount}}</span></div>
+                                    <div flex="25">
+                                        <div layout-padding>现金结余 :  <span>{{item.currentCashAmount}}</span></div>
+                                        <div layout-padding>微信结余 :  <span>{{item.currentWxAmount}}</span></div>
+                                        <div layout-padding>支付宝结余 :  <span>{{item.currentZfbAmount}}</span></div>
+                                        <div layout-padding>筹码结余 :  <span>{{item.currentCardAmount}}</span></div>
+                                        <div layout-padding>刷卡结余 :  <span>{{item.currentPosAmount}}</span></div>
+                                    </div>
+                                    <div flex="25">
+                                        <div layout-padding>上分金额 :  <span>{{item.upAmount}}</span></div>
+                                        <div layout-padding>下分金额 :  <span>{{item.downAmount}}</span></div>
+                                        <div layout-padding>售卖金额 :  <span>{{item.saleAmount}}</span></div>
+                                        <div layout-padding>支出金额 :  <span>{{item.payAmount}}</span></div>
+                                        <div layout-padding>上水金额 :  <span>{{item.profit}}</span></div>
                                     </div>
                                 </div>
                                 <div layout="row" layout-align="end center">
-                                    <!--<md-switch ng-model="item.confirm" aria-label="Switch 1" class="md-block" ng-true-value="'2'" ng-false-value="'1'" ng-click="confirmClickAction($event, item)">
-                                        审核
-                                    </md-switch>
-                                    <md-switch ng-model="item.status" aria-label="Switch 1" class="md-block" ng-true-value="'1'" ng-false-value="'2'" ng-click="statusClickAction($event, item)">
-                                        启用
-                                    </md-switch>
-                                    <md-switch ng-model="item.release" aria-label="Switch 1" class="md-block" ng-true-value="'2'" ng-false-value="'1'" ng-click="releaseClickAction($event, item)">
-                                        发布
-                                    </md-switch>-->
-                                    <md-button class="md-button close-btn" aria-label="More" ng-click="showEditor(item)" style="position: relative;left: 15px; color:blue;">
+                                    <md-button ng-disabled="item.active != '0'" class="md-button close-btn" aria-label="More" ng-click="showEditor(item)" style="position: relative;left: 15px;">
+                                        修改备用金
+                                    </md-button>
+                                    <md-button class="md-button close-btn" aria-label="More" ng-click="showProfitEditor(item)" style="position: relative;left: 15px;">
                                         上水
                                     </md-button>
-                                    <md-button class="md-button close-btn" aria-label="More" ng-click="showEditor(item)" style="position: relative;left: 15px; color:blue;">
-                                        设定备用金
+                                    <md-button ng-disabled="item.active == '1'" class="md-button close-btn" aria-label="More" ng-click="startDuty(item)" style="position: relative;left: 15px;">
+                                        开始
                                     </md-button>
-                                    <md-button class="md-button close-btn" aria-label="More" ng-click="toggleMorePanelAction(item)" style="position: relative;left: 15px; color:blue;">
+                                    <md-button ng-disabled="item.active == '2'" class="md-button close-btn" aria-label="More" ng-click="finishDuty(item)" style="position: relative;left: 15px;">
+                                        完成
+                                    </md-button>
+                                    <!--<md-button class="md-button close-btn" aria-label="More" ng-click="toggleMorePanelAction(item)" style="position: relative;left: 15px; color:blue;">
                                         查看流水
-                                    </md-button>
+                                    </md-button>-->
                                 </div>
                             </div>
                         </div>

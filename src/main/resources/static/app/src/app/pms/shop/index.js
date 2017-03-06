@@ -5,7 +5,7 @@ angular.module('IOne-Production').config(['$routeProvider', function($routeProvi
     })
 }]);
 
-angular.module('IOne-Production').controller('ShopController', function($scope, $mdDialog, ShopService, OrderService, Constant) {
+angular.module('IOne-Production').controller('ShopController', function($scope, $mdDialog, ShopService, OrderService, DutyService, Constant) {
     $scope.pageOption = {
         sizePerPage: 10,
         currentPage: 0,
@@ -28,26 +28,43 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
     };
 
     $scope.refreshList = function() {
-        ShopService.getReport('1').success(function(rep){ //'1' 默认店面UUID
+        // 获取店面统计信息
+        ShopService.getReport(Constant.PMS_DEFAULT_SHOP_UUID).success(function(rep){ //'1' 默认店面UUID
             $scope.currentReport = rep;
-
-            //获取流水信息
-            OrderService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
-                $scope.itemList = data.content;
-                $scope.pageOption.totalPage = data.totalPages;
-                $scope.pageOption.totalElements = data.totalElements;
-
-                if($scope.itemList != null && $scope.itemList.length > 0){
-                    $scope.currentDuty = $scope.itemList[0].duty;
-                }
-            }).error(function (response) {
-                $scope.itemList = [];
-                $scope.pageOption.totalPage = 0;
-                $scope.pageOption.totalElements = 0;
-                $scope.showError('获取信息失败，' + response.message);
-            });
         }).error(function(error){
             $scope.showError('获取统计信息失败，' + error.message);
+        });
+
+        // 获取内部班次
+        DutyService.getAll(5, 0, {'uuid': Constant.PMS_DEFAULT_DUTY_UUID}).success(function(rep){
+            if(rep.totalElements === 1){
+                $scope.currentDuty = rep.content[0];
+                // 获取班次统计报表
+                if($scope.currentDuty != null){
+                    DutyService.getReport($scope.currentDuty.uuid).success(function(rep){
+                        $scope.currentDutyReport = rep;
+                    }).error(function(error){
+                        $scope.showError('获取班次统计信息失败，' + error.message);
+                    });
+                }
+
+                //获取班次流水
+                $scope.listFilterOption.dutyUuid = $scope.currentDuty.uuid;
+                OrderService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
+                    $scope.itemList = data.content;
+                    $scope.pageOption.totalPage = data.totalPages;
+                    $scope.pageOption.totalElements = data.totalElements;
+                }).error(function (response) {
+                    $scope.itemList = [];
+                    $scope.pageOption.totalPage = 0;
+                    $scope.pageOption.totalElements = 0;
+                    $scope.showError('获取信息失败，' + response.message);
+                });
+            } else {
+                $scope.showError('班次尚未开始');
+            }
+        }).error(function(error){
+            $scope.showError('班次尚未开始，' + error.message);
         });
     };
 
@@ -58,18 +75,7 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
         $scope.refreshList();
     }, true);
 
-    $scope.itemList = [
-        { no:'1111111', name: 'name1', orderAmount: '100', confirm: '1', release: '1', status: '2' },
-        { no:'2222222', name: 'name2', orderAmount: '200', confirm: '2', release: '1', status: '1'  },
-        { no:'4444444', name: 'name0', orderAmount: '400', confirm: '1', release: '1', status: '1'  },
-        { no:'3333333', name: 'name3', orderAmount: '300', confirm: '1', release: '2', status: '2'  }
-    ];
-
-    $scope.subItemList = [
-        { no:'1111111', name: 'name1', orderAmount: '100', confirm: '1', release: '1', status: '2' },
-        { no:'2222222', name: 'name2', orderAmount: '200', confirm: '2', release: '1', status: '1'  },
-        { no:'3333333', name: 'name3', orderAmount: '300', confirm: '1', release: '2', status: '2'  }
-    ];
+    $scope.itemList = [];
 
     $scope.selectAllFlag = false;
 
@@ -162,56 +168,56 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
         }
     };
 
-    $scope.showEditor = function (selectedItem) {
-        var action = "edit";
-        if(selectedItem === null){
-            action = "add";
-            selectedItem = {
-                "cashAmount": 0,
-                "wxAmount": 0,
-                "zfbAmount": 0,
-                "cardAmount": 0
-
-            };
-        }
-
-        $mdDialog.show({
-            controller: 'EditShopController',
-            templateUrl: 'app/src/app/pms/duty/dutyEditor.html',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            locals: {
-                parentSelectedItem: selectedItem,
-                action: action
-            }
-        }).then(function (data) {
-            var postData = {
-                "cashAmount": data.cashAmount,
-                "wxAmount": data.wxAmount,
-                "zfbAmount": data.zfbAmount,
-                "cardAmount": data.cardAmount
-            };
-
-            if(action === "edit") {
-                ShopService.modify(selectedItem.uuid, postData).success(function () {
-                    //$scope.updateSelectedItem(data);
-                    $scope.showInfo('修改班次成功');
-                    $scope.refreshList();
-                }).error(function (response) {
-                    $scope.showError('修改班次失败，' + response.message);
-                });
-            } else if(action === "add"){
-                postData.startTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-                ShopService.add(postData).success(function () {
-                    //$scope.updateSelectedItem(data);
-                    $scope.showInfo('新建班次成功');
-                    $scope.refreshList();
-                }).error(function (response) {
-                    $scope.showError('新建班次失败，' + response.message);
-                });
-            }
-        });
-    };
+    //$scope.showEditor = function (selectedItem) {
+    //    var action = "edit";
+    //    if(selectedItem === null){
+    //        action = "add";
+    //        selectedItem = {
+    //            "cashAmount": 0,
+    //            "wxAmount": 0,
+    //            "zfbAmount": 0,
+    //            "cardAmount": 0
+    //
+    //        };
+    //    }
+    //
+    //    $mdDialog.show({
+    //        controller: 'EditShopController',
+    //        templateUrl: 'app/src/app/pms/duty/dutyEditor.html',
+    //        parent: angular.element(document.body),
+    //        targetEvent: event,
+    //        locals: {
+    //            parentSelectedItem: selectedItem,
+    //            action: action
+    //        }
+    //    }).then(function (data) {
+    //        var postData = {
+    //            "cashAmount": data.cashAmount,
+    //            "wxAmount": data.wxAmount,
+    //            "zfbAmount": data.zfbAmount,
+    //            "cardAmount": data.cardAmount
+    //        };
+    //
+    //        if(action === "edit") {
+    //            ShopService.modify(selectedItem.uuid, postData).success(function () {
+    //                //$scope.updateSelectedItem(data);
+    //                $scope.showInfo('修改班次成功');
+    //                $scope.refreshList();
+    //            }).error(function (response) {
+    //                $scope.showError('修改班次失败，' + response.message);
+    //            });
+    //        } else if(action === "add"){
+    //            postData.startTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+    //            ShopService.add(postData).success(function () {
+    //                //$scope.updateSelectedItem(data);
+    //                $scope.showInfo('新建班次成功');
+    //                $scope.refreshList();
+    //            }).error(function (response) {
+    //                $scope.showError('新建班次失败，' + response.message);
+    //            });
+    //        }
+    //    });
+    //};
 
     /* 添加流水 */
     $scope.showAddEditor = function (type, payType) {
@@ -219,12 +225,12 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
             "amount": 0,
             "type": type,
             "payType": payType,
-            "dutyUuid": 'sys-management',//$scope.currentDuty.uuid,
+            "dutyUuid": $scope.currentDuty.uuid,
             "comment": ''
         };
         $mdDialog.show({
             controller: 'AddOrderController',
-            templateUrl: 'app/src/app/pms/shop/orderCreator.html',
+            templateUrl: 'app/src/app/pms/order/orderCreator.html',
             parent: angular.element(document.body),
             targetEvent: event,
             locals: {
@@ -236,8 +242,8 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
                 "type": data.type,
                 "payType": data.payType,
                 "comment": data.comment,
-                "dutyUuid": data.dutyUuid,
-                "isShopLevel": '1'
+                "dutyUuid": data.dutyUuid/*,
+                "isShopLevel": '1'*/
             };
 
             //postData.startTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
@@ -255,7 +261,7 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
     $scope.showModifyEditor = function (item) {
         $mdDialog.show({
             controller: 'EditOrderController',
-            templateUrl: 'app/src/app/pms/shop/orderEditor.html',
+            templateUrl: 'app/src/app/pms/order/orderEditor.html',
             parent: angular.element(document.body),
             targetEvent: event,
             locals: {
@@ -267,8 +273,8 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
                 "type": data.type,
                 "payType": data.payType,
                 "comment": data.comment,
-                "dutyUuid": data.dutyUuid,
-                "isShopLevel": '1'
+                "dutyUuid": data.dutyUuid/*,
+                "isShopLevel": '1'*/
             };
 
             OrderService.modify(item.uuid, postData).success(function () {
@@ -294,41 +300,38 @@ angular.module('IOne-Production').controller('ShopController', function($scope, 
     };
 });
 
-angular.module('IOne-Production').controller('EditShopController', function ($scope, $mdDialog, parentSelectedItem) {
-    $scope.selectedItem = {
-        "cashAmount": parentSelectedItem.cashAmount,
-        "wxAmount": parentSelectedItem.wxAmount,
-        "zfbAmount": parentSelectedItem.zfbAmount,
-        "cardAmount": parentSelectedItem.cardAmount,
-        "createTime": parentSelectedItem.createTime
-    };
-    //if (parentSelectedItem.deliverDate != null) {
-    //    $scope.selectedItem.deliverDate = new Date(parentSelectedItem.deliverDate);
-    //}
-    //if (parentSelectedItem.predictDeliverDate != null) {
-    //    $scope.selectedItem.predictDeliverDate = new Date(parentSelectedItem.predictDeliverDate);
-    //}
-
-    //$scope.pageOption = {
-    //    sizePerPage: 5,
-    //    currentPage: 0,
-    //    totalPage: 0,
-    //    totalElements: 0,
-    //    displayModel: 0
-    //};
-
-    $scope.save = function () {
-        $mdDialog.hide($scope.selectedItem);
-    };
-
-    $scope.cancelDlg = function () {
-        $mdDialog.cancel();
-    };
-
-    //$scope.selectCustomerAddressCallback = function (selectedCustomerAddress) {
-    //    $scope.selectedItem.receivePhone = selectedCustomerAddress.receivePhone;
-    //    $scope.selectedItem.receiveName = selectedCustomerAddress.receiveName;
-    //    $scope.selectedItem.receiveAddress = selectedCustomerAddress.receiveAddress;
-    //    $scope.selectedItem.customerAddress = selectedCustomerAddress;
-    //};
-});
+//angular.module('IOne-Production').controller('EditOrderController', function ($scope, $mdDialog, parentSelectedItem) {
+//    $scope.selectedItem = {
+//        "cashAmount": parentSelectedItem.cashAmount,
+//        "wxAmount": parentSelectedItem.wxAmount,
+//        "zfbAmount": parentSelectedItem.zfbAmount,
+//        "cardAmount": parentSelectedItem.cardAmount,
+//        "createTime": parentSelectedItem.createTime
+//    };
+//
+//    $scope.save = function () {
+//        $mdDialog.hide($scope.selectedItem);
+//    };
+//
+//    $scope.cancelDlg = function () {
+//        $mdDialog.cancel();
+//    };
+//});
+//
+//angular.module('IOne-Production').controller('AddOrderController', function ($scope, $mdDialog, parentSelectedItem) {
+//    $scope.selectedItem = {
+//        "cashAmount": parentSelectedItem.cashAmount,
+//        "wxAmount": parentSelectedItem.wxAmount,
+//        "zfbAmount": parentSelectedItem.zfbAmount,
+//        "cardAmount": parentSelectedItem.cardAmount,
+//        "createTime": parentSelectedItem.createTime
+//    };
+//
+//    $scope.save = function () {
+//        $mdDialog.hide($scope.selectedItem);
+//    };
+//
+//    $scope.cancelDlg = function () {
+//        $mdDialog.cancel();
+//    };
+//});

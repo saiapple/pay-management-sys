@@ -41,13 +41,13 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Page<Order> getAll(@Valid OrderQuery query) {
-        if(!StringUtils.isNotBlank(query.getDutyUuid())){
-            List<Duty> dutyList = dutyService.findByActive(Duty.ACTIVE_1);
-            if(dutyList == null || dutyList.size() != 1){
-                throw new RuntimeException("无法获取当前班次，请检查是否有正在进行中的班次");
-            }
-            query.setDutyUuid(dutyList.get(0).getUuid());
-        }
+//        if(StringUtils.isNotBlank(query.getDutyUuid())){
+//            List<Duty> dutyList = dutyService.findByActive(Duty.ACTIVE_1);
+//            if(dutyList == null || dutyList.size() != 1){
+//                throw new RuntimeException("无法获取当前班次，请检查是否有正在进行中的班次");
+//            }
+//            query.setDutyUuid(dutyList.get(0).getUuid());
+//        }
         return orderService.findAll(query);
     }
 
@@ -63,12 +63,12 @@ public class OrderController {
         Order order = new Order();
         DomainUtil.copyNotNullProperties(orderInput, order);
 
-        Duty duty;
-        if(OrderInput.SHOP_LEVEL_YES.equalsIgnoreCase(orderInput.getIsShopLevel())){
-            duty = dutyService.findSysDuty();
-        } else {
-            duty = dutyService.findOne(orderInput.getDutyUuid()).orElseThrow(() -> new ResourceNotFoundException(Duty.class, orderInput.getDutyUuid()));
-        }
+        Duty duty = dutyService.findOne(orderInput.getDutyUuid()).orElseThrow(() -> new ResourceNotFoundException(Duty.class, orderInput.getDutyUuid()));
+//        if(OrderInput.SHOP_LEVEL_YES.equalsIgnoreCase(orderInput.getIsShopLevel())){
+//            duty = dutyService.findSysDuty();
+//        } else {
+//            duty = dutyService.findOne(orderInput.getDutyUuid()).orElseThrow(() -> new ResourceNotFoundException(Duty.class, orderInput.getDutyUuid()));
+//        }
         order.setDuty(duty);
 
         BindException exception = new BindException(order, order.getClass().getSimpleName());
@@ -86,7 +86,7 @@ public class OrderController {
     @RequestMapping(value = "/{uuid}", method = RequestMethod.PATCH)
     public Order update(@PathVariable String uuid, @Valid @RequestBody OrderUpdateInput orderUpdateInput) throws BindException {
         Order order = orderService.findOne(uuid).orElseThrow(() -> new ResourceNotFoundException(Order.class, uuid));
-        DomainUtil.copyNotNullProperties(orderUpdateInput, order);
+        //DomainUtil.copyNotNullProperties(orderUpdateInput, order);
 
         BindException exception = new BindException(order, Order.class.getSimpleName());
         Validators.validateBean(exception, order);

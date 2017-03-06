@@ -1,5 +1,6 @@
 package com.i1.tde.service;
 
+import com.i1.base.domain.DomainUtil;
 import com.i1.tde.Constant;
 import com.i1.tde.dao.OrderRepository;
 import com.i1.tde.domain.Duty;
@@ -79,10 +80,7 @@ public class OrderServiceImpl implements OrderService {
         rollback_count(duty, shop, order.getType(), order.getPayType(), order.getAmount());
         count(duty, shop, orderUpdateInput.getType(), orderUpdateInput.getPayType(), orderUpdateInput.getAmount());
 
-        order.setType(orderUpdateInput.getType());
-        order.setPayType(orderUpdateInput.getPayType());
-        order.setAmount(orderUpdateInput.getAmount());
-        order.setComment(orderUpdateInput.getComment());
+        DomainUtil.copyNotNullProperties(orderUpdateInput, order);
 
         this.update(order);
         dutyService.update(duty);

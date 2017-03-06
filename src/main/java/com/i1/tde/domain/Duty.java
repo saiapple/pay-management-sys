@@ -14,17 +14,21 @@ import java.util.Date;
 @Table(name = "duty")
 public class Duty extends MaintainDomainObj {
     /**
-     * 状态码 : 无效
+     * 状态码 : 系统
      */
     public static final String ACTIVE_SYS = "-1";
     /**
-     * 状态码 : 无效
+     * 状态码 : 未开始
      */
     public static final String ACTIVE_0 = "0";
     /**
-     * 状态码 : 有效;
+     * 状态码 : 已开始
      */
     public static final String ACTIVE_1 = "1";
+    /**
+     * 状态码 : 结束
+     */
+    public static final String ACTIVE_2 = "2";
 
 
     private BigDecimal cashAmount = BigDecimal.ZERO;

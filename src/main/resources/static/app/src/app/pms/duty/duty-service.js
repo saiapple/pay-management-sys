@@ -9,6 +9,9 @@ angular.module('IOne-Production').service('DutyService', function ($http, Consta
         if (filter.active != null) {
             url = url + '&active=' + filter.active;
         }
+        if (filter.uuid != null) {
+            url = url + '&uuid=' + filter.uuid;
+        }
         if (filter.showSys != null) {
             url = url + '&showSys=' + filter.showSys;
         }

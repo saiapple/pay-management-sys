@@ -14,7 +14,7 @@ public class OrderInput {
     private String payType;
     private String comment;
     private String dutyUuid;
-    private String isShopLevel;
+    //private String isShopLevel;
 
     public BigDecimal getAmount() {
         return amount;
@@ -56,11 +56,11 @@ public class OrderInput {
         this.dutyUuid = dutyUuid;
     }
 
-    public String getIsShopLevel() {
-        return isShopLevel;
-    }
-
-    public void setIsShopLevel(String isShopLevel) {
-        this.isShopLevel = isShopLevel;
-    }
+//    public String getIsShopLevel() {
+//        return isShopLevel;
+//    }
+//
+//    public void setIsShopLevel(String isShopLevel) {
+//        this.isShopLevel = isShopLevel;
+//    }
 }

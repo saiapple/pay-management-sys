@@ -52,10 +52,10 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
                     $scope.showError('获取信息失败，' + response.message);
                 });
             } else {
-                $scope.showError('获取活动班次失败');
+                $scope.showError('班次尚未开始');
             }
         }).error(function(error){
-            $scope.showError('获取活动班次失败，' + error.message);
+            $scope.showError('班次尚未开始，' + error.message);
         });
     };
 
@@ -66,18 +66,7 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
         $scope.refreshList();
     }, true);
 
-    $scope.itemList = [
-        { no:'1111111', name: 'name1', orderAmount: '100', confirm: '1', release: '1', status: '2' },
-        { no:'2222222', name: 'name2', orderAmount: '200', confirm: '2', release: '1', status: '1'  },
-        { no:'4444444', name: 'name0', orderAmount: '400', confirm: '1', release: '1', status: '1'  },
-        { no:'3333333', name: 'name3', orderAmount: '300', confirm: '1', release: '2', status: '2'  }
-    ];
-
-    $scope.subItemList = [
-        { no:'1111111', name: 'name1', orderAmount: '100', confirm: '1', release: '1', status: '2' },
-        { no:'2222222', name: 'name2', orderAmount: '200', confirm: '2', release: '1', status: '1'  },
-        { no:'3333333', name: 'name3', orderAmount: '300', confirm: '1', release: '2', status: '2'  }
-    ];
+    $scope.itemList = [];
 
     $scope.selectAllFlag = false;
 

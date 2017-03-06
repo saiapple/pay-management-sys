@@ -414,9 +414,9 @@ angular.module('IOne-Constant').constant('Constant', {
             isOpen: true,
             icon: 'fa fa-cube',
             subList: [
-                {id: '/pms-shop', name: '支出管理', link: '/pms-shop', uuid: ''},
+                {id: '/pms-shop', name: '店面支出', link: '/pms-shop', uuid: ''},
                 {id: '/pms-duty', name: '班次管理', link: '/pms-duty', uuid: ''},
-                {id: '/pms-order', name: '收银管理', link: '/pms-order', uuid: ''},
+                {id: '/pms-order', name: '值班收银', link: '/pms-order', uuid: ''},
                 {id: '/pms-user', name: '人员管理', link: '/pms-user', uuid: ''}
             ]
         },
@@ -888,5 +888,7 @@ angular.module('IOne-Constant').constant('Constant', {
     'PMS_USER_ROLES':{
         1: {value: '1', name: '管理员'},
         2: {value: '2', name: '收银员'}
-    }
+    },
+    'PMS_DEFAULT_SHOP_UUID': '1',
+    'PMS_DEFAULT_DUTY_UUID': 'sys-internal-duty-uuid'
 });

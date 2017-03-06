@@ -151,8 +151,8 @@ angular.module('IOne-Production').controller('DutyController', function($scope, 
                 "cashAmount": 0,
                 "wxAmount": 0,
                 "zfbAmount": 0,
-                "cardAmount": 0
-
+                "cardAmount": 0,
+                "posAmount": 0
             };
         }
 
@@ -170,7 +170,9 @@ angular.module('IOne-Production').controller('DutyController', function($scope, 
                 "cashAmount": data.cashAmount,
                 "wxAmount": data.wxAmount,
                 "zfbAmount": data.zfbAmount,
-                "cardAmount": data.cardAmount
+                "cardAmount": data.cardAmount,
+                "posAmount": data.posAmount,
+                "shopUuid": Constant.PMS_DEFAULT_SHOP_UUID
             };
 
             if(action === "edit") {
@@ -193,6 +195,54 @@ angular.module('IOne-Production').controller('DutyController', function($scope, 
             }
         });
     };
+
+    $scope.showProfitEditor = function (selectedItem) {
+        $mdDialog.show({
+            controller: 'EditDutyController',
+            templateUrl: 'app/src/app/pms/duty/dutyProfitEditor.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            locals: {
+                parentSelectedItem: selectedItem
+            }
+        }).then(function (data) {
+            var postData = {
+                "profit": data.profit
+            };
+
+            DutyService.modify(selectedItem.uuid, postData).success(function () {
+                //$scope.updateSelectedItem(data);
+                $scope.showInfo('修改成功');
+                $scope.refreshList();
+            }).error(function (response) {
+                $scope.showError('修改失败，' + response.message);
+            });
+        });
+    };
+
+    $scope.startDuty = function(item) {
+        $scope.showConfirm('', '确认开始吗？', function () {
+            DutyService.modify(item.uuid, {'active': '1'}).success(function() {
+                //$scope.itemList.splice($scope.itemList.indexOf(item), 1);
+                $scope.refreshList();
+                $scope.showInfo('开始成功');
+            }).error(function (response) {
+                $scope.showError('开始失败，' + response.message);
+            });
+        });
+    };
+
+    $scope.finishDuty = function(item) {
+        $scope.showConfirm('', '确认完成吗？', function () {
+            DutyService.modify(item.uuid, {'active': '2'}).success(function() {
+                //$scope.itemList.splice($scope.itemList.indexOf(item), 1);
+                $scope.refreshList();
+                $scope.showInfo('完成成功');
+            }).error(function (response) {
+                $scope.showError('完成失败，' + response.message);
+            });
+        });
+    };
 });
 
 angular.module('IOne-Production').controller('EditDutyController', function ($scope, $mdDialog, parentSelectedItem) {
@@ -203,20 +253,6 @@ angular.module('IOne-Production').controller('EditDutyController', function ($sc
         "cardAmount": parentSelectedItem.cardAmount,
         "createTime": parentSelectedItem.createTime
     };
-    //if (parentSelectedItem.deliverDate != null) {
-    //    $scope.selectedItem.deliverDate = new Date(parentSelectedItem.deliverDate);
-    //}
-    //if (parentSelectedItem.predictDeliverDate != null) {
-    //    $scope.selectedItem.predictDeliverDate = new Date(parentSelectedItem.predictDeliverDate);
-    //}
-
-    //$scope.pageOption = {
-    //    sizePerPage: 5,
-    //    currentPage: 0,
-    //    totalPage: 0,
-    //    totalElements: 0,
-    //    displayModel: 0
-    //};
 
     $scope.save = function () {
         $mdDialog.hide($scope.selectedItem);
@@ -225,11 +261,19 @@ angular.module('IOne-Production').controller('EditDutyController', function ($sc
     $scope.cancelDlg = function () {
         $mdDialog.cancel();
     };
-
-    //$scope.selectCustomerAddressCallback = function (selectedCustomerAddress) {
-    //    $scope.selectedItem.receivePhone = selectedCustomerAddress.receivePhone;
-    //    $scope.selectedItem.receiveName = selectedCustomerAddress.receiveName;
-    //    $scope.selectedItem.receiveAddress = selectedCustomerAddress.receiveAddress;
-    //    $scope.selectedItem.customerAddress = selectedCustomerAddress;
-    //};
 });
+
+angular.module('IOne-Production').controller('EditDutyProfitController', function ($scope, $mdDialog, parentSelectedItem) {
+    $scope.selectedItem = {
+        "profit": parentSelectedItem.profit
+    };
+
+    $scope.save = function () {
+        $mdDialog.hide($scope.selectedItem);
+    };
+
+    $scope.cancelDlg = function () {
+        $mdDialog.cancel();
+    };
+});
+
