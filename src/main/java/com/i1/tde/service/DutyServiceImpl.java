@@ -69,7 +69,6 @@ public class DutyServiceImpl implements DutyService {
     @Override
     public void cascadeUpdate(Duty duty, DutyUpdateInput input) {
         if(StringUtils.isNotBlank(input.getActive())){
-            duty.setActive(input.getActive());
             if(Duty.ACTIVE_1.equalsIgnoreCase(input.getActive())){ //开始
                 List<Duty> dutyList = repository.findByActive(Duty.ACTIVE_1);
                 if(dutyList != null && dutyList.size() > 0){
@@ -78,12 +77,13 @@ public class DutyServiceImpl implements DutyService {
 
                 duty.setStartTime(Calendar.getInstance().getTime());
             } else if(Duty.ACTIVE_2.equalsIgnoreCase(input.getActive())){ //完成
-                if(Duty.ACTIVE_1.equalsIgnoreCase(duty.getActive())){
+                if(!Duty.ACTIVE_1.equalsIgnoreCase(duty.getActive())){
                     throw new RuntimeException("班次尚未开始，无法直接完成");
                 }
 
                 duty.setEndTime(Calendar.getInstance().getTime());
             }
+            duty.setActive(input.getActive());
         } else if(input.getProfit() != null){
             // 把之前设置的水额从店面中去掉后加上新的水额
             Shop shop = duty.getShop();

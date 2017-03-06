@@ -12,8 +12,8 @@ angular.module('IOne-Production').service('DutyService', function ($http, Consta
         if (filter.uuid != null) {
             url = url + '&uuid=' + filter.uuid;
         }
-        if (filter.showSys != null) {
-            url = url + '&showSys=' + filter.showSys;
+        if (filter.noShowSys != null) {
+            url = url + '&noShowSys=' + filter.noShowSys;
         }
         if (filter.startDate !== null && filter.startDate !== undefined) {
             var startDate = new Date(filter.startDate);

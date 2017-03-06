@@ -25,6 +25,7 @@ angular.module('IOne-Production').controller('DutyController', function($scope, 
     };
 
     $scope.refreshList = function() {
+        $scope.listFilterOption.noShowSys = '1';
         DutyService.getAll($scope.pageOption.sizePerPage, $scope.pageOption.currentPage, $scope.listFilterOption).success(function(data) {
             $scope.itemList = data.content;
             $scope.pageOption.totalPage = data.totalPages;

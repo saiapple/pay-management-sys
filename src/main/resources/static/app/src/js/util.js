@@ -419,7 +419,7 @@ angular.module('IOne-Constant').constant('Constant', {
                 {id: '/pms-order', name: '值班收银', link: '/pms-order', uuid: ''},
                 {id: '/pms-user', name: '人员管理', link: '/pms-user', uuid: ''}
             ]
-        },
+        }/*,
         {
             id: 1,
             uuid: RES_UUID_MAP.PRODUCTION.RES_UUID,
@@ -582,7 +582,7 @@ angular.module('IOne-Constant').constant('Constant', {
                 },
                 {id: '/plm/series', name: '商品系列信息', link: '/plm/series', uuid: RES_UUID_MAP.CBI.SERIES.RES_UUID}
             ]
-        }
+        }*/
     ],
     ///////////////////////////////
 

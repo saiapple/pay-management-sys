@@ -19,7 +19,7 @@ import static org.torpedoquery.jpa.Torpedo.*;
  */
 public class DutyQuery extends PageableQuery<Duty> {
     String name;
-    String showSys;
+    String noShowSys;
     String active;
     private Date startDate;
     private Date endDate;
@@ -33,12 +33,12 @@ public class DutyQuery extends PageableQuery<Duty> {
         this.name = name;
     }
 
-    public String getShowSys() {
-        return showSys;
+    public String getNoShowSys() {
+        return noShowSys;
     }
 
-    public void setShowSys(String showSys) {
-        this.showSys = showSys;
+    public void setNoShowSys(String noShowSys) {
+        this.noShowSys = noShowSys;
     }
 
     public String getActive() {
@@ -80,7 +80,7 @@ public class DutyQuery extends PageableQuery<Duty> {
         Duty from = from(Duty.class);
         List<OnGoingLogicalCondition> conditions = new ArrayList<>();
 
-        if (!StringUtils.isNotBlank(showSys)) {
+        if (StringUtils.isNotBlank(noShowSys)) {
             conditions.add(condition(from.getActive()).neq(Duty.ACTIVE_SYS));
         }
 
