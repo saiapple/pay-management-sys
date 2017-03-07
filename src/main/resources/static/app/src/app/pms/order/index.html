@@ -246,6 +246,41 @@
                                 </span>
                                 <span flex class="right-align">利润:{{item.profit}}</span>
                             </div>-->
+                            <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px;font-size: 14px;font-weight: bold;" ng-if="$index == 0">
+                                <div layout="row" flex style="color:#7f8fa4" >
+                                    <div flex="10">
+                                        <div layout-padding><span>批次</span></div>
+                                    </div>
+                                    <div flex="10">
+                                        <div layout-padding><span>操作</span></div>
+                                    </div>
+                                    <div flex="10">
+                                        <div layout-padding><span>支付手段</span></div>
+                                    </div>
+                                    <div flex="10">
+                                        <div layout-padding><span>金额</span></div>
+                                    </div>
+                                    <div flex="10">
+                                        <div layout-padding><span>时间</span></div>
+                                    </div>
+                                    <div flex="10">
+                                        <div layout-padding><span>操作人</span></div>
+                                    </div>
+                                    <div>
+                                        <div layout-padding>备注</span></div>
+                                    </div>
+                                </div>
+                                <div layout="row" layout-align="end center">
+                                    <md-button class="md-button close-btn" aria-label="More" style="position: relative;left: 15px; color:blue;">
+                                        &nbsp;&nbsp;
+                                    </md-button>
+                                </div>
+                                <div layout="row" layout-align="end center">
+                                    <md-button class="md-button close-btn" aria-label="More" style="position: relative;left: 15px; color:blue;">
+                                        &nbsp;&nbsp;
+                                    </md-button>
+                                </div>
+                            </div>
                             <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px;font-size: 14px;">
                                 <div layout="row" flex style="color:#7f8fa4" >
                                     <div flex="10">
@@ -267,7 +302,7 @@
                                         <div layout-padding><span>{{item.createUser.name}}</span></div>
                                     </div>
                                     <div flex>
-                                        <div layout-padding>备注 :  <span>{{item.comment}}</span></div>
+                                        <div layout-padding><span>{{item.comment}}</span></div>
                                     </div>
                                 </div>
                                 <div layout="row" layout-align="end center">
