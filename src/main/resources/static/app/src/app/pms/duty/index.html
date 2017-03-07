@@ -2,10 +2,10 @@
     <div ng-show="ui_status == UI_STATUS.VIEW_UI_STATUS">
         <div layout="row" class="top-title">
             <div flex="70" hide-sm hide-md class="left-title" ng-show="selectedItem" style="position: relative;">
-                <md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="showEditor(selectedItem)">
+                <!--<md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="showEditor(selectedItem)">
                     <ng-md-icon icon="edit"></ng-md-icon>
-                </md-button>
-                <md-menu>
+                </md-button>-->
+                <!--<md-menu>
                     <md-button class="md-icon-button close-btn" aria-label="More" style="float: left;" ng-click="$mdOpenMenu($event)">
                         <ng-md-icon icon="menu"></ng-md-icon>
                     </md-button>
@@ -17,7 +17,7 @@
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>
-                </md-menu>
+                </md-menu>-->
                 <span>班次详情</span>
                 <md-button class="md-icon-button close-btn float-right" aria-label="More" ng-click="selectedItem = null">
                     <ng-md-icon icon="chevron_left"></ng-md-icon>
@@ -99,77 +99,70 @@
 
                     <md-tabs md-dynamic-height md-border-bottom style="padding-top: 10px;">
                         <md-tab label="上水详情">
-                            <div layout="row" layout-wrap layout-margin>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <span>桌号</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <span>1分筹码</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <span>5分筹码</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <span>10分筹码</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <span>水</span>
-                                        </span>
-                                        <span flex="25" flex-sm="100" layout-padding>
-                                            <md-button class="md-icon-button close-btn" aria-label="More" style="float: right;margin-top:-15px; margin-right: 36px;" ng-click="showAddProfitEditor(null)">
-                                                <ng-md-icon icon="add"></ng-md-icon>
-                                            </md-button>
-                                        </span>
-                            </div>
-                            <div layout="row" layout-wrap style="margin-top: 20px;">
-                                <div flex="100" ng-repeat="detail in selectedItem.detailList" ng-click="" class="prod-item"
-                                     style="position: relative;padding-bottom: 0px; min-height: 50px;margin-top: 1px;">
-                                    <md-divider style="margin-top: 5px"></md-divider>
-                                    <div layout="row">
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <!--<span class="item-name">桌号</span>-->
-                                            <span class="item-content">{{detail.tableNumber}}</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <!--<span class="item-name">1分筹码</span>-->
-                                            <span class="item-content">{{detail.card1Count}}</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <!--<span class="item-name">5分筹码</span>-->
-                                            <span class="item-content">{{detail.card5Count}}</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <!--<span class="item-name">10分筹码</span>-->
-                                            <span class="item-content">{{detail.card10Count}}</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <!--<span class="item-name">水 :</span>-->
-                                            <span class="item-content">{{detail.profit}}</span>
-                                        </span>
-                                        <span flex="25" flex-sm="100" layout-padding>
-                                            <!--<md-button class="md-button close-btn" aria-label="More" ng-click="toggleDetailMorePanelAction(detail)">
-                                                查看更多...
-                                            </md-button>-->
-                                            <md-button class="md-button close-btn" aria-label="More" ng-click="deleteProfitAction(detail)">
-                                                <ng-md-icon icon="remove_circle_outline" size="20"></ng-md-icon>删除
-                                            </md-button>
-                                            <md-button class="md-button close-btn" aria-label="More"
-                                                       ng-click="showAddProfitEditor(detail)">
-                                                <ng-md-icon icon="edit" size="20"></ng-md-icon>编辑
-                                            </md-button>
-                                        </span>
+                            <div ng-repeat="detail in selectedItem.detailList" ng-class="selectedItem.no == item.no ? 'selected-item':''">
+                                <div ><!--class="summary-item"-->
+                                    <div layout="row" layout-wrap>
+                                        <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px;font-size: 14px;font-weight: bold;" ng-if="$index == 0">
+                                            <div layout="row" flex style="color:#7f8fa4" >
+                                                <div flex="15">
+                                                    <div layout-padding><span>桌号</span></div>
+                                                </div>
+                                                <div flex="15">
+                                                    <div layout-padding><span>1分筹码</span></div>
+                                                </div>
+                                                <div flex="15">
+                                                    <div layout-padding><span>5分筹码</span></div>
+                                                </div>
+                                                <div flex="15">
+                                                    <div layout-padding><span>10分筹码</span></div>
+                                                </div>
+                                                <div flex="15">
+                                                    <div layout-padding><span>上水金额</span></div>
+                                                </div>
+                                            </div>
+                                            <div layout="row" layout-align="end center">
+                                                <md-button class="md-button close-btn" aria-label="More" style="position: relative;left: 15px; color:blue;">
+                                                    &nbsp;&nbsp;
+                                                </md-button>
+                                            </div>
+                                            <div layout="row" layout-align="end center">
+                                                <md-button class="md-button close-btn" aria-label="More" style="position: relative;left: 15px; color:blue;">
+                                                    &nbsp;&nbsp;
+                                                </md-button>
+                                            </div>
+                                        </div>
+                                        <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px;font-size: 14px;">
+                                            <div layout="row" flex style="color:#7f8fa4" >
+                                                <div flex="15">
+                                                    <div layout-padding><span>{{detail.tableNumber}}</span></div>
+                                                </div>
+                                                <div flex="15">
+                                                    <div layout-padding><span>{{detail.card1Count}}</span></div>
+                                                </div>
+                                                <div flex="15">
+                                                    <div layout-padding><span>{{detail.card5Count}}</span></div>
+                                                </div>
+                                                <div flex="15">
+                                                    <div layout-padding><span>{{detail.card10Count}}</span></div>
+                                                </div>
+                                                <div flex="15">
+                                                    <div layout-padding><span>{{detail.profit}}</span></div>
+                                                </div>
+                                            </div>
+                                            <div layout="row" layout-align="end center">
+                                                <md-button class="md-button close-btn" aria-label="More" ng-click="showAddProfitEditor(detail)" style="position: relative;left: 15px; color:blue;">
+                                                    编辑
+                                                </md-button>
+                                            </div>
+                                            <div layout="row" layout-align="end center">
+                                                <md-button class="md-button close-btn" aria-label="More" ng-click="deleteProfitAction(detail)" style="position: relative;left: 15px; color:blue;">
+                                                    删除
+                                                </md-button>
+                                            </div>
+                                        </div>
                                     </div>
-
-
-                                    <!-- detail panel -->
-                                    <!--<div layout="row" ng-show="detail.showMorePanel">
-                                        <div layout-margin>Have more stuff here....</div>
-                                    </div>-->
-
                                 </div>
-                                <!--<div flex="100" class="add-new" style="margin: 10px 0 0 0;" ng-click="showAddProfitEditor(null)">
-                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;新增上水...</a>
-                                </div>-->
+                                <md-divider></md-divider>
                             </div>
                         </md-tab>
                     </md-tabs>
@@ -190,27 +183,27 @@
                         <label>输入关键字查询</label>
                         <input ng-model="theMax">
                     </md-input-container>-->
-                    <span style="padding-top: 10px;">
+                    <!--<span style="padding-top: 10px;">
                         <md-button class="md-icon-button" aria-label="Eat cake" ng-click="showAdvancedSearchAction()">
                             <ng-md-icon icon="expand_more" ng-show="!displayAdvancedSearPanel"></ng-md-icon>
                             <ng-md-icon icon="expand_less" ng-show="displayAdvancedSearPanel"></ng-md-icon>
                         </md-button>
-                    </span>
+                    </span>-->
                 </div>
                 <!-- advanced search-->
-                <div layout="row" ng-show="displayAdvancedSearPanel">
-                    <!-- fill more searching here.-->
+                <!--<div layout="row" ng-show="displayAdvancedSearPanel">
+                    &lt;!&ndash; fill more searching here.&ndash;&gt;
                     <div flex>
                         Have you stuff here...
                     </div>
-                </div>
+                </div>-->
                 <!-- status panel-->
                 <div layout="row" layout-warp layout-padding layout-margin ng-show="!selectedItem" style="margin: 20px 0px 20px 0px; padding-left: 60px;background-color: whitesmoke;position: relative;height: 50px;padding-top: 15px;">
                     <span flex="20">总记录数: {{pageOption.totalElements}}</span>
-                    <span flex="20">已选记录数: </span>
-                    <span flex="20">汇总金额: </span>
+                    <!--<span flex="20">已选记录数: </span>
+                    <span flex="20">汇总金额: </span>-->
 
-                    <md-menu>
+                    <!--<md-menu>
                         <md-button class="md-button close-btn" aria-label="More" ng-click="$mdOpenMenu($event)" style="position: absolute;right: 0px;top: 0px;">
                             <ng-md-icon icon="sort"></ng-md-icon>排序
                         </md-button>
@@ -224,7 +217,7 @@
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
-                    </md-menu>
+                    </md-menu>-->
                 </div>
                 <div ng-repeat="item in itemList | orderBy:sortByField" ng-class="selectedItem.no == item.no ? 'selected-item':''">
                     <div style = "height: 230px;">
@@ -234,10 +227,10 @@
                                     {{item.startTime | date:'yyyy-MM-dd HH:mm:ss'}}&nbsp;&nbsp;--&nbsp;&nbsp;{{item.endTime | date:'yyyy-MM-dd HH:mm:ss'}}
                                 </span>
                                 <!--<span flex class="right-align">￥:{{item.orderAmount}}</span>-->
-                                <span ng-show="item.active=='-1'" flex class="right-align" style="padding-right: 60px;">系统班次</span>
-                                <span ng-show="item.active=='0'" flex class="right-align" style="padding-right: 60px;">未开始</span>
-                                <span ng-show="item.active=='1'" flex class="right-align" style="padding-right: 60px;">进行中</span>
-                                <span ng-show="item.active=='2'" flex class="right-align" style="padding-right: 60px;">已结束</span>
+                                <span ng-show="item.active=='-1'" flex class="right-align" style="padding-right: 60px;font-weight:100;">系统班次</span>
+                                <span ng-show="item.active=='0'" flex class="right-align" style="padding-right: 60px;font-weight:100;">未开始</span>
+                                <span ng-show="item.active=='1'" flex class="right-align" style="padding-right: 60px; font-weight:500;color: red;">进行中</span>
+                                <span ng-show="item.active=='2'" flex class="right-align" style="padding-right: 60px;font-weight:100;">已结束</span>
                             </div>
                             <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px;font-size: 14px;" layout-align="space-between center" ng-hide="selectedItem">
                                 <div layout="row" flex style="color:#7f8fa4" >
