@@ -1,0 +1,47 @@
+<md-dialog style="padding: 30px;min-width:750px; max-width: 900px;max-height: 800px;">
+    <div layout="row">
+        <div flex>
+            <h4>{{PMS_BILL_TYPES[workingItem.type].name}}</h4>
+            <form name="editDuty" novalidate>
+                <md-input-container>
+                    <label>现金备</label>
+                    <input name="text" type="number" ng-model="workingItem.cashAmount">
+                </md-input-container>
+                <md-input-container>
+                    <label>微信</label>
+                    <input name="text" type="number" ng-model="workingItem.wxAmount">
+                </md-input-container>
+                <md-input-container>
+                    <label>支付宝</label>
+                    <input name="text" type="number" ng-model="workingItem.zfbAmount">
+                </md-input-container>
+                <md-input-container>
+                    <label>刷卡</label>
+                    <input name="text" type="number" ng-model="workingItem.posAmount">
+                </md-input-container>
+                <!--<md-input-container>
+                    <label>欠款</label>
+                    <input name="text" type="number" ng-model="workingItem.lendAmount">
+                </md-input-container>-->
+                <md-input-container>
+                    <label>筹码</label>
+                    <input name="text" type="number" ng-model="workingItem.cardAmount">
+                </md-input-container>
+                <md-input-container>
+                    <label>备注</label>
+                    <input name="text" type="text" ng-model="workingItem.comment">
+                </md-input-container>
+            </form>
+            <div layout="row">
+                <md-button ng-click="cancelDlg()"><i class="fa fa-times"></i>&nbsp;取消</md-button>
+                <md-button ng-click="save()">
+                    <i class="fa fa-check"></i>&nbsp;确定
+                </md-button>
+            </div>
+        </div>
+        <!--<div flex="50" customer-address-list param="customerAddressSelectionParam"
+             select-item-callback="selectCustomerAddressCallback(customerAddress)"
+             style="max-height: 500px; overflow-y: auto; overflow-x: hidden;">
+        </div>-->
+    </div>
+</md-dialog>

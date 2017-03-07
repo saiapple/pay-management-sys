@@ -237,6 +237,112 @@ angular.module('IOne-Production').controller('OrderController', function($scope,
             });
         });
     };
+
+    $scope.createPostData = function(type, comment, dutyUuid, currentItem){
+        var postData = [];
+        if(currentItem.cashAmount != null && currentItem.cashAmount > 0) {
+            postData.push({
+                "amount": currentItem.cashAmount,
+                "type": type,
+                "payType": $scope.PMS_BILL_PAY_TYPES[1].value,
+                "comment": comment,
+                "dutyUuid": dutyUuid
+            });
+        };
+        if(currentItem.wxAmount != null && currentItem.wxAmount > 0) {
+            postData.push({
+                "amount": currentItem.wxAmount,
+                "type": type,
+                "payType": $scope.PMS_BILL_PAY_TYPES[2].value,
+                "comment": comment,
+                "dutyUuid": dutyUuid
+            });
+        };
+        if(currentItem.zfbAmount != null && currentItem.zfbAmount > 0) {
+            postData.push({
+                "amount": currentItem.zfbAmount,
+                "type": type,
+                "payType": $scope.PMS_BILL_PAY_TYPES[3].value,
+                "comment": comment,
+                "dutyUuid": dutyUuid
+            });
+        };
+        if(currentItem.posAmount != null && currentItem.posAmount > 0) {
+            postData.push({
+                "amount": currentItem.posAmount,
+                "type": type,
+                "payType": $scope.PMS_BILL_PAY_TYPES[4].value,
+                "comment": comment,
+                "dutyUuid": dutyUuid
+            });
+        };
+        if(currentItem.lendAmount != null && currentItem.lendAmount > 0) {
+            postData.push({
+                "amount": currentItem.lendAmount,
+                "type": type,
+                "payType": $scope.PMS_BILL_PAY_TYPES[5].value,
+                "comment": comment,
+                "dutyUuid": dutyUuid
+            });
+        };
+        if(currentItem.cardAmount != null && currentItem.cardAmount > 0) {
+            postData.push({
+                "amount": currentItem.cardAmount,
+                "type": type,
+                "payType": $scope.PMS_BILL_PAY_TYPES[6].value,
+                "comment": comment,
+                "dutyUuid": dutyUuid
+            });
+        };
+
+        return postData;
+    };
+
+    $scope.showBatchEditor = function (type) {
+        var addItem = {
+            "amount": 0,
+            "type": type,
+            "cashAmount": 0,
+            "wxAmount": 0,
+            "zfbAmount": 0,
+            "posAmount": 0,
+            "cardAmount": 0
+        };
+        $mdDialog.show({
+            controller: 'BatchEditController',
+            templateUrl: 'app/src/app/pms/order/batchOrderEditor.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            locals: {
+                workingItem: addItem
+            }
+        }).then(function (data) {
+            var postData = $scope.createPostData(data.type, data.comment, $scope.currentDuty.uuid, data);
+
+            //postData.startTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+            OrderService.add(postData).success(function () {
+                //$scope.updateSelectedItem(data);
+                $scope.showInfo('操作成功');
+                $scope.refreshList();
+            }).error(function (response) {
+                $scope.showError('操作失败，' + response.message);
+            });
+        });
+    };
+});
+
+angular.module('IOne-Production').controller('BatchEditController', function ($scope, $mdDialog, Constant, workingItem) {
+    $scope.workingItem = workingItem;
+    $scope.PMS_BILL_TYPES = Constant.PMS_BILL_TYPES;
+    $scope.PMS_BILL_PAY_TYPES = Constant.PMS_BILL_PAY_TYPES;
+
+    $scope.save = function () {
+        $mdDialog.hide($scope.workingItem);
+    };
+
+    $scope.cancelDlg = function () {
+        $mdDialog.cancel();
+    };
 });
 
 angular.module('IOne-Production').controller('AddOrderController', function ($scope, $mdDialog, Constant, workingItem) {

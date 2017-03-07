@@ -59,28 +59,9 @@ public class OrderController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
-    public Order add(@Valid @RequestBody OrderInput orderInput) throws BindException {
-        Order order = new Order();
-        DomainUtil.copyNotNullProperties(orderInput, order);
-
-        Duty duty = dutyService.findOne(orderInput.getDutyUuid()).orElseThrow(() -> new ResourceNotFoundException(Duty.class, orderInput.getDutyUuid()));
-//        if(OrderInput.SHOP_LEVEL_YES.equalsIgnoreCase(orderInput.getIsShopLevel())){
-//            duty = dutyService.findSysDuty();
-//        } else {
-//            duty = dutyService.findOne(orderInput.getDutyUuid()).orElseThrow(() -> new ResourceNotFoundException(Duty.class, orderInput.getDutyUuid()));
-//        }
-        order.setDuty(duty);
-
-        BindException exception = new BindException(order, order.getClass().getSimpleName());
-        Validators.validateBean(exception, order);
-
-        if (exception.hasErrors()) {
-            throw exception;
-        }
-
-        orderService.cascadeAdd(order);
-
-        return order;
+    public List<Order> add(@Valid @RequestBody List<OrderInput> orderInputList) throws BindException {
+        List<Order> orders = orderService.cascadeAdd(orderInputList);
+        return orders;
     }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.PATCH)

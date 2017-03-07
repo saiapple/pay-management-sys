@@ -18,6 +18,7 @@ public class Order extends MaintainDomainObj {
     private String type;
     private String payType;
     private String comment;
+    private Long no;
 
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -67,5 +68,14 @@ public class Order extends MaintainDomainObj {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Column(name = "no")
+    public Long getNo() {
+        return no;
+    }
+
+    public void setNo(Long no) {
+        this.no = no;
     }
 }

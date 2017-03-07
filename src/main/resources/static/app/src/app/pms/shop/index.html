@@ -5,71 +5,37 @@
              style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:rgb(79, 73, 73);height: 60px;padding-top: 15px;">
             <div flex="10" layout="column">
                 <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[4].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_TYPES[4].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
+                    <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[4].value)">
+                        {{PMS_BILL_TYPES[4].name}}<!--加备用金-->
                     </button>
                 </span>
             </div>
             <div flex="10" layout="column">
                 <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[4].value, PMS_BILL_PAY_TYPES[2].value)">
-                        {{PMS_BILL_TYPES[4].name + '|' + PMS_BILL_PAY_TYPES[2].name}}
+                    <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[5].value)">
+                        {{PMS_BILL_TYPES[5].name}}<!--减备用金-->
+                    </button>
+                </span>
+            </div>
+
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[6].value)">
+                        {{PMS_BILL_TYPES[6].name}}<!--工资支出-->
                     </button>
                 </span>
             </div>
             <div flex="10" layout="column">
                 <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[4].value, PMS_BILL_PAY_TYPES[3].value)">
-                        {{PMS_BILL_TYPES[4].name + '|' + PMS_BILL_PAY_TYPES[3].name}}
+                    <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[10].value)">
+                        {{PMS_BILL_TYPES[10].name}}<!--房租支出-->
                     </button>
                 </span>
             </div>
             <div flex="10" layout="column">
                 <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[4].value, PMS_BILL_PAY_TYPES[4].value)">
-                        {{PMS_BILL_TYPES[4].name + '|' + PMS_BILL_PAY_TYPES[4].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[4].value, PMS_BILL_PAY_TYPES[6].value)">
-                        {{PMS_BILL_TYPES[4].name + '|' + PMS_BILL_PAY_TYPES[6].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[5].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_TYPES[5].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[5].value, PMS_BILL_PAY_TYPES[2].value)">
-                        {{PMS_BILL_TYPES[5].name + '|' + PMS_BILL_PAY_TYPES[2].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[5].value, PMS_BILL_PAY_TYPES[3].value)">
-                        {{PMS_BILL_TYPES[5].name + '|' + PMS_BILL_PAY_TYPES[3].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[5].value, PMS_BILL_PAY_TYPES[4].value)">
-                        {{PMS_BILL_TYPES[5].name + '|' + PMS_BILL_PAY_TYPES[4].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[5].value, PMS_BILL_PAY_TYPES[6].value)">
-                        {{PMS_BILL_TYPES[5].name + '|' + PMS_BILL_PAY_TYPES[6].name}}
+                    <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[11].value)">
+                        {{PMS_BILL_TYPES[11].name}}<!--日常支出-->
                     </button>
                 </span>
             </div>
@@ -131,50 +97,7 @@
         </div>
 
         <div layout="row" flex="100" layout-warp
-             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:rgb(79, 73, 73);height: 50px;padding-top: 10px;">
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[6].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_TYPES[6].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[7].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_TYPES[7].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[8].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_TYPES[8].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[9].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_TYPES[9].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[10].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_TYPES[10].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
-                    </button>
-                </span>
-            </div>
-            <div flex="10" layout="column">
-                <span>
-                    <button md-raised-button ng-click="showAddEditor(PMS_BILL_TYPES[11].value, PMS_BILL_PAY_TYPES[1].value)">
-                        {{PMS_BILL_TYPES[11].name + '|' + PMS_BILL_PAY_TYPES[1].name}}
-                    </button>
-                </span>
-            </div>
-
+             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:rgb(79, 73, 73);height: 2px;padding-top: 0px;">
         </div>
 
 
@@ -284,6 +207,9 @@
                         <div layout="row" layout-wrap>
                             <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px;font-size: 14px;">
                                 <div layout="row" flex style="color:#7f8fa4" >
+                                    <div flex="10">
+                                        <div layout-padding><span>{{item.no}}</span></div>
+                                    </div>
                                     <div flex="10">
                                         <div layout-padding><span>{{PMS_BILL_TYPES[item.type].name}}</span></div>
                                     </div>

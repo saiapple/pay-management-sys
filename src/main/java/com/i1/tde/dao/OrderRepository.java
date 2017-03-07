@@ -16,4 +16,7 @@ import java.util.Map;
 public interface OrderRepository extends JpaRepository<Order, String> {
 //    @Query(value = "select type as billType, pay_type as payType, sum(amount) as amount from bill where duty_uuid = :dutyUuid group by type, pay_type", nativeQuery = true)
 //    List<Map<String, Object>> countOrdersOfDuty(@Param("dutyUuid") String dutyUuid);
+
+    @Query(value = "select max(no) from bill where duty_uuid = :dutyUuid", nativeQuery = true)
+    Long findMaxNo(@Param("dutyUuid") String dutyUuid);
 }
