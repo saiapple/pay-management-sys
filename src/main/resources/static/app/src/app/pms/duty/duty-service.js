@@ -47,3 +47,21 @@ angular.module('IOne-Production').service('DutyService', function ($http, Consta
         return $http.get(Constant.BACKEND_BASE + '/duties/' + uuid + '/report');
     };
 });
+
+angular.module('IOne-Production').service('DutyProfitService', function ($http, Constant) {
+    this.getAll = function (dutyUuid) {
+        return $http.get(Constant.BACKEND_BASE + '/duties/' + dutyUuid + '/profits');
+    };
+    this.get = function (dutyUuid, profitUuid) {
+        return $http.get(Constant.BACKEND_BASE + '/duties/' + dutyUuid + '/profits/' + profitUuid);
+    };
+    this.modify = function (dutyUuid, profitUuid, profitUpdateInput) {
+        return $http.patch(Constant.BACKEND_BASE + '/duties/' + dutyUuid + '/profits/' + profitUuid, profitUpdateInput);
+    };
+    this.add = function (dutyUuid, profitInput) {
+        return $http.post(Constant.BACKEND_BASE + '/duties/' + dutyUuid + '/profits', profitInput);
+    };
+    this.delete = function (dutyUuid, profitUuid) {
+        return $http.delete(Constant.BACKEND_BASE + '/duties/' + dutyUuid + '/profits/' + profitUuid);
+    };
+});

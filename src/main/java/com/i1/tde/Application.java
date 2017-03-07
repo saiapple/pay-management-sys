@@ -31,9 +31,9 @@ public class Application {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "erpDataSource")
+/*    @Bean(name = "erpDataSource")
     @ConfigurationProperties(prefix = "spring.erpDatasource")
     public DataSource erpDataSource() {
         return DataSourceBuilder.create().build();
-    }
+    }*/
 }

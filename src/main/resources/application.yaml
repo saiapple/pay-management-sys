@@ -21,15 +21,15 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.0.129:3306/fangzhengju?useSSL=false
+    url: jdbc:mysql://192.168.3.13:3306/fangzhengju?useSSL=false
     username: root
     password: Pass1234
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
 #    url: jdbc:oracle:thin:@//192.168.1.110:1521/ORCL
 #    username: i1
 #    password: i1
-  erpDatasource:
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.0.129:3306/fangzhengju?useSSL=false
-      username: root
-      password: Pass1234
+#  erpDatasource:
+#      driver-class-name: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://192.168.0.129:3306/fangzhengju?useSSL=false
+#      username: root
+#      password: Pass1234

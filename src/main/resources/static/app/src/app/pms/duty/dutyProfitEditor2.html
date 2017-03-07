@@ -2,30 +2,25 @@
     <div layout="row">
         <div flex>
             <form name="editDuty" novalidate>
-                <!--<md-input-container>
-                    <label class="label">开始时间：</label>
-                    <span>{{selectedItem.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
-                </md-input-container>-->
-
                 <md-input-container>
-                    <label>现金备用金</label>
-                    <input name="text" type="number" ng-model="selectedItem.cashAmount">
+                    <label>桌号</label>
+                    <input name="text" type="text" ng-model="selectedItem.tableNumber">
                 </md-input-container>
                 <md-input-container>
-                    <label>微信备用金</label>
-                    <input name="text" type="number" ng-model="selectedItem.wxAmount">
+                    <label>1分数量</label>
+                    <input name="text" type="number" ng-model="selectedItem.card1Count">
                 </md-input-container>
                 <md-input-container>
-                    <label>支付宝备用金</label>
-                    <input name="text" type="number" ng-model="selectedItem.zfbAmount">
+                    <label>5分数量</label>
+                    <input name="text" type="number" ng-model="selectedItem.card5Count">
                 </md-input-container>
                 <md-input-container>
-                    <label>卡牌备用金</label>
-                    <input name="text" type="number" ng-model="selectedItem.cardAmount">
+                    <label>10分数量</label>
+                    <input name="text" type="number" ng-model="selectedItem.card10Count">
                 </md-input-container>
-                <md-input-container>
-                    <label>POS刷卡备用金</label>
-                    <input name="text" type="number" ng-model="selectedItem.posAmount">
+                <md-input-container ng-disable="true">
+                    <label>上水金额</label>
+                    <input name="text" type="number" ng-model="selectedItem.profit">
                 </md-input-container>
             </form>
             <div layout="row">

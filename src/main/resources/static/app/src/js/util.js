@@ -873,8 +873,8 @@ angular.module('IOne-Constant').constant('Constant', {
         7: {value: '7', name: '买烟支出'},
         8: {value: '8', name: '酒水支出'},
         9: {value: '9', name: '买菜支出'},
-        10: {value: '10', name: '房租水电支出'},
-        11: {value: '11', name: '其他支出'}
+        10: {value: '10', name: '房租支出'},
+        11: {value: '11', name: '日常支出'}
     },
     'PMS_BILL_PAY_TYPES':{
         0: {value: '0', name: '全部'},

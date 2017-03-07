@@ -5,7 +5,7 @@ angular.module('IOne-Production').config(['$routeProvider', function($routeProvi
     })
 }]);
 
-angular.module('IOne-Production').controller('DutyController', function($scope, $mdDialog, DutyService, Constant) {
+angular.module('IOne-Production').controller('DutyController', function($scope, $mdDialog, DutyService, DutyProfitService, Constant) {
     $scope.pageOption = {
         sizePerPage: 10,
         currentPage: 0,
@@ -33,6 +33,12 @@ angular.module('IOne-Production').controller('DutyController', function($scope, 
         });
     };
 
+    $scope.refreshDetailList = function(item) {
+        DutyProfitService.getAll(item.uuid).success(function(data) {
+            item.detailList = data.content;
+        });
+    };
+
     $scope.$watch('listFilterOption', function() {
         $scope.pageOption.currentPage = 0;
         $scope.pageOption.totalPage = 0;
@@ -40,31 +46,20 @@ angular.module('IOne-Production').controller('DutyController', function($scope, 
         $scope.refreshList();
     }, true);
 
-    $scope.itemList = [
-        { no:'1111111', name: 'name1', orderAmount: '100', confirm: '1', release: '1', status: '2' },
-        { no:'2222222', name: 'name2', orderAmount: '200', confirm: '2', release: '1', status: '1'  },
-        { no:'4444444', name: 'name0', orderAmount: '400', confirm: '1', release: '1', status: '1'  },
-        { no:'3333333', name: 'name3', orderAmount: '300', confirm: '1', release: '2', status: '2'  }
-    ];
+    $scope.itemList = [];
 
-    $scope.subItemList = [
-        { no:'1111111', name: 'name1', orderAmount: '100', confirm: '1', release: '1', status: '2' },
-        { no:'2222222', name: 'name2', orderAmount: '200', confirm: '2', release: '1', status: '1'  },
-        { no:'3333333', name: 'name3', orderAmount: '300', confirm: '1', release: '2', status: '2'  }
-    ];
+    $scope.subItemList = [];
 
     $scope.selectAllFlag = false;
 
     /**
      * Show left detail panel when clicking the title
      */
-    //$scope.showDetailPanelAction = function(item) {
-    //    $scope.selectedItem = item;
-    //    //OrderDetail.get($scope.selectedItem.uuid).success(function(data) {
-    //    //    $scope.orderDetailList = data.content;
-    //    //});
-    //    item.detailList = $scope.subItemList;
-    //};
+    $scope.showDetailPanelAction = function(item) {
+        $scope.selectedItem = item;
+        item.detailList = [];
+        $scope.refreshDetailList(item);
+    };
 
     /**
      * Show advanced search panel which you can add more search condition
@@ -197,26 +192,57 @@ angular.module('IOne-Production').controller('DutyController', function($scope, 
         });
     };
 
-    $scope.showProfitEditor = function (selectedItem) {
+    $scope.showAddProfitEditor = function (profitItem) {
+        var action;
+        if(profitItem == null)
+            action = "add";
         $mdDialog.show({
-            controller: 'EditDutyController',
-            templateUrl: 'app/src/app/pms/duty/dutyProfitEditor.html',
+            controller: 'EditDutyProfitController',
+            templateUrl: 'app/src/app/pms/duty/dutyProfitEditor2.html',
             parent: angular.element(document.body),
             targetEvent: event,
             locals: {
-                parentSelectedItem: selectedItem
+                selectedProfitItem: profitItem
             }
         }).then(function (data) {
             var postData = {
+                "tableNumber": data.tableNumber,
+                "card1Count": data.card1Count,
+                "card5Count": data.card5Count,
+                "card10Count": data.card10Count,
                 "profit": data.profit
             };
 
-            DutyService.modify(selectedItem.uuid, postData).success(function () {
-                //$scope.updateSelectedItem(data);
-                $scope.showInfo('修改成功');
-                $scope.refreshList();
+            if(action == "add") {
+                DutyProfitService.add($scope.selectedItem.uuid, postData).success(function (rep) {
+                    //$scope.updateSelectedItem(data);
+                    $scope.selectedItem = rep.duty;
+                    $scope.refreshDetailList($scope.selectedItem);
+                    $scope.showInfo('新增成功');
+                }).error(function (response) {
+                    $scope.showError('新增失败，' + response.message);
+                });
+            } else {
+                DutyProfitService.modify($scope.selectedItem.uuid, profitItem.uuid, postData).success(function (rep) {
+                    $scope.selectedItem = rep.duty;
+                    $scope.refreshDetailList($scope.selectedItem);
+                    $scope.showInfo('修改成功');
+                }).error(function (response) {
+                    $scope.showError('修改失败，' + response.message);
+                });
+            }
+        });
+    };
+
+    $scope.deleteProfitAction = function(profitItem) {
+        $scope.showConfirm('', '确认删除吗？', function () {
+            DutyProfitService.delete($scope.selectedItem.uuid, profitItem.uuid).success(function(rep) {
+                //$scope.itemList.splice($scope.itemList.indexOf(item), 1);
+                $scope.selectedItem.profit -= profitItem.profit;
+                $scope.refreshDetailList($scope.selectedItem);
+                $scope.showInfo('删除成功');
             }).error(function (response) {
-                $scope.showError('修改失败，' + response.message);
+                $scope.showError('删除失败，' + response.message);
             });
         });
     };
@@ -246,12 +272,45 @@ angular.module('IOne-Production').controller('DutyController', function($scope, 
     };
 });
 
+angular.module('IOne-Production').controller('EditDutyProfitController', function ($scope, $mdDialog, selectedProfitItem) {
+    if(selectedProfitItem == null){
+        $scope.selectedItem = {
+            "tableNumber": 0,
+            "card1Count": 0,
+            "card5Count": 0,
+            "card10Count": 0,
+            "profit": 0
+        };
+    } else {
+        $scope.selectedItem = {
+            "tableNumber": selectedProfitItem.tableNumber,
+            "card1Count": selectedProfitItem.card1Count,
+            "card5Count": selectedProfitItem.card5Count,
+            "card10Count": selectedProfitItem.card10Count,
+            "profit": selectedProfitItem.profit
+        };
+    }
+
+    $scope.$watch('selectedItem', function() {
+        $scope.selectedItem.profit = $scope.selectedItem.card1Count * 10 + $scope.selectedItem.card5Count * 50 +  $scope.selectedItem.card10Count * 100;
+    }, true);
+
+    $scope.save = function () {
+        $mdDialog.hide($scope.selectedItem);
+    };
+
+    $scope.cancelDlg = function () {
+        $mdDialog.cancel();
+    };
+});
+
 angular.module('IOne-Production').controller('EditDutyController', function ($scope, $mdDialog, parentSelectedItem) {
     $scope.selectedItem = {
         "cashAmount": parentSelectedItem.cashAmount,
         "wxAmount": parentSelectedItem.wxAmount,
         "zfbAmount": parentSelectedItem.zfbAmount,
         "cardAmount": parentSelectedItem.cardAmount,
+        "posAmount": parentSelectedItem.posAmount,
         "createTime": parentSelectedItem.createTime
     };
 
@@ -264,17 +323,17 @@ angular.module('IOne-Production').controller('EditDutyController', function ($sc
     };
 });
 
-angular.module('IOne-Production').controller('EditDutyProfitController', function ($scope, $mdDialog, parentSelectedItem) {
-    $scope.selectedItem = {
-        "profit": parentSelectedItem.profit
-    };
-
-    $scope.save = function () {
-        $mdDialog.hide($scope.selectedItem);
-    };
-
-    $scope.cancelDlg = function () {
-        $mdDialog.cancel();
-    };
-});
+//angular.module('IOne-Production').controller('EditDutyProfitController', function ($scope, $mdDialog, parentSelectedItem) {
+//    $scope.selectedItem = {
+//        "profit": parentSelectedItem.profit
+//    };
+//
+//    $scope.save = function () {
+//        $mdDialog.hide($scope.selectedItem);
+//    };
+//
+//    $scope.cancelDlg = function () {
+//        $mdDialog.cancel();
+//    };
+//});
 

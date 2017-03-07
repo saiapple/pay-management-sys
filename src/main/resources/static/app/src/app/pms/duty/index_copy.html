@@ -1,8 +1,8 @@
 <div class="main-panel">
     <div ng-show="ui_status == UI_STATUS.VIEW_UI_STATUS">
         <div layout="row" class="top-title">
-            <div flex="70" hide-sm hide-md class="left-title" ng-show="selectedItem" style="position: relative;">
-                <md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="showEditor(selectedItem)">
+            <!--<div flex="70" hide-sm hide-md class="left-title" ng-show="selectedItem" style="position: relative;">
+                <md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="editItemAction(selectedItem, 'PSO_ORDER_MST', '订单: ' + selectedItem.no)">
                     <ng-md-icon icon="edit"></ng-md-icon>
                 </md-button>
                 <md-menu>
@@ -16,13 +16,31 @@
                                 审核
                             </md-button>
                         </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" aria-label="More" ng-click="statusClickAction($event, selectedItem)">
+                                <ng-md-icon icon="lock_open"></ng-md-icon>
+                                启用
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" aria-label="More" ng-click="releaseClickAction($event, selectedItem)">
+                                <ng-md-icon icon="send"></ng-md-icon>
+                                发布
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" aria-label="More" ng-click="deleteClickAction($event, selectedItem)">
+                                <ng-md-icon icon="delete"></ng-md-icon>
+                                删除
+                            </md-button>
+                        </md-menu-item>
                     </md-menu-content>
                 </md-menu>
-                <span>班次详情</span>
+                <span>订单详细信息</span>
                 <md-button class="md-icon-button close-btn float-right" aria-label="More" ng-click="selectedItem = null">
                     <ng-md-icon icon="chevron_left"></ng-md-icon>
                 </md-button>
-            </div>
+            </div>-->
             <div flex class="right-title">
                 <md-button class="md-icon-button close-btn" aria-label="More" style="float: left; margin-left: 36px;" ng-click="showEditor(null)">
                     <ng-md-icon icon="add"></ng-md-icon>
@@ -39,6 +57,24 @@
                                 批量审核
                             </md-button>
                         </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" aria-label="More" ng-click="statusAllClickAction($event)">
+                                <ng-md-icon icon="lock_open"></ng-md-icon>
+                                批量启用
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" aria-label="More" ng-click="releaseAllClickAction($event)">
+                                <ng-md-icon icon="send"></ng-md-icon>
+                                批量发布
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" aria-label="More" ng-click="deleteAllClickAction($event)">
+                                <ng-md-icon icon="delete"></ng-md-icon>
+                                批量删除
+                            </md-button>
+                        </md-menu-item>
                     </md-menu-content>
                 </md-menu>-->
             </div>
@@ -48,136 +84,78 @@
             <div flex="70" hide-sm hide-md layout="column" class="left-body" ng-show="selectedItem">
                 <div flex="100" layout-padding>
                     <div layout="row" layout-padding style="font-size: 20px;padding-top: 2px; font-weight: bold;">
-                        <span flex>班次时间: {{selectedItem.startTime | date:'MM-dd HH:mm:ss'}}&nbsp;&nbsp;--&nbsp;&nbsp;{{selectedItem.endTime | date:'MM-dd HH:mm:ss'}}</span>
-                        <span flex class="right-align">上水：{{selectedItem.profit | currency:'￥'}}</span>
+                        <span flex>订单编号: {{selectedItem.no}}</span>
+                        <span flex class="right-align">￥:{{selectedItem.orderAmount}}</span>
                     </div>
                     <md-divider></md-divider>
                     <div layout="row" layout-wrap layout-margin>
-                        <!--<span flex="50" flex-sm="100" layout-padding>
-                            <span class="item-name">上分金额</span>
-                            <span class="item-content">{{selectedItem.upAmount}}</span>
-                        </span>
                         <span flex="50" flex-sm="100" layout-padding>
-                            <span class="item-name">下分金额</span>
-                            <span class="item-content">{{selectedItem.downAmount}}</span>
+                            <span class="item-name">客户编号</span>
+                            <span class="item-content">{{selectedItem.customer.no}}</span>
                         </span>
-                        <span flex="50" flex-sm="100" layout-padding>
-                            <span class="item-name">售卖金额</span>
-                            <span class="item-content">{{selectedItem.saleAmount}}</span>
+                        <span flex=50" flex-sm="100" layout-padding>
+                            <span class="item-name">导购名称</span>
+                            <span class="item-content">{{selectedItem.employee.name}}</span>
                         </span>
-                        <span flex="50" flex-sm="100" layout-padding>
-                            <span class="item-name">支出金额</span>
-                            <span class="item-content">{{selectedItem.payAmount}}</span>
-                        </span>
-                        <span flex="50" flex-sm="100" layout-padding>
-                            <span class="item-name">上水金额</span>
-                            <span class="item-content">{{selectedItem.profit}}</span>
-                        </span>-->
-
-                        <div flex="25">
-                            <div layout-padding>现金备用金 :  <span>{{selectedItem.cashAmount}}</span></div>
-                            <div layout-padding>微信备用金 :  <span>{{selectedItem.wxAmount}}</span></div>
-                            <div layout-padding>支付宝备用金 :  <span>{{selectedItem.zfbAmount}}</span></div>
-                            <div layout-padding>筹码备用金额 :  <span>{{selectedItem.cardAmount}}</span></div>
-                            <div layout-padding>刷卡备用金额 :  <span>{{selectedItem.posAmount}}</span></div>
-                        </div>
-                        <div flex="25">
-                            <div layout-padding>现金结余 :  <span>{{selectedItem.currentCashAmount}}</span></div>
-                            <div layout-padding>微信结余 :  <span>{{selectedItem.currentWxAmount}}</span></div>
-                            <div layout-padding>支付宝结余 :  <span>{{selectedItem.currentZfbAmount}}</span></div>
-                            <div layout-padding>筹码结余 :  <span>{{selectedItem.currentCardAmount}}</span></div>
-                            <div layout-padding>刷卡结余 :  <span>{{selectedItem.currentPosAmount}}</span></div>
-                        </div>
-                        <div flex="25">
-                            <div layout-padding>上分金额 :  <span>{{selectedItem.upAmount}}</span></div>
-                            <div layout-padding>下分金额 :  <span>{{selectedItem.downAmount}}</span></div>
-                            <div layout-padding>售卖金额 :  <span>{{selectedItem.saleAmount}}</span></div>
-                            <div layout-padding>支出金额 :  <span>{{selectedItem.payAmount}}</span></div>
-                            <!--<div layout-padding>上水金额 :  <span>{{selectedItem.profit}}</span></div>-->
-                        </div>
                     </div>
 
-                    <md-tabs md-dynamic-height md-border-bottom style="padding-top: 10px;">
-                        <md-tab label="上水详情">
-                            <div layout="row" layout-wrap layout-margin>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <span>桌号</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <span>1分筹码</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <span>5分筹码</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <span>10分筹码</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <span>水</span>
-                                        </span>
-                                        <span flex="25" flex-sm="100" layout-padding>
-                                            <md-button class="md-icon-button close-btn" aria-label="More" style="float: right;margin-top:-15px; margin-right: 36px;" ng-click="showAddProfitEditor(null)">
-                                                <ng-md-icon icon="add"></ng-md-icon>
-                                            </md-button>
-                                        </span>
-                            </div>
+                    <md-tabs md-dynamic-height md-border-bottom style="padding-top: 30px;">
+                        <md-tab label="产品信息">
                             <div layout="row" layout-wrap style="margin-top: 20px;">
-                                <div flex="100" ng-repeat="detail in selectedItem.detailList" ng-click="" class="prod-item"
-                                     style="position: relative;padding-bottom: 0px; min-height: 50px;margin-top: 1px;">
-                                    <md-divider style="margin-top: 5px"></md-divider>
-                                    <div layout="row">
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <!--<span class="item-name">桌号</span>-->
-                                            <span class="item-content">{{detail.tableNumber}}</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <!--<span class="item-name">1分筹码</span>-->
-                                            <span class="item-content">{{detail.card1Count}}</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <!--<span class="item-name">5分筹码</span>-->
-                                            <span class="item-content">{{detail.card5Count}}</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <!--<span class="item-name">10分筹码</span>-->
-                                            <span class="item-content">{{detail.card10Count}}</span>
-                                        </span>
-                                        <span flex="15" flex-sm="100" layout-padding>
-                                            <!--<span class="item-name">水 :</span>-->
-                                            <span class="item-content">{{detail.profit}}</span>
-                                        </span>
-                                        <span flex="25" flex-sm="100" layout-padding>
-                                            <!--<md-button class="md-button close-btn" aria-label="More" ng-click="toggleDetailMorePanelAction(detail)">
+                                <div flex="100" ng-repeat="detail in selectedItem.detailList" ng-click="" class="prod-item" style="position: relative;padding-bottom: 0px; min-height: 200px;margin-top: 20px;">
+                                    <div layout="row" class="height: 100%;">
+                                        <div flex="33">
+                                            <img style="max-height: 180px;" ng-src="app/img/item.jpeg" >
+                                        </div>
+                                        <div flex="33">
+                                            <div layout-padding>商品名称 :  <span>{{detail.item.name}}</span></div>
+                                            <div layout-padding>商品编号 :  <span>{{detail.item.no}}</span></div>
+                                            <div layout-padding>商品品牌 :  <span>{{detail.item.brand.name}}</span></div>
+                                        </div>
+                                        <div flex="33" style="margin-bottom: 45px;">
+                                            <div layout-padding>是否定制 :  <span>{{CUSTOMIZE_FLAG[detail.customizeFlag].name}}</span></div>
+                                            <div layout-padding>商品属性 :  <span>{{detail.itemAttribute}}</span></div>
+                                            <div layout-padding>销售类型 :  <span>{{detail.saleType.name}}</span></div>
+                                            <div layout-padding>订单数量 :  <span>{{detail.orderQuantity}}</span></div>
+                                        </div>
+                                        <div style="position: absolute; right: -10px; bottom: 10px;">
+                                            <md-button class="md-button close-btn" aria-label="More" ng-click="toggleDetailMorePanelAction(detail)">
                                                 查看更多...
-                                            </md-button>-->
-                                            <md-button class="md-button close-btn" aria-label="More" ng-click="deleteProfitAction(detail)">
+                                            </md-button>
+                                            <md-button class="md-button close-btn" aria-label="More" ng-click="deleteDetailAction(detail)">
                                                 <ng-md-icon icon="remove_circle_outline" size="20"></ng-md-icon>删除
                                             </md-button>
                                             <md-button class="md-button close-btn" aria-label="More"
-                                                       ng-click="showAddProfitEditor(detail)">
+                                                       ng-click="editItemAction(detail, 'PSO_ORDER_DTL', '订单: ' + selectedItem.no + ' / ' + '产品信息: ' + detail.no)">
                                                 <ng-md-icon icon="edit" size="20"></ng-md-icon>编辑
                                             </md-button>
-                                        </span>
+                                        </div>
                                     </div>
-
-
                                     <!-- detail panel -->
-                                    <!--<div layout="row" ng-show="detail.showMorePanel">
+                                    <div layout="row" ng-show="detail.showMorePanel">
                                         <div layout-margin>Have more stuff here....</div>
-                                    </div>-->
-
+                                    </div>
+                                    <md-divider style="margin-top: 5px"></md-divider>
                                 </div>
-                                <!--<div flex="100" class="add-new" style="margin: 10px 0 0 0;" ng-click="showAddProfitEditor(null)">
-                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;新增上水...</a>
-                                </div>-->
+                                <div flex="100" class="add-new" style="margin: 10px 0 0 0;" ng-click="preAddItemAction({}, 'PSO_ORDER_DTL', '新增订单')">
+                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;点击新增...</a>
+                                </div>
                             </div>
+                        </md-tab>
+                        <md-tab label="出货">
+                            ...
                         </md-tab>
                     </md-tabs>
                 </div>
             </div>
+
+
             <div flex class="right-body">
                 <!-- basic search-->
                 <div class="search-bar" layout="row" style="position: relative">
+                    <!--<span style="position: absolute; top: 15px; left: 10px;">
+                        <md-checkbox ng-model="selectAllFlag" aria-label="Checkbox" ng-change="selectAllAction()"></md-checkbox>
+                    </span>-->
                     <md-input-container flex="30" style="margin-left: 50px;">
                         <label class="label">起始日期：</label>
                         <input type="date" ng-model="listFilterOption.startDate">
@@ -186,60 +164,63 @@
                         <label class="label">结束日期：</label>
                         <input type="date" ng-model="listFilterOption.endDate">
                     </md-input-container>
+                    <!--<md-input-container flex="15" style="margin-left: 50px;" ng-show="selectedItem == null">-->
+                        <!--<label>班次开始时间</label>-->
+                        <!--<md-select ng-model="listFilterOption.status">-->
+                            <!--<md-option ng-repeat="(key, value) in STATUS" ng-value="key">{{value.name}}</md-option>-->
+                        <!--</md-select>-->
+                    <!--</md-input-container>-->
+                    <!--<md-input-container flex="15" ng-show="selectedItem == null">-->
+                        <!--<label>班次结束时间</label>-->
+                        <!--<md-select ng-model="listFilterOption.confirm">-->
+                            <!--<md-option ng-repeat="(key, value) in CONFIRM" ng-value="key">{{value.name}}</md-option>-->
+                        <!--</md-select>-->
+                    <!--</md-input-container>-->
+                    <!--<md-input-container flex="15" ng-show="selectedItem == null">-->
+                        <!--<label>发布状态</label>-->
+                        <!--<md-select ng-model="listFilterOption.release">-->
+                            <!--<md-option ng-repeat="(key, value) in RELEASE" ng-value="key">{{value.name}}</md-option>-->
+                        <!--</md-select>-->
+                    <!--</md-input-container>-->
                     <!--<md-input-container flex style="margin-left: 50px;" >
                         <label>输入关键字查询</label>
-                        <input ng-model="theMax">
+                        <input ng-model="searchKeyWord">
                     </md-input-container>-->
-                    <span style="padding-top: 10px;">
-                        <md-button class="md-icon-button" aria-label="Eat cake" ng-click="showAdvancedSearchAction()">
-                            <ng-md-icon icon="expand_more" ng-show="!displayAdvancedSearPanel"></ng-md-icon>
-                            <ng-md-icon icon="expand_less" ng-show="displayAdvancedSearPanel"></ng-md-icon>
-                        </md-button>
-                    </span>
+                    <!--<span style="padding-top: 10px;">-->
+                        <!--<md-button class="md-icon-button" aria-label="Eat cake" ng-click="showAdvancedSearchAction()">-->
+                            <!--<ng-md-icon icon="expand_more" ng-show="!displayAdvancedSearPanel"></ng-md-icon>-->
+                            <!--<ng-md-icon icon="expand_less" ng-show="displayAdvancedSearPanel"></ng-md-icon>-->
+                        <!--</md-button>-->
+                    <!--</span>-->
                 </div>
                 <!-- advanced search-->
-                <div layout="row" ng-show="displayAdvancedSearPanel">
-                    <!-- fill more searching here.-->
-                    <div flex>
-                        Have you stuff here...
-                    </div>
-                </div>
+                <!--<div layout="row" ng-show="displayAdvancedSearPanel">-->
+                    <!--&lt;!&ndash; fill more searching here.&ndash;&gt;-->
+                    <!--<div flex>-->
+                        <!--Have you stuff here...-->
+                    <!--</div>-->
+                <!--</div>-->
                 <!-- status panel-->
                 <div layout="row" layout-warp layout-padding layout-margin ng-show="!selectedItem" style="margin: 20px 0px 20px 0px; padding-left: 60px;background-color: whitesmoke;position: relative;height: 50px;padding-top: 15px;">
-                    <span flex="20">总记录数: {{pageOption.totalElements}}</span>
-                    <span flex="20">已选记录数: </span>
-                    <span flex="20">汇总金额: </span>
-
-                    <md-menu>
-                        <md-button class="md-button close-btn" aria-label="More" ng-click="$mdOpenMenu($event)" style="position: absolute;right: 0px;top: 0px;">
-                            <ng-md-icon icon="sort"></ng-md-icon>排序
-                        </md-button>
-                        <md-menu-content width="2">
-                            <md-menu-item>
-                                <md-button class="md-button" aria-label="More" ng-click="sortByAction('name')">
-                                    <ng-md-icon ng-show="sortByField == 'name'" icon="play_arrow"></ng-md-icon>按名称
-                                </md-button>
-                                <md-button class="md-button" aria-label="More" ng-click="sortByAction('no')">
-                                    <ng-md-icon ng-show="sortByField == 'no'" icon="play_arrow"></ng-md-icon>按编号
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                    <span flex="20">班次总数: {{pageOption.totalElements}}</span>
+                    <span flex="20">上水总额: </span>
                 </div>
-                <div ng-repeat="item in itemList | orderBy:sortByField" ng-class="selectedItem.no == item.no ? 'selected-item':''">
-                    <div style = "height: 230px;">
+                <div ng-repeat="item in itemList | orderBy:sortByField" ng-show="!selectedItem" ng-class="selectedItem.no == item.no ? 'selected-item':''">
+                    <div >
                         <div layout="row" layout-wrap>
-                            <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px; font-weight: bold;">
-                                <span flex ng-click="showDetailPanelAction(item)" class="summary-item__title">
+                            <!--<span style="position: absolute">-->
+                                <!--<md-checkbox ng-model="item.selected" aria-label="Checkbox" ng-click="selectItemAction($event, item)"></md-checkbox>-->
+                            <!--</span>-->
+                            <div flex="100" layout="row" style="padding-left: 50px;padding-top: 15px; font-weight: bold;">
+                                <span flex class="summary-item__title" ng-click="showDetailPanelAction(item)">
                                     {{item.startTime | date:'yyyy-MM-dd HH:mm:ss'}}&nbsp;&nbsp;--&nbsp;&nbsp;{{item.endTime | date:'yyyy-MM-dd HH:mm:ss'}}
                                 </span>
-                                <!--<span flex class="right-align">￥:{{item.orderAmount}}</span>-->
                                 <span ng-show="item.active=='-1'" flex class="right-align" style="padding-right: 60px;">系统班次</span>
                                 <span ng-show="item.active=='0'" flex class="right-align" style="padding-right: 60px;">未开始</span>
                                 <span ng-show="item.active=='1'" flex class="right-align" style="padding-right: 60px;">进行中</span>
                                 <span ng-show="item.active=='2'" flex class="right-align" style="padding-right: 60px;">已结束</span>
                             </div>
-                            <div flex="100" layout="row" style="padding-left: 50px;padding-top: 10px;font-size: 14px;" layout-align="space-between center" ng-hide="selectedItem">
+                            <div flex="100" layout="row" style="padding-left: 50px; padding-top: 5px;font-size: 14px;" layout-align="space-between center" ng-hide="selectedItem">
                                 <div layout="row" flex style="color:#7f8fa4" >
                                     <div flex="25">
                                         <div layout-padding>现金备用金 :  <span>{{item.cashAmount}}</span></div>
@@ -267,9 +248,9 @@
                                     <md-button ng-disabled="item.active != '0'" class="md-button close-btn" aria-label="More" ng-click="showEditor(item)" style="position: relative;left: 15px;">
                                         修改备用金
                                     </md-button>
-                                    <!--<md-button class="md-button close-btn" aria-label="More" ng-click="showProfitEditor(item)" style="position: relative;left: 15px;">
+                                    <md-button class="md-button close-btn" aria-label="More" ng-click="showProfitEditor(item)" style="position: relative;left: 15px;">
                                         上水
-                                    </md-button>-->
+                                    </md-button>
                                     <md-button ng-disabled="item.active == '1'" class="md-button close-btn" aria-label="More" ng-click="startDuty(item)" style="position: relative;left: 15px;">
                                         开始
                                     </md-button>
@@ -283,7 +264,7 @@
                             </div>
                         </div>
                     </div>
-                    <div layout="row" layout-wrap ng-show="item.showMorePanel && !selectedItem" style="font-size: 14px;">
+                    <!--<div layout="row" layout-wrap ng-show="item.showMorePanel && !selectedItem" style="font-size: 14px;">
                         <div flex="100" ng-repeat="detail in item.detailList" style="padding: 10px 20px 0px 20px;">
                             <md-divider></md-divider>
                             <div layout="row" style="height: 100%;">
@@ -306,7 +287,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <md-divider></md-divider>
                 </div>
                 <div pagination option="pageOption" callback="refreshList()"></div>
