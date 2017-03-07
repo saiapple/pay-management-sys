@@ -3,25 +3,63 @@
 
 
 
-        <div layout="row" flex="100" layout-warp
+        <div layout="row" flex="100" layout-warp hide-sm hide-md
              style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:rgb(79, 73, 73);;height: 60px;padding-top: 15px;">
             <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[1].value)">
+                        {{PMS_BILL_TYPES[1].name}}<!--上分-->
+                    </button>
+                </span>
+            </div>
+
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[2].value)">
+                        {{PMS_BILL_TYPES[2].name}}<!--下分-->
+                    </button>
+                </span>
+            </div>
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[3].value)">
+                        {{PMS_BILL_TYPES[3].name}}<!--售卖-->
+                    </button>
+                </span>
+            </div>
+
+            <div flex="10" layout="column">
+                <span>
+                    <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[11].value)">
+                        {{PMS_BILL_TYPES[11].name}}<!--支出-->
+                    </button>
+                </span>
+            </div>
+
+            <div flex="10" layout="column" style="position: absolute;right: 350px;top: 65px;">
                 <span>
                     <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[4].value)">
                         {{PMS_BILL_TYPES[4].name}}<!--加备用金-->
                     </button>
                 </span>
             </div>
-            <div flex="10" layout="column">
+            <div flex="10" layout="column" style="position: absolute;right: 200px;top: 65px;">
                 <span>
                     <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[5].value)">
                         {{PMS_BILL_TYPES[5].name}}<!--减备用金-->
                     </button>
                 </span>
             </div>
+            <!--<div flex="10" layout="column" style="position: absolute;right: 60px;top: 65px;">
+                <span>
+                    <button md-raised-button ng-click="">
+                        结束班次
+                    </button>
+                </span>
+            </div>-->
         </div>
 
-        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:#FFFFFF;position: relative;height: 40px;padding-top: 0;">
+        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:#FFFFFF;position: relative;height: 40px;padding-top: 5px;">
             <div layout="row" flex="100" style="color:#7f8fa4" >
                 <div flex="20">
                     <div layout-padding>开始时间 :  <span>{{currentDuty.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</span></div>
@@ -32,7 +70,7 @@
             </div>
         </div>
 
-        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:#FFFFFF;position: relative;height: 230px;padding-top: 0;">
+        <div layout="row" style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:#FFFFFF;position: relative;height: 250px;padding-top: 0px;">
             <div layout="row" flex="100" style="color:#7f8fa4" >
                 <div flex="20">
                     <div layout-padding>总备用金 :  <span>{{currentDutyReport.totalAmount}}</span></div>
@@ -86,11 +124,11 @@
         </div>
 
         <div layout="row" flex="100" layout-warp
-             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:rgb(79, 73, 73);height: 60px;padding-top: 15px;">
-            <div flex="10" layout="column">
+             style="margin: 0px 0px 0px 0px; padding-left: 60px;background-color:rgb(79, 73, 73);height: 1px;padding-top: 0px;">
+            <!--<div flex="10" layout="column">
                 <span>
                     <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[1].value)">
-                        {{PMS_BILL_TYPES[1].name}}<!--上分-->
+                        {{PMS_BILL_TYPES[1].name}}&lt;!&ndash;上分&ndash;&gt;
                     </button>
                 </span>
             </div>
@@ -98,14 +136,14 @@
             <div flex="10" layout="column">
                 <span>
                     <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[2].value)">
-                        {{PMS_BILL_TYPES[2].name}}<!--下分-->
+                        {{PMS_BILL_TYPES[2].name}}&lt;!&ndash;下分&ndash;&gt;
                     </button>
                 </span>
             </div>
             <div flex="10" layout="column">
                 <span>
                     <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[3].value)">
-                        {{PMS_BILL_TYPES[3].name}}<!--售卖-->
+                        {{PMS_BILL_TYPES[3].name}}&lt;!&ndash;售卖&ndash;&gt;
                     </button>
                 </span>
             </div>
@@ -113,10 +151,10 @@
             <div flex="10" layout="column">
                 <span>
                     <button md-raised-button ng-click="showBatchEditor(PMS_BILL_TYPES[11].value)">
-                        {{PMS_BILL_TYPES[11].name}}<!--支出-->
+                        {{PMS_BILL_TYPES[11].name}}&lt;!&ndash;支出&ndash;&gt;
                     </button>
                 </span>
-            </div>
+            </div>-->
         </div>
 
         <div layout="row" class="main-body border">
