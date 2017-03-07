@@ -3,11 +3,11 @@ package com.i1.tde.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.i1.base.domain.IdentifiableObject;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -15,6 +15,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "user")
+@EntityListeners(AuditingEntityListener.class)
 public class User extends IdentifiableObject {
     public static final String ROLE_1 = "1";
     public static final String ROLE_2 = "2";
@@ -72,6 +73,7 @@ public class User extends IdentifiableObject {
     }
 
     //@NotBlank
+    @CreatedDate
     @Column(name = "create_time")
     public Date getCreateTime() {
         return createTime;
@@ -82,6 +84,7 @@ public class User extends IdentifiableObject {
     }
 
     //@NotBlank
+    @LastModifiedDate
     @Column(name = "update_time")
     public Date getUpdateTime() {
         return updateTime;

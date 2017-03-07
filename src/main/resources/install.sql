@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2017-03-06 12:11:17
+Date: 2017-03-07 16:22:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,6 +30,7 @@ CREATE TABLE `bill` (
   `update_time` datetime DEFAULT NULL,
   `create_user_uuid` varchar(64) DEFAULT NULL,
   `update_user_uuid` varchar(64) DEFAULT NULL,
+  `no` bigint(20) NOT NULL COMMENT '批次号',
   PRIMARY KEY (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -77,7 +78,31 @@ CREATE TABLE `duty` (
 -- ----------------------------
 -- Records of duty
 -- ----------------------------
-INSERT INTO `duty` VALUES ('sys-internal-duty-uuid', '1', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-03-06 10:40:26', '2017-03-06 10:40:41', null, null, '2017-03-06 10:40:16', '2017-03-06 12:05:56', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `duty` VALUES ('ab092ea6-109e-4218-87c8-e0d43e9e8eca', '1', '1', '20202', '10002', '20002', '10002', '10002', '0', '0', '0', '0', '2017-03-07 12:25:17', null, null, null, '2017-03-07 12:25:14', '2017-03-07 16:12:08', '1', '1', '20399', '10234', '19979', '9773', '10001', '236', '0', '242', '66');
+INSERT INTO `duty` VALUES ('sys-internal-duty-uuid', '1', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-03-06 10:40:26', '2017-03-06 10:40:41', null, null, '2017-03-06 10:40:16', '2017-03-07 15:08:17', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+
+-- ----------------------------
+-- Table structure for duty_profit
+-- ----------------------------
+DROP TABLE IF EXISTS `duty_profit`;
+CREATE TABLE `duty_profit` (
+  `uuid` varchar(64) NOT NULL,
+  `duty_uuid` varchar(64) NOT NULL,
+  `card1_count` decimal(10,0) DEFAULT NULL,
+  `card5_count` decimal(10,0) DEFAULT NULL,
+  `card10_count` decimal(10,0) DEFAULT NULL,
+  `profit` decimal(10,0) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `create_user_uuid` varchar(64) DEFAULT NULL,
+  `update_user_uuid` varchar(64) DEFAULT NULL,
+  `table_number` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of duty_profit
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for shop
@@ -114,7 +139,7 @@ CREATE TABLE `shop` (
 -- ----------------------------
 -- Records of shop
 -- ----------------------------
-INSERT INTO `shop` VALUES ('1', '方正居', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-03-05 13:33:10', '2017-03-06 12:05:56', '1', '1', '0');
+INSERT INTO `shop` VALUES ('1', '方正居', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2017-03-05 13:33:10', '2017-03-07 15:45:21', '1', '1', '0');
 
 -- ----------------------------
 -- Table structure for user
@@ -137,3 +162,4 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'admin', '管理员', '124b188b837105a212485079d407408b85cf20c0', '2017-03-09 16:00:38', '2017-03-22 16:00:41', '1', '1', '1');
+INSERT INTO `user` VALUES ('fd23941c-8333-438b-9ca8-f6f39b590a6b', 'test', 'test', '3b4a73232ac42b239c09e6b6007ee95e04a8f2bc', '2017-03-07 16:21:14', '2017-03-07 16:21:14', null, null, '1');
