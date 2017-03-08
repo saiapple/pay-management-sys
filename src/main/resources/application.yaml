@@ -1,5 +1,5 @@
 banner:
-  location: banner.txt
+  location: banner-prod.txt
 
 spring:
   profiles.active: default
@@ -10,26 +10,51 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
 #    database-platform: org.hibernate.dialect.Oracle10gDialect
 
-server:
-  port: 8088
+  resources:
+    static-locations: file:/root/i1-server/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
 
+  datasource:
+    test-on-borrow: true
+    validation-query: select 1 from dual
+    test-while-idle: true
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://rm-2zey15w7o73ja32s3o.mysql.rds.aliyuncs.com:3306/fangzhengju_test?useSSL=false
+    username: root
+    password: fangzhengju_yanglei1234
+
+server:
+  port: 8080
+
+logging:
+  file: /root/i1-server/log/i1-server.log
 
 --- # Sai's Dev
 
 spring:
   profiles: SAI
+banner:
+  location: banner-dev.txt
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.3.13:3306/fangzhengju?useSSL=false
     username: root
     password: Pass1234
-#    driver-class-name: oracle.jdbc.driver.OracleDriver
-#    url: jdbc:oracle:thin:@//192.168.1.110:1521/ORCL
-#    username: i1
-#    password: i1
-#  erpDatasource:
-#      driver-class-name: com.mysql.jdbc.Driver
-#      url: jdbc:mysql://192.168.0.129:3306/fangzhengju?useSSL=false
-#      username: root
-#      password: Pass1234
+
+server:
+  port: 8088
+
+--- # FangZhengJu's Test
+spring:
+  profiles: FZJ_TEST
+banner:
+  location: banner-uat.txt
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://rm-2zey15w7o73ja32s3o.mysql.rds.aliyuncs.com:3306/fangzhengju_test?useSSL=false
+    username: root
+    password: fangzhengju_yanglei1234
+
+server:
+  port: 8888

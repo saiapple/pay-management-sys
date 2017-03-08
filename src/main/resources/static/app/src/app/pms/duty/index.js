@@ -198,7 +198,7 @@ angular.module('IOne-Production').controller('DutyController', function($scope, 
             action = "add";
         $mdDialog.show({
             controller: 'EditDutyProfitController',
-            templateUrl: 'app/src/app/pms/duty/dutyProfitEditor2.html',
+            templateUrl: 'app/src/app/pms/duty/dutyProfitEditor.html',
             parent: angular.element(document.body),
             targetEvent: event,
             locals: {
